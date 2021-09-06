@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "allowUmdGlobalAccess": true,
+    "target": "es6",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "Services/*":["src/services/*"],
+      "Components/*": ["src/components/*"],
+      "Recoil/*": ["src/recoil/*"],
+      "Utils/*":["src/utils/*"],
+      "Pages/*":["src/pages/*"],
+      "Public/*": ["public/*"],
+      "Shared/*": ["src/components/shared/*"]
+    }
+  },
+  "exclude": [
+    "./node_modules/**/*",
+    "./webpack.*",
+    "dist"
+  ],
+  "include": [
+    "src/**/*",
+  ]
+}

@@ -1,0 +1,14 @@
+.alert-box {
+    font-family: $token-font-family-text;
+
+    .error {
+        background-color: white;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        border-left: 5px solid $token-font-color-danger;
+        width: auto;
+        padding: 5px 10px;
+        box-shadow: 5px 7px 4px rgba(0, 0, 0, 0.25);
+    }
+}

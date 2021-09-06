@@ -1,0 +1,9 @@
+{
+    "label.staffID": "Staff ID",
+    "label.password": "Password",
+    "label.confirmPassword": "Confirm Password",
+
+
+    "error.pattern": "{{field}} should match the required pattern.",
+    "error.required": "{{field}} is required."
+}

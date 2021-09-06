@@ -1,0 +1,12 @@
+{
+    "media-query": {
+      "2xs": { "value": "22.5em", "comment": "360px" },
+      "xs": { "value": "35.9375em", "comment": "575px" },
+      "sm": { "value": "36em", "comment": "576px" },
+      "md": { "value": "48em", "comment": "768px" },
+      "lg": { "value": "62em", "comment": "992px" },
+      "xl": { "value": "64.0625em", "comment": "1025px" },
+      "2xl": { "value": "76.25em", "comment": "1220px" },
+      "3xl": { "value": "106.25em", "comment": "1700px" }
+    }
+  }
