@@ -9,6 +9,7 @@ module.exports = {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
+        publicPath: "/",
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -26,7 +27,9 @@ module.exports = {
     ],
     devtool: 'inline-source-map',
     devServer: {
-        static: './dist'
+        static: path.resolve(__dirname, 'public'),
+        historyApiFallback: true,
+        port: 8080,
     },
     resolve: {
         extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
@@ -38,6 +41,8 @@ module.exports = {
             Services: path.resolve(__dirname, 'src/services'),
             Public: path.resolve(__dirname, 'public'),
             Shared: path.resolve(__dirname, 'src/components/shared'),
+            Helpers: path.resolve(__dirname, 'src/helpers'),
+            src: path.resolve(__dirname, 'src'),
         },
     },
     module: {

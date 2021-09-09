@@ -27,7 +27,8 @@
       "Utils/*":["src/utils/*"],
       "Pages/*":["src/pages/*"],
       "Public/*": ["public/*"],
-      "Shared/*": ["src/components/shared/*"]
+      "Shared/*": ["src/components/shared/*"],
+      "Helpers/*": ["src/helpers"]
     }
   },
   "exclude": [

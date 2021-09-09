@@ -1,17 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import { RecoilRoot } from 'recoil';
-import HomePage from 'Pages/home-page';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { routes } from './routes';
+import Shell from './shell';
 import './i18n';
 
-function App() {
+const App = () => {
+ 
   return (
-    <RecoilRoot>
-      <div className="App">
-        <HomePage />
-      </div>
-    </RecoilRoot>
+      <RecoilRoot>
+        <Shell routes={routes} />
+      </RecoilRoot>
+    
   );
 }
 

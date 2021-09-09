@@ -1,5 +1,4 @@
 .modal {
-    display: var(modal-visibility);
     position: fixed;
     top: 0;
     left: 0;
@@ -13,11 +12,11 @@
 
 .modal-content {
     background: white;
-    margin: 5% auto;
+    margin: 3% auto;
     padding: 20px;
     border: 0px solid grey;
     width: 50%;
-    min-height: 60%;
+    height: inherit;
     max-height: 80%;
     display: flex;
     justify-content: center;

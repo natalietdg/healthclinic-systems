@@ -22,13 +22,8 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
     const [ loginInput, setLoginInput ] = useState(initialLoginInput);
     const [ error, setError ] = useState<any>({});
 
-    useEffect(()=> {
-        console.log('error22', error);
-    },[error])
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLoginInput({...loginInput, [e.target.name]: e.target.value});
-        console.log('e', e);
         setError({});
     }
 
@@ -48,11 +43,13 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
         }
         catch(err) {
             let { path, message, type }:any = err;
+          
             let value = '';
-            if (type.includes('Passwords') && type.includes('match')) {
+            if (message.includes('Passwords') && message.includes('match')) {
                 setError({...error, [path]: message });
             }
             else {
+
                 ({path, value} = errorHandler.validation(err));
                 
                 if (path.indexOf('.')!==-1) {
@@ -62,6 +59,7 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
 
                 setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
             }
+
             
             if (path.indexOf('.')!==-1) {
                 const str = path.split('.');

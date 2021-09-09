@@ -1,0 +1,165 @@
+.navbar-bg{
+    position: absolute;
+    width: 5vw;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-animation: slideIn 0.5s backwards;
+    animation: slideIn 0.5s backwards;
+
+    .link-list {
+        font-family: $token-font-family-text;
+        list-style-type: none;
+        font-size: 15px;
+        display: flex;
+        width: inherit;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+        align-items: center;
+        // padding: 0px 0px 0px 20px;
+        padding: 0px;
+    }
+
+    &:hover {
+        -webkit-animation: slide 0.5s forwards;
+        animation: slide 0.5s forwards;
+        padding: 0px;
+
+        .link-list {
+            padding: 0px;
+            align-items: flex-start;
+            width: 100%;
+            
+            span {
+                color: #b8b9be;
+
+                &:hover {
+                    color: white;
+                }
+            }
+        }
+    }
+
+    .blurred {
+        width: 78%;
+        height: 98%;
+        border: 2px solid #FFFFFF;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        align-content: flex-start;
+
+        ul {
+            width: inherit;
+        }
+
+        li {
+            padding: 20px 0px;
+            width: inherit;
+            
+        
+            &:hover {
+                color: white;
+                background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
+                a {
+                    color: white;
+                }
+
+                span {
+                    color: white
+                };
+
+                cursor: pointer;
+
+                img {
+                    filter: brightness(0) invert(1);
+                }
+            }
+        }
+
+        a {
+            text-decoration: none;
+            &:hover {
+                color: white;
+            }
+        }
+
+        img {
+            width: 25px;
+            height: 25px;
+            padding: 0px 5px;
+        }
+
+        span {
+            color: rgb(0, 0, 0, 0);
+        }
+    }
+
+    
+}
+@-webkit-keyframes slideIn {
+    0% {
+        width: 16vw;
+    }
+
+    100% {
+        width: 5vw;
+    }
+    
+}
+@-moz-keyframes slideIn {
+    0% {
+        width: 16vw;
+    }
+
+    100% {
+        width: 5vw;
+    }
+    
+}
+
+@keyframes slideIn {
+    0% {
+        width: 16vw;
+    }
+
+    100% {
+        width: 5vw;
+    }
+    
+}
+
+@-webkit-keyframes slide {
+    0% {
+        width: 5vw;
+    }
+    100% {
+        width: 16vw;
+    }
+    
+}
+
+@-moz-keyframes slide {
+    0% {
+        width: 5vw;
+    }
+    100% {
+        width: 16vw;
+    }
+}
+
+@keyframes slide {
+    0% {
+        width: 5vw;
+    }
+    100% {
+        width: 16vw;
+    }  
+}
+
