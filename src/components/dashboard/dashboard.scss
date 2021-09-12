@@ -1,0 +1,26 @@
+.dashboard-bg {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    display: flex;
+    background-position-y: -110px;
+
+    .dashboard {
+        width: 100%;
+        height: 100%;
+        backdrop-filter: blur(60px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        h3 {
+            font-family: $token-font-family-heading;
+            font-size: $token-font-size-xl;
+        }
+    }
+    
+}

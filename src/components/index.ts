@@ -1,6 +1,13 @@
-import LoginForm from "./login/login-form";
-import Navbar from "./navbar/navbar";
+import LoginForm from "./login";
+import Navbar from "./navbar";
+import Dashboard from "./dashboard";
+import Profile from "./profile";
+import Patient from './patient-form';
+
 export {
     LoginForm,
-    Navbar
+    Navbar,
+    Dashboard,
+    Profile,
+    Patient
 }

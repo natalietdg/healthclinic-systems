@@ -2,6 +2,7 @@
     "background": {
         "home": { "imageUrl": "/assets/images/homepage-bg.png" },
         "side-bar": {"imageUrl": "/assets/images/side-bar.png" },
-        "side-bar-blurred": { "imageUrl": "/assets/images/side-bar-blurred.png"}
+        "side-bar-blurred": { "imageUrl": "/assets/images/side-bar-blurred.png"},
+        "vertical-bg": {"imageUrl": "/assets/images/vertical-background.png"}
     }
 }

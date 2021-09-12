@@ -4,6 +4,7 @@ import HomePage from 'Pages/home-page';
 import ProfilePage from 'Pages/profile-page';
 import ReportPage from 'Pages/report-page';
 import DashboardPage from 'Pages/dashboard-page';
+import Patient from 'Pages/patient-page';
 
 const publicRoutes = [
     {
@@ -27,6 +28,16 @@ const privateRoutes = [
     {
         path: '/dashboard',
         component: <DashboardPage />,
+        withNavbar: true
+    },
+    {
+        path: '/new-patient',
+        component: <Patient.NewPatientPage />,
+        withNavbar: true
+    },
+    {
+        path: '/patients',
+        component: <Patient.PatientDatabase />,
         withNavbar: true
     }
 ]

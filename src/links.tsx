@@ -15,7 +15,7 @@ export const Links = [
         name: 'Generate Report'
     },
     {
-        to: '/add',
+        to: '/new-patient',
         img: '/assets/images/new-patient.png',
         name: 'Add New Patient'
     }
