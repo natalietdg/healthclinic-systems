@@ -7,7 +7,7 @@ interface SearchInputProps {
     searchOptions: string[];
     name: string;
     value: string;
-    required: boolean;
+    required?: boolean;
     defaultValue?: string;
     error: any;
     label: string;

@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import './checkbox.scss';
 
@@ -13,12 +13,17 @@ interface CheckboxProps {
         value: string;
         label: string;
     }[];
+    input: any;
     required?: boolean;
-    onCheck?: (name: string, value: string) => void;
+    onCheck?: (name: string, subName: string, value: string) => void;
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, name, error, required, values, onCheck}) => {
-    
+const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, name, error, required, input, values, onCheck}) => {
+    const [checkBoxInput, setCheckBoxInput ] = useState<any>({});
+    useEffect(()=> {
+        console.log(input);
+        if(input) setCheckBoxInput(input);
+    },[input])
     const handleChecked = (event: any) => {
       
         if (onCheck) onCheck(name, event.target?.name, event.target?.checked);
@@ -32,7 +37,16 @@ const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, na
                 {
                     values.map((value, index) => {
                         return ( 
-                            <div key={index}><input key={index} className="checkbox--input" name={value.name} placeholder={placeholder?placeholder:''} type="checkbox" onClick={(event: any) => handleChecked(event)} value={value.value} />
+                            <div key={index}>
+                                <input 
+                                    checked={input && checkBoxInput[`${value.name}`]?true: false}
+                                    key={index} 
+                                    className="checkbox--input" 
+                                    name={value.name} 
+                                    placeholder={placeholder?placeholder:''} 
+                                    type="checkbox" onClick={(event: any) => handleChecked(event)} 
+                                    value={value.value} 
+                                />
                                 <label className="checkbox--label">{value.label}</label>
                             </div>
                         )

@@ -9,7 +9,7 @@ interface TextInputProps {
     placeholder?:string;
     error: any;
     required?: boolean;
-    onChange?: (data: any) => void;
+    onChange?: (name: string, value: string) => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({name, label, value, placeholder, error, required, onChange}) => {
@@ -20,9 +20,7 @@ const TextInput: React.FC<TextInputProps> = ({name, label, value, placeholder, e
     return(
         <div className="text-input">
             <h4 className={classNames("text-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
-            <div className="text-input--content">
-                <input className="text-input--input" name={name} placeholder={placeholder?placeholder:''} type="text" onChange={(event) => handleTextChange(event)} value={value}/>
-            </div>
+            <input className="text-input--input" name={name} placeholder={placeholder?placeholder:''} type="text" onChange={(event) => handleTextChange(event)} value={value}/>
         </div>
     )
 }

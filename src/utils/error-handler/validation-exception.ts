@@ -6,7 +6,7 @@ const ValidationException = (error: any) => {
     const { path, message, type } = error;
     let errorMessage: string = '';
     let refPath: string | null = null;
-
+    console.log('type', type);
     if (type?.includes('empty') || type?.includes('required')) {
         errorMessage = 'error.required';
     }

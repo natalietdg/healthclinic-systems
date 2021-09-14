@@ -16,7 +16,7 @@ const NewPatientPage = () => {
     },[])
 
     return(
-        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}>
+        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}>  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/}
             <div className="new-patient-page">
                 <Patient.PatientInformation />
 

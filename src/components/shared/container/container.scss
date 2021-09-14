@@ -39,7 +39,7 @@
     display: flex;
     justify-content: center;
     border-radius: 10px;
-    flex-direction: var('flexDirection');
+    flex-direction: var(--flexDirection);
 }
 
 .close {

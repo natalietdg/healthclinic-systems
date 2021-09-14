@@ -8,7 +8,7 @@ interface RadioInputProps {
     name: string;
     placeholder?:string;
     error: any;
-    multiple: boolean;
+    multiple?: boolean;
     values: {
         name: string;
         value: string;
@@ -22,7 +22,7 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
     
     const handleChecked = (event: React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>) => {
       
-        if (onSelect) onSelect(name, e?.target.value);
+        if (onSelect) onSelect(name, event.target?.value);
 
         const checked = document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
         checked.checked = true;

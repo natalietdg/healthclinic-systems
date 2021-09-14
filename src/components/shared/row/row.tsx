@@ -2,12 +2,12 @@ import React from 'react';
 import './row.scss';
 
 interface RowProps {
-
+    style?: any
 }
 
-const Row: React.FC<RowProps> = ({children}) => {
+const Row: React.FC<RowProps> = ({children, style}) => {
     return (
-        <div className="row">
+        <div className="row" style={style}>
             {children}
         </div>
     )

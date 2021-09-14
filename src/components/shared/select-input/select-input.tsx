@@ -6,7 +6,7 @@ import addressInput from '../address-input';
 interface SelectInputProps {
     selectOptions: any[];
     name: string;
-    required: boolean;
+    required?: boolean;
     defaultValue?: string;
     error: any;
     label: string;
@@ -14,9 +14,6 @@ interface SelectInputProps {
 }
 
 const SelectInput: React.FC<SelectInputProps> = ({selectOptions, label, name, required, error, defaultValue, onSelect}) => {
-    useEffect(()=> {
-        console.log('defaultValue', defaultValue);
-    },[]);
 
     const { t } = useTranslation();
 

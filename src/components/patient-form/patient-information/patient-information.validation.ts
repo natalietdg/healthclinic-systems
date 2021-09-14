@@ -6,6 +6,7 @@ export const PatientInformationFormValidation = Yup.object().shape({
     race: Yup.mixed().oneOf(['CHINESE', 'MALAY', 'INDIAN', 'OTHERS']).required(),
     educationLevel: Yup.mixed().oneOf(['SECONDARY SCHOOL', 'BACHELORS', 'MASTERS', 'PHD']).optional(),
     state: Yup.string().required(),
+    reasonForConsultation: Yup.string().required(),
     address: Yup.object().shape({
         street1: Yup.string().min(3).max(100).required(),
         street2: Yup.string().min(3).max(100).optional(),

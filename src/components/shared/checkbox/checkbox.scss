@@ -1,7 +1,7 @@
 .checkbox {
     font-family: $token-font-family-text;
     width: auto;
-    height: 80px;
+    height: auto;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -15,7 +15,7 @@
     }
 
     &--title {
-        font-size: 18px;
+        font-size: 16px;
         font-weight: $token-font-weight-normal;
         margin: 10px 0px;
         text-align: left;

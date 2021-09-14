@@ -3,7 +3,6 @@ import './login.scss';
 import { LoginFormValidation } from './login-form.validation';
 import { TextInput, AlertBox } from 'Shared/index';
 import errorHandler from 'Utils/error-handler';
-import login from '.';
 import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 

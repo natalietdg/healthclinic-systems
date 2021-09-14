@@ -8,7 +8,9 @@ interface PagePaneProps {
 const PagePane: React.FC<PagePaneProps> = ({children, index}) => {
     return (
         <div className="page-pane">
-            {children}
+            <div className="page-pane--child">
+                {children}
+            </div>
         </div>
     )
 }

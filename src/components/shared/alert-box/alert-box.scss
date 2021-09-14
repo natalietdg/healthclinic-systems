@@ -1,6 +1,6 @@
 .alert-box {
     font-family: $token-font-family-text;
-
+    display: var(--alert-box-display);
     .error {
         background-color: white;
         display: flex;

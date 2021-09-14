@@ -24,6 +24,12 @@
     "label.masters": "Masters",
     "label.phd": "PhD",
     "label.secondarySchool": "Secondary School",
+    "label.street1": "Street 1", 
+    "label.street2": "Street 2",
+    "label.postcode": "Postcode", 
+    "label.state": "State",
+    "label.city": "City",
+    "label.reasonForConsultation": "Reason For Consultation",
 
     "error.pattern": "{{field}} should match the required pattern.",
     "error.required": "{{field}} is required."

@@ -1,13 +1,13 @@
 import React from 'react';
 import './col.scss';
 
-interface RowProps {
-
+interface ColProps {
+    style?: any;
 }
 
-const Col: React.FC<RowProps> = ({children}) => {
+const Col: React.FC<ColProps> = ({children, style}) => {
     return (
-        <div className="col">
+        <div className="col" style={style}>
             {children}
         </div>
     )

@@ -9,6 +9,15 @@ interface AlertBoxProps {
 }
 
 const AlertBox: React.FC<AlertBoxProps> = ({error, name}) => {   
+    useEffect(()=> {
+        (document.querySelector('.alert-box') as HTMLElement).style.setProperty('--alert-box-display', 'none');
+    },[]);
+
+    useEffect(()=> {
+        if(error) {
+            (document.querySelector('.alert-box') as HTMLElement).style.setProperty('--alert-box-display', 'block');
+        }
+    },[error]);
 
     return (
         <div className="alert-box">
