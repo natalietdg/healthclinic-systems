@@ -10,11 +10,6 @@ interface AlertBoxProps {
 
 const AlertBox: React.FC<AlertBoxProps> = ({error, name}) => {   
 
-    useEffect(()=> {
-        console.log('error', error);
-        console.log('!!error', !!error);
-    },[error])
-
     return (
         <div className="alert-box">
             <div className={classNames({error: !!error})}>

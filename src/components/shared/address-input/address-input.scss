@@ -1,0 +1,40 @@
+.address-input {
+    font-family: $token-font-family-text;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .required {
+        color: $token-font-color-danger;
+    }
+
+    .error {
+        color: $token-font-color-danger;
+    }
+
+    &--content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &--title {
+        font-size: 18px;
+        font-weight: $token-font-weight-normal;
+        margin: 10px 0px;
+        text-align: left;
+    }
+
+    &--input {
+        width: 200px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid grey;
+        padding: 0px 10px;
+        font-size: 16px;
+        font-family: $token-font-family-text;
+    }
+}

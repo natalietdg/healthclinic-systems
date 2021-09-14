@@ -1,0 +1,40 @@
+.search-input {
+    width: auto;
+    font-size: 16px;
+    font-family: $token-font-family-text;
+    width: auto;
+    height: 80px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .required {
+        color: $token-font-color-danger;
+    }
+
+    .error {
+        color: $token-font-color-danger;
+    }
+
+    &--title {
+        font-size: 18px;
+        font-weight: $token-font-weight-normal;
+        margin: 10px 0px;
+        text-align: left;
+    }
+
+    &--input {
+        min-width: 200px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1px solid grey;
+        font-family: $token-font-family-text;
+        font-size: 16px;
+        padding: 0px 10px;
+    }
+
+    option {
+        font-size: 16px;
+        font-family: $token-font-family-text;
+    }
+}

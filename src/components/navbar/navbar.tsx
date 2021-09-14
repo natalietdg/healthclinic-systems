@@ -11,7 +11,7 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     
     return (       
-        <div className="navbar-bg" style={{backgroundImage: `url(${navbar['side-bar']?.imageUrl})`}}> {/*style={{backgroundImage: `url(${navbar['side-bar']?.imageUrl})`}}*/}
+        <div className="navbar-bg"> {/*style={{backgroundImage: `url(${navbar['side-bar']?.imageUrl})`}}*/}
             <div className="blurred" > {/*style={{backgroundImage: `url(${navbar['side-bar-blurred']?.imageUrl})`}}*/}
             <span><img style={{top: 0, width: '25px', height: '25px', paddingTop: '20px'}} src="/assets/images/menu.png"/></span>
                 <ul className="link-list">

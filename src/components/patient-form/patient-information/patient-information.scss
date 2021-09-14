@@ -1,17 +1,25 @@
 .patient-info {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
     display: flex;
-    
-    .content {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+
+    h2 {
+        font-family: $token-font-family-heading;
+    }
+
+    .divider {
+        h3 {
+            font-family: $token-font-family-heading;
+            font-size: $token-font-size-lg;
+        }
+
         display: flex;
-        width: 100%;
-        height: 100%;
-        justify-content: center;
         flex-direction: column;
-        align-items: center;
-        align-content: center;
+        align-items: flex-start;
+        padding: 10px 60px;
     }
 }

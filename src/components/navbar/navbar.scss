@@ -1,7 +1,7 @@
 .navbar-bg{
     box-shadow: 3px 3px 6px #b8b9be, -3px -3px 6px #fff;
     width: 5vw;
-    height: 100%;
+    height: 100vw;
     top: 0;
     left: 0px;
     top: 0px;
@@ -11,13 +11,13 @@
     position: sticky;
     top: 0px;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     -webkit-animation: slideIn 0.5s backwards;
     animation: slideIn 0.5s backwards;
     z-index: 20;
+    background-color: white;
 
     .link-list {
-       
         font-family: $token-font-family-text;
         list-style-type: none;
         font-size: 15px;
@@ -39,7 +39,7 @@
         .link-list {
             padding: 0px;
             align-items: flex-start;
-            width: 100%;
+            width: auto;
             backdrop-filter: blur(8px);
 
             span {
@@ -63,14 +63,15 @@
 
     .blurred {
         // width: 78%;
-        width: 100%;
-        height: 100%;
+        width: auto;
+        height: 100vw;
         border: 2px solid #FFFFFF;
         background-size: cover;
         display: flex;
         align-items: center;
         flex-direction: column;
         align-content: flex-start;
+        position: fixed;
 
         ul {
             width: inherit;
@@ -128,24 +129,24 @@
 @-webkit-keyframes slideIn {
     0% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }
 
     100% {
         width: 5vw;
-        height: 100%;
+        height: 100vw;
     }
     
 }
 @-moz-keyframes slideIn {
     0% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }
 
     100% {
         width: 5vw;
-        height: 100%;
+        height: 100vw;
     }
     
 }
@@ -153,7 +154,7 @@
 @keyframes slideIn {
     0% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }
 
     100% {
@@ -166,11 +167,11 @@
 @-webkit-keyframes slide {
     0% {
         width: 5vw;
-        height: 100%;
+        height: 100vw;
     }
     100% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }
     
 }
@@ -178,22 +179,22 @@
 @-moz-keyframes slide {
     0% {
         width: 5vw;
-        height: 100%;
+        height: 100vw;
     }
     100% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }
 }
 
 @keyframes slide {
     0% {
         width: 5vw;
-        height: 100%;
+        height: 100vw;
     }
     100% {
         width: 16vw;
-        height: 100%;
+        height: 100vw;
     }  
 }
 
