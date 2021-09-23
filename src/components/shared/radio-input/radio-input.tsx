@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import './radio-input.scss';
 
@@ -9,28 +9,39 @@ interface RadioInputProps {
     placeholder?:string;
     error: any;
     multiple?: boolean;
-    values: {
-        name: string;
-        value: string;
-        label: string;
-    }[];
+    values: any;
     required?: boolean;
-    onSelect?: (name: string, value: string) => void;
+    onSelect?: (name: string, value: any) => void;
 }
 
 const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, placeholder, error, required, values, multiple, onSelect}) => {
-    
-    const handleChecked = (event: React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>) => {
-      
-        if (onSelect) onSelect(name, event.target?.value);
-
-        const checked = document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
-        checked.checked = true;
+    const [ currentValue, setCurrentValue] = useState<any>('');
+    useEffect(()=> {
+        console.log('values length', values.length);
+        if(values.length > 3) {
+            (document.querySelector(`div[name='${name}'].radio-input--values`) as HTMLInputElement).style.flexDirection = 'column';
+        }
+    },[])
+    useEffect(()=> {
+        console.log('defaultvalue', defaultValue, typeof(defaultValue));
+        setCurrentValue(defaultValue);
+    },[defaultValue])
+    const handleChecked = (event: any) => { //React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>
+        console.log('event.target.name', event.target.name);
+        // const checked = event;
+        // console.log('checked', checked);
+        // var checked = document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
+        // console.log('checked', checked);
+        (document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement).checked=true;
+        // checked.checked = true;
+        console.log('name here', name);
+        if (onSelect) onSelect(name,  event.target.value);
 
         if(multiple==false) {
-            values.map((value)=> {
-                if(value.name!==event.target?.name) {
-                    (document.querySelector(`input[name='${value.name}']`) as HTMLInputElement).checked = false;
+            values.map((value:any)=> {
+                console.log(typeof(value.value));
+                if((name+value.name)!==event.target?.name) {
+                    (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = false;
                 }
             })
         }
@@ -39,11 +50,12 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
     return(
         <div className="radio-input">
             <h4 className={classNames("radio-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
-            <div className={"radio-input--values"}>
+            <div name={name} className={"radio-input--values"}>
                 {
-                    values.map((value, index) => {
-                        return  <div key={index} style={{padding: '0px 10px 0px 0px'}}><input key={index} className="radio-input--input" name={value.name} placeholder={placeholder?placeholder:''} type="radio" onClick={(event: any) => handleChecked(event)} value={value.value} />
-                        <label className="radio-input--label">{value.label}</label></div>
+                    values.map((value:any, index:number) => {
+                        return  <div key={index} style={{padding: '0px 10px 0px 0px', display: 'flex'}}>
+                                    <input key={index} className="radio-input--input" checked={currentValue===value.value?true: false} name={`${name}.${value.name}`} placeholder={placeholder?placeholder:''} type="radio" onClick={(event: any) => handleChecked(event)} value={value.value} />
+                            <label className="radio-input--label">{value.label}</label></div>
                     })
                 }
             </div>

@@ -6,12 +6,12 @@ import addressInput from '../address-input';
 interface SearchInputProps {
     searchOptions: string[];
     name: string;
-    value: string;
+    value: any;
     required?: boolean;
     defaultValue?: string;
     error: any;
     label: string;
-    onSearch: (name: string, value: string) => void;
+    onSearch: (name: string, value: any) => void;
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({searchOptions, label, name, required, error, value, defaultValue, onSearch}) => {

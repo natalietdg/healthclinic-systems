@@ -28,7 +28,8 @@
       "Pages/*":["src/pages/*"],
       "Public/*": ["public/*"],
       "Shared/*": ["src/components/shared/*"],
-      "Helpers/*": ["src/helpers"]
+      "Helpers/*": ["src/helpers"],
+      "Data/*": ["src/data/*"],
     }
   },
   "exclude": [

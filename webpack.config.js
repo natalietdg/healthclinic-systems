@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 module.exports = {
     mode: 'development',
     entry: './src/index.js',
@@ -23,6 +24,10 @@ module.exports = {
                     from: 'assets/**/*',
                 }
             ]
+        }),
+        new Dotenv({
+            path: './.env',
+            safe: true
         })
     ],
     devtool: 'inline-source-map',
@@ -43,6 +48,7 @@ module.exports = {
             Shared: path.resolve(__dirname, 'src/components/shared'),
             Helpers: path.resolve(__dirname, 'src/helpers'),
             src: path.resolve(__dirname, 'src'),
+            Data: path.resolve(__dirname, 'src/data'),
         },
     },
     module: {

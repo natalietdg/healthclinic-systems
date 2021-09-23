@@ -16,12 +16,28 @@ interface AddressInputProps {
         state: string;
         city: string;
     }
-    onChange: (name: string, value: string) => void;
+    onChange: (name: string, value: any) => void;
     error: any;
 }
 
 const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChange}) => {
     const [ postCodes, setPostCodes ] = useState<any>([]);
+
+    useEffect(()=> {
+        console.log('addresss error', error);
+        if (error) {
+            const keys = Object.keys(error);
+            const path = keys[0];
+            if (document.querySelector(`input[name=${path}]`)) {
+                console.log('path', path);
+                (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
+            }
+            else if (document.querySelector(`div[name=${path}]`)) {
+                console.log('path2', path);
+                (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
+            }
+        }
+    },[error])
 
     useEffect(()=> {
         let filteredStates = [];
@@ -48,15 +64,15 @@ const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChang
     },[addressInput.state])
     const { t } = useTranslation();
 
-    const handleTextChange = (name: string, value: string) => {
+    const handleTextChange = (name: string, value: any) => {
         if (onChange) onChange(name, value);
     }
 
-    const handleSelectChange = (name: string, value: string) => {
+    const handleSelectChange = (name: string, value: any) => {
         onChange(name, value);
     }
     
-    const handleSearchChange = (name: string, value: string) => {
+    const handleSearchChange = (name: string, value: any) => {
         onChange(name, value);
     }
 
@@ -65,28 +81,28 @@ const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChang
             <h4 className={classNames("address-input--title", { error: !!error })}>Address</h4>
             <div className="address-input--content">
                 <Row>
-                    <div>
+                    <div style={{width: 'inherit'}}>
                         <TextInput value={addressInput.street1} required error={!!error?.street1} name='street1' label={t('label.street1')} onChange={handleTextChange} />
                         <AlertBox error={error?.street1} name={t('label.street1')} />
                     </div>
-                    <div>
+                    <div style={{width: 'inherit'}}>
                         <TextInput value={addressInput.street2 || ''} error={!!error?.street2} name='street2' label={t('label.street2')} onChange={handleTextChange} />
                         <AlertBox error={error?.street2} name={t('label.street2')} />
                     </div>
                 </Row>
                 <Row>
-                    <div>
+                    <div style={{width: 'inherit'}}>
                         <SearchInput defaultValue={addressInput.postcode} searchOptions={postCodes || []} value={addressInput.postcode} required error={!!error?.postcode} name='postcode' label={t('label.postcode')} onSearch={handleSearchChange} />
                         <AlertBox error={error?.postcode} name={t('label.postcode')} />
                         
                     </div>
-                    <div>
+                    <div style={{width: 'inherit'}}>
                         <TextInput value={addressInput.city} required error={!!error?.city} name='city' label={t('label.city')} onChange={handleTextChange} />
                         <AlertBox error={error?.city} name={t('label.city')} />
                     </div>
                 </Row>
                 <Row>
-                    <div>
+                    <div style={{width: 'inherit'}}>
                         <SelectInput 
                             required
                             selectOptions={statesPostCodes} 

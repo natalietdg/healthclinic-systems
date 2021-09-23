@@ -1,0 +1,49 @@
+.image-upload {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .required {
+        color: $token-font-color-danger;
+    }
+
+    .error {
+        color: $token-font-color-danger;
+    }
+
+    img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: grey;
+        padding: 10px 10px;
+        margin: 10px 10px;
+    }
+
+    &--input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: inherit;
+        min-width: 100px;
+        height: 30px;
+        border-radius: 8px;
+        color: white;
+        background-color: $token-button-primary-background-color-base;
+        border: 0px solid grey;
+        font-size: 16px;
+        cursor: pointer;
+        font-weight: 200;
+        font-family: $token-font-family-text;
+
+        &:hover, &:active {
+            color: $token-button-primary-text-color-hover;
+            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+            border: 0px solid white;
+        }
+    }
+    
+}

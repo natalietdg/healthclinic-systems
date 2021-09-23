@@ -21,7 +21,7 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
     const [ loginInput, setLoginInput ] = useState(initialLoginInput);
     const [ error, setError ] = useState<any>({});
 
-    const handleChange = (name: string, value: string) => {
+    const handleChange = (name: string, value: any) => {
         setLoginInput({...loginInput, [name]: value});
         setError({});
     }

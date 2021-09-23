@@ -11,10 +11,6 @@ const Page: React.FC<PageProps> = ({children, visibility, numOfChildren}) => {
         numOfChildren(children.length);
     },[])
 
-    const nextPage = () => {
-
-    }
-
     return(
         <div>
             {

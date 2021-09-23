@@ -12,6 +12,8 @@ import Row from './row';
 import Col from './col';
 import AddressInput from "./address-input";
 import SearchInput from "./search-input";
+import DateInput from "./date-input";
+import ImageUpload from "./image-upload";
 
 export {
     Modal,
@@ -27,5 +29,7 @@ export {
     Col,
     Checkbox,
     AddressInput,
-    SearchInput
+    SearchInput,
+    DateInput,
+    ImageUpload
 } 

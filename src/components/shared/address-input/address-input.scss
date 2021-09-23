@@ -1,6 +1,6 @@
 .address-input {
     font-family: $token-font-family-text;
-    width: auto;
+    width: inherit;
     height: auto;
     padding: 10px 0px;
     display: flex;
@@ -29,7 +29,7 @@
     }
 
     &--input {
-        width: 200px;
+        width: inherit;
         height: 30px;
         border-radius: 8px;
         border: 1px solid grey;

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Patient from 'Components/patient-form';
 import { fetchBackground } from 'Services/background.services';
+import { savePatientInformation } from 'Services/patient.services';
 import './new-patient-page.scss';
 
 const NewPatientPage = () => {
@@ -15,10 +16,17 @@ const NewPatientPage = () => {
         getBackground();
     },[])
 
+    const submit = async(patientInformation) => {
+        const response = await savePatientInformation(patientInformation);
+
+        console.log('response', response);
+    }
+
+
     return(
         <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}>  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/}
             <div className="new-patient-page">
-                <Patient.PatientInformation />
+                <Patient.PatientInformation onSubmit={submit} />
 
                 {/* <Patient.MedicalRecord /> */}       
             </div>
