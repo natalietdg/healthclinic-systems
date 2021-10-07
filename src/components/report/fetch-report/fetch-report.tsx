@@ -11,8 +11,9 @@ const FetchReport: React.FC<FetchReportProps> = ({}) => {
     let history = useHistory();
     const [ error, setError ] = useState<any>({});
 
-    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-        setReportNumber(e.target.value);
+    function handleChange(name: string, value: string) {
+        console.log('')
+        setReportNumber(value);
     }
     
     const fetchReport = () => {
@@ -29,7 +30,7 @@ const FetchReport: React.FC<FetchReportProps> = ({}) => {
             </div>
             <div className="block">
                 <h3 className="heading">Are you a <label style={{color: '#8f60df'}}>patient</label>?</h3>
-                <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={error?.reportNo} onChange={(event) => handleChange(event)} />
+                <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={error?.reportNo} onChange={handleChange} />
                 <button className="button" onClick={fetchReport}>View Report</button>
             </div>
         </div>

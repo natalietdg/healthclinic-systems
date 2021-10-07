@@ -85,6 +85,8 @@ const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChang
                         <TextInput value={addressInput.street1} required error={!!error?.street1} name='street1' label={t('label.street1')} onChange={handleTextChange} />
                         <AlertBox error={error?.street1} name={t('label.street1')} />
                     </div>
+                </Row>
+                <Row>
                     <div style={{width: 'inherit'}}>
                         <TextInput value={addressInput.street2 || ''} error={!!error?.street2} name='street2' label={t('label.street2')} onChange={handleTextChange} />
                         <AlertBox error={error?.street2} name={t('label.street2')} />
@@ -110,6 +112,21 @@ const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChang
                             name="state"
                             defaultValue={addressInput.state}
                             label={t ('label.state')}
+                            onSelect={handleSelectChange}
+                        />
+                        <AlertBox error={error?.state} name={t('label.state')} />
+                    </div>
+                    
+                </Row>
+                <Row>
+                    <div style={{width: 'inherit'}}>
+                        <SelectInput 
+                            required
+                            selectOptions={statesPostCodes} 
+                            error={!!error?.state}
+                            name="state"
+                            defaultValue={addressInput.country}
+                            label={t ('label.country')}
                             onSelect={handleSelectChange}
                         />
                         <AlertBox error={error?.state} name={t('label.state')} />

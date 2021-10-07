@@ -1,6 +1,7 @@
 .select-input {
     width: auto;
-    font-size: 16px;
+    // font-size: 16px;
+    font-size: 22px;
     font-family: $token-font-family-text;
     width: auto;
     height: 80px;
@@ -17,7 +18,8 @@
     }
 
     &--title {
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 22px;
         font-weight: $token-font-weight-normal;
         margin: 10px 0px;
         text-align: left;
@@ -25,36 +27,43 @@
 
     &--input {
         width: inherit;
-        height: 30px;
+        // height: 30px;
+        height: 35px;
         border-radius: 8px;
-        border: 1px solid grey;
+        border: 0px solid grey;
+        box-shadow: 3px 3px 6px rgb(0 0 0 / 25%);
         padding: 0px 10px;
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 20px;
         font-family: $token-font-family-text;
       
         &:focus {
             outline: none;
-            border: 3px solid $token-button-primary-background-color-base;
+            // border: 2px solid $token-button-primary-background-color-base;
+            box-shadow: 3px 3px 6px $token-button-primary-background-color-base;
         }  
     }
 
     .error-input {
-        border: 3px solid $token-font-color-danger !important;
+        // border: 2px solid $token-font-color-danger !important;
+        box-shadow: 3px 3px 6px $token-font-color-danger !important;
         
         &:focus {
-             border: 3px solid $token-font-color-danger !important;
+             // border: 2px solid $token-font-color-danger !important;
+        box-shadow: 3px 3px 6px $token-font-color-danger !important;
         }
        
     }
    
 
     option {
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 20px;
         font-family: $token-font-family-text;
 
         &:hover {
             outline: none;
-            background-color: $token-button-primary-background-color-base;
+            background-color: $token-button-primary-background-color-base !important;
             color: white;
         }
     }

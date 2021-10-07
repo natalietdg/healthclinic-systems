@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import './search-input.scss';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
@@ -33,11 +33,11 @@ const SearchInput: React.FC<SearchInputProps> = ({searchOptions, label, name, re
                         })
                     }
                 </search> */}
-            <input className="search-input--input" type='search' list="options" defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
-            <datalist id="options">
-                {searchOptions.map((data)=> {
-                    return (
-                        <option key={data} value={data} />
+            <input className="search-input--input" type='search' list={name} defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
+            <datalist id={name}>
+                {searchOptions.map((data, index)=> {
+                    return (                       
+                        <option key={data} value={data}>{data}</option>
                         )
                 })}
             </datalist>

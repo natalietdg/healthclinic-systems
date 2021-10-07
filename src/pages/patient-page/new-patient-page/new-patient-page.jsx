@@ -8,7 +8,6 @@ const NewPatientPage = () => {
     const [ bg, setBg ] = useState({});
     const getBackground = async() => {
         const response = await fetchBackground();
-        console.log('response', response);
         setBg(response);
     }
 
@@ -24,7 +23,11 @@ const NewPatientPage = () => {
 
 
     return(
-        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}>  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/}
+        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}> {/* style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}} */}  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/} 
+            {/*backgroundImage: `url(${bg['vertical-bg-3']?.imageUrl})`,  backgroundPositionY: '1128px', backgroundSize: 'cover',  */}
+            {/* <div style={{borderBottom: '2px solid #CCCCCC', display: 'flex', justifyContent: 'center', width: '100%', height: '15%', alignContent: 'center', alignItems: 'center'}}>   
+                <h2>New Patient</h2>
+            </div> */}
             <div className="new-patient-page">
                 <Patient.PatientInformation onSubmit={submit} />
 

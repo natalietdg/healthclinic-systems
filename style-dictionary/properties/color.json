@@ -1,6 +1,7 @@
 {
     "color": {
         "primary": { 
+            "light": { "value": "#9d79da"},
             "base": { "value": "#8f60df" },
             "dark": { "value": "#6d3bc2" }
         },

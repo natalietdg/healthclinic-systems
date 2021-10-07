@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { isEmpty } from 'lodash';
-import { useHistory } from "react-router";
 import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { useHistory } from "react-router-dom";
 import { fetchBackground } from 'Services/background.services';
 import { Modal } from 'Shared/index';
 import { LoginForm } from 'Components/index';
@@ -15,7 +15,7 @@ interface HomePageProp {
 
 const HomePage: React.FC<HomePageProp> = ({}) => {
     const [ homePage, setHomePage ] = useState({ imageUrl: '' });
-    
+    let history = useHistory();
     const [ modalVisibility, setModalVisibility ] = useState(false);
 
     useEffect(()=> {
@@ -32,6 +32,9 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
     const signIn = (data: any) => {
         if (!isEmpty(data))  {
             //submit form data
+            console.log('data', data);
+            const url = "new-patient";
+            history.push(url);
             toggleModalVisibility(false);
         }
     }

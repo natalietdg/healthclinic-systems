@@ -1,13 +1,18 @@
 export const Links = [
     {
-        to: '/profile',
-        img: '/assets/images/user.png',
-        name: 'My Profile'
+        to: '/dashboard',
+        img: 'assets/images/users.png',
+        name: 'Home',
     },
     {
         to: '/patients',
         img: '/assets/images/users.png',
         name: 'Patients Database',
+    },
+    {
+        to: '',
+        img: '',
+        name: 'placeholder'
     },
     {
         to: '/analyze-data',
@@ -18,5 +23,10 @@ export const Links = [
         to: '/new-patient',
         img: '/assets/images/new-patient.png',
         name: 'Add New Patient'
-    }
+    },
+    {
+        to: '/profile',
+        img: '/assets/images/user.png',
+        name: 'My Profile'
+    },
 ]

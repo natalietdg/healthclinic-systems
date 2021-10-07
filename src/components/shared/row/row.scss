@@ -1,9 +1,14 @@
 .row {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
-    padding: 0px 10px 0px 10px;
+    // justify-content: flex-start;
+    padding: 10px;
     height: auto;
     align-items: center;
     width: 100%;
+
+    @media(min-width: $token-media-query-lg) {
+        flex-direction: row;
+    }
 }

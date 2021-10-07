@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { fetchBackground } from 'Services/background.services';
 import { Container } from 'Components/shared';
 import './dashboard.scss';
@@ -8,6 +9,7 @@ interface DashboardProps {
 }
 
 const Dashboard:React.FC<DashboardProps> = ({}) => {
+    let history = useHistory();
     const [ bg, setBg ] = useState<any>({});
     const [ user, setUser ] = useState<any>({name: 'Natalie'});
 
@@ -34,9 +36,9 @@ const Dashboard:React.FC<DashboardProps> = ({}) => {
                 <div>
                     <h3> Quick Access </h3>
                     <Container flexDirection="row">
-                        <button><img src="/assets/images/new-patient.png" />Add New Patient</button>
-                        <button><img src="/assets/images/users.png" />Patient Database</button>
-                        <button><img src="/assets/images/machine-learning.png" />Generate Report</button>
+                        <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/new-patient.png" />Add New Patient</button>
+                        <button onClick={()=> {history.push('/patients')}}><img src="/assets/images/users.png" />Patient Database</button>
+                        <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/machine-learning.png" />Generate Report</button>
                     </Container>
                 </div>
             </div>

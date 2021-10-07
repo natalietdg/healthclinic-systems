@@ -27,12 +27,15 @@ const Shell: React.FC<ShellProps> = ({routes}) => {
                 routes.private.map((route:any, index:number) => {
                     return (
                         <Route key={index} exact path={route.path}>
-                            {
-                                route.withNavbar && 
-                                <Navbar navbar={navbar} />
-                            }
+                            <div>
+                                {
+                                    route.withNavbar && 
+                                    <Navbar navbar={navbar} />
+                                }
                             
-                            {route.component}
+                                {route.component}
+                            </div>
+                           
                         </Route>
                     )
                 })

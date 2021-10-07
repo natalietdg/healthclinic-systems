@@ -21,11 +21,9 @@ interface CheckboxProps {
 const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, name, error, required, input, values, onCheck}) => {
     const [checkBoxInput, setCheckBoxInput ] = useState<any>({});
     useEffect(()=> {
-        console.log(input);
         if(input) setCheckBoxInput(input);
     },[input])
     const handleChecked = (event: any) => {
-        console.log('event', event);
         if (onCheck) onCheck(name, event.target?.name, event.target?.checked);
         // document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
     }

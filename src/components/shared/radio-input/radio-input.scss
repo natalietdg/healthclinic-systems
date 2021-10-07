@@ -14,19 +14,23 @@
     }
 
     &--title {
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 22px;
         font-weight: $token-font-weight-normal;
         margin: 10px 0px;
         text-align: left;
     }
 
     &--input {
-        width: inherit;
-        height: 30px;
+        // width: inherit;
+        width: 20px;
+        // height: 30px;
+        height: 35px;
         border-radius: 8px;
         border: 1px solid grey;
         padding: 0px 10px;
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 20px;
         font-family: $token-font-family-text;
 
         &:focus {
@@ -47,7 +51,8 @@
     &--label {
         padding: 10px 0px;
         font-family: $token-font-family-text;
-        font-size: 16px;
+        // font-size: 16px;
+        font-size: 20px;
     }
 
     &--values {

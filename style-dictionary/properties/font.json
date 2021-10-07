@@ -4,7 +4,7 @@
             "default": { "value": "#3D3D3D" },
             "success": { "value": "#10B9C4" },
             "warning": { "value": "FF6F31" },
-            "danger": { "value": "#C90303" }
+            "danger": { "value": "#ed6767" }
         },
         "family": {
             "heading": { "value": "'Bogue', serif" },

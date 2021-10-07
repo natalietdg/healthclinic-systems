@@ -15,10 +15,9 @@
     }
 
     img {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
         border-radius: 50%;
-        background: grey;
         padding: 10px 10px;
         margin: 10px 10px;
     }
@@ -28,20 +27,27 @@
         align-items: center;
         justify-content: center;
         width: inherit;
-        min-width: 100px;
-        height: 30px;
+        width: 130px;
+        height: 45px;
         border-radius: 8px;
         color: white;
         background-color: $token-button-primary-background-color-base;
         border: 0px solid grey;
-        font-size: 16px;
+        // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;
+        // box-shadow: 4px 3px 6px 1px rgb(128 105 169 / 60%);
+        box-shadow: 4px 4px 8px #48297d;
+        // font-size: 16px;
+        font-size: 20px;
         cursor: pointer;
-        font-weight: 200;
+        font-weight: 400;
         font-family: $token-font-family-text;
 
         &:hover, &:active {
+            background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
-            box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+            // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;
+            // box-shadow: 4px 4px 6px #48297d;
+            box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
             border: 0px solid white;
         }
     }

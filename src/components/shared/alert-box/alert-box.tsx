@@ -14,7 +14,12 @@ const AlertBox: React.FC<AlertBoxProps> = ({error, name}) => {
     },[]);
 
     useEffect(()=> {
+        console.log('error oobj', error);
+        
         if(error) {
+            // for(const key in error) {
+            //     error[key].
+            // }
             (document.querySelectorAll('.alert-box')).forEach(alertBox => (alertBox as HTMLElement).style.setProperty('--alert-box-display', 'block'));
         }
     },[error]);

@@ -88,7 +88,7 @@
         border: 1px solid rgb(0, 0, 0, 0);
         font-weight: 200;
         box-shadow: 3px 3px 6px rgb(72 41 125 / 75%), -2px -2px 6px #fff;
-    
+        margin: 20px;
         &:hover {
             // background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             background: $token-button-primary-background-color-base;

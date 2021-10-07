@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 23 Sep 2021 10:21:48 GMT
+ * Generated on Tue, 05 Oct 2021 14:47:03 GMT
  */
 
 export const ButtonPrimaryTextColorBase = "#ffffff";
@@ -18,6 +18,7 @@ export const ButtonSecondaryBorderRadius = "20px";
 export const ButtonSecondaryBorderWidth = "0px";
 export const ButtonSecondaryBorderColorBase = "#ffffff";
 export const ButtonSecondaryBorderColorHover = "#ffffff";
+export const ColorPrimaryLight = "#9d79da";
 export const ColorPrimaryBase = "#8f60df";
 export const ColorPrimaryDark = "#6d3bc2";
 export const ColorSecondaryBase = "#10b9c4";
@@ -32,7 +33,7 @@ export const ColorBlack = "#3d3d3d";
 export const FontColorDefault = "#3D3D3D";
 export const FontColorSuccess = "#10B9C4";
 export const FontColorWarning = "FF6F31";
-export const FontColorDanger = "#C90303";
+export const FontColorDanger = "#ed6767";
 export const FontFamilyHeading = "'Bogue', serif";
 export const FontFamilyText = "'Gill Sans MT', sans-serif";
 export const FontWeightNormal = "400";

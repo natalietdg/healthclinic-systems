@@ -1,0 +1,57 @@
+.progress-bar {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+  img {
+    width: calc(100% - 2px);
+    height:  calc(100% - 2px);
+    align-items: center;
+  }
+
+.circle {
+    border-radius: 50%;
+    z-index: 2;
+    width: 30px;
+    height: 30px;
+    background: #afafaf;
+    box-shadow: 4px 3px 6px 1px #525252;
+
+    &--done {
+        border-radius: 50%;
+        z-index: 2;        
+        width: 30px;
+        height: 30px;
+        background-color: $token-color-primary-base !important;
+        box-shadow: 4px 3px 6px 1px #533883;
+    }
+
+    &--current {
+        border-radius: 50%;
+        z-index: 2;        
+        width: 30px;
+        height: 30px;
+        background-color: $token-color-secondary-base !important;
+        box-shadow: 4px 3px 6px 1px #533883;
+    }
+}
+
+.line {
+    z-index: 0;
+    width: 20%;
+    height: 3px;
+    display: block;
+    background: #afafaf;
+
+    &--current {
+        z-index: 0;
+        width: 20%;
+        height: 3px;
+        display: block;
+        background: #afafaf;
+        background: $token-color-secondary-base !important;
+    }
+}

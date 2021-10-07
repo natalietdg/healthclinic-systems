@@ -14,6 +14,9 @@ import AddressInput from "./address-input";
 import SearchInput from "./search-input";
 import DateInput from "./date-input";
 import ImageUpload from "./image-upload";
+import Table from "./table";
+import ProgressBar from "./progress-bar";
+import TextArea from "./text-area";
 
 export {
     Modal,
@@ -31,5 +34,8 @@ export {
     AddressInput,
     SearchInput,
     DateInput,
-    ImageUpload
+    ImageUpload,
+    Table,
+    ProgressBar,
+    TextArea
 } 

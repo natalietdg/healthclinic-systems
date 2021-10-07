@@ -12,7 +12,7 @@ const Page: React.FC<PageProps> = ({children, visibility, numOfChildren}) => {
     },[])
 
     return(
-        <div>
+        <div style={{width: 'inherit', display: 'flex', flexDirection: 'row', justifyContent: 'center',  padding: '40px 0px'}}>
             {
                 children.map((child)=> {
                     if(child.props.index==visibility) {
