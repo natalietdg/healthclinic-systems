@@ -1,13 +1,15 @@
 import React from 'react';
 import './row.scss';
+import classNames from 'classnames';
 
 interface RowProps {
-    style?: any
+    style?: any;
+    className?: any;
 }
 
-const Row: React.FC<RowProps> = ({children, style}) => {
+const Row: React.FC<RowProps> = ({children, style, className}) => {
     return (
-        <div className="row" style={style}>
+        <div className={classNames("row", className)} style={style}>
             {children}
         </div>
     )

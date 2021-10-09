@@ -363,9 +363,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
                         <div className="header">   
                             <h2>Personal Information</h2>
                         </div>
-                        <div className="content">
-                            
-                            
+                        <div className="content">                            
                             <div className="divider--fifty">
                                 <Row>
                                     <div style={{width: 'inherit'}}>

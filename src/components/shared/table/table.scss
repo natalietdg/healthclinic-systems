@@ -1,9 +1,11 @@
 table {
     background-color: white;
     // box-shadow: 3px 3px 6px #b8b9be;
-    box-shadow: 10px 13px 8px #aab4e7, -3px -3px 6px #f1f1f1;
+    box-shadow: 8px 9px 9px #aab4e7, -3px -3px 6px #f1f1f1;
     border-radius: 20px;
     padding: 20px;
+    margin-top: 20px;
+    height: auto;
     table-layout: fixed;
     border-spacing: 0px;
 
@@ -39,7 +41,8 @@ table {
         // }
 
         &:hover {
-            box-shadow: 3px 3px 6px #b8b9be;
+            box-shadow: 3px 5px 5px #aab4e7, -3px -3px 6px #f1f1f1;
+            border-radius: 10px;
         }
     }
 
@@ -47,7 +50,7 @@ table {
         text-align: center;
         max-width: 300px;
         /* overflow: auto; */
-        border-top: 1px solid #b8b9be;
+        border-top: 1px solid #b8b9be38;
         overflow-wrap: break-word;
         padding: 20px;
         font-weight: 500;
