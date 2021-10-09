@@ -14,9 +14,10 @@ import { PatientInformationFormValidation } from './patient-information.validati
 
 interface PatientInformationProps {
     onSubmit: (data: any) => void;
+    data: any;
 }
 
-const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
+const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=> {
     const { t } = useTranslation();
     const [ weightStatus, setWeightStatus ] = useState('');
     const [ pageVisibility, setPageVisibility ] = useState(0);
@@ -81,7 +82,11 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
 
     const [maxSize, setMaxSize] = useState(0);
 
-    const [ patientInformation, setPatientInformation ] = useRecoilState<PatientInformationType>(patientInformationAtom);
+    const [ patientInformation, setPatientInformation ] = useState<any>(patientInformationAtom);
+
+    useEffect(()=> {
+        setPatientInformation(data);
+    },[data]);
 
     useEffect(()=> {
         if(patientInformation.weight> 0 && patientInformation.height > 0) {
@@ -106,7 +111,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
     useEffect(()=> {
         console.log('pageVisibility',pageVisibility);
     },[pageVisibility]);
-
 
 
     const nextPage = () => {
@@ -367,13 +371,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
                             <div className="divider--fifty">
                                 <Row>
                                     <div style={{width: 'inherit'}}>
-                                        <TextInput value={patientInformation?.firstName} required error={!!error?.firstName} name='firstName' label={t('label.firstName')} onChange={handleTextChange} />
-                                        <AlertBox error={error?.firstName} name={t('label.firstName')} />
+                                        <TextInput value={patientInformation?.fullName} required error={!!error?.fullName} name='fullName' label={t('label.fullName')} onChange={handleTextChange} />
+                                        <AlertBox error={error?.fullName} name={t('label.fullName')} />
                                     </div>
-                                    <div style={{width: 'inherit'}}>
+                                    {/* <div style={{width: 'inherit'}}>
                                         <TextInput value={patientInformation?.lastName} required error={!!error?.lastName} name='lastName' label={t('label.lastName')} onChange={handleTextChange} />
                                         <AlertBox error={error?.lastName} name={t('label.lastName')} />
-                                    </div>
+                                    </div> */}
                                 </Row>
                                 <Row>
                                     <div style={{width: 'inherit'}}>
@@ -399,17 +403,22 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
                                             {
                                                 name: 'chinese',
                                                 label: t('option.chinese'),
-                                                value: 'chinese'
+                                                value: 'CH'
                                             },
                                             {
                                                 name: 'malay',
                                                 label: t('option.malay'),
-                                                value: 'malay'
+                                                value: 'MA'
                                             },
                                             {
                                                 name: 'indian',
                                                 label: t('option.indian'),
-                                                value: 'indian'
+                                                value: 'IN'
+                                            },
+                                            {
+                                                name: 'other',
+                                                label: t('option.other'),
+                                                value: 'OT'
                                             }
                                         ]} 
                                             multiple = {false}
@@ -429,12 +438,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
                                                 {
                                                     name: 'male',
                                                     label: t('option.male'),
-                                                    value: 'male'
+                                                    value: 'M'
                                                 },
                                                 {
                                                     name: 'female',
                                                     label: t('option.female'),
-                                                    value: 'female'
+                                                    value: 'F'
                                                 }
                                             ]} 
                                             defaultValue={patientInformation.gender}
@@ -1429,8 +1438,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit})=> {
                             <div className="divider--full">
                                 {/* <h3>{`${t('label.diagnosis')} & ${t('label.comments')}`}</h3> */}
                                 {
-                                    patientInformation?.comments.map((tempComment: any, index: any)=> {
-                                        return <Row index={index}>
+                                    patientInformation?.comments && patientInformation?.comments.map((tempComment: any, index: any)=> {
+                                        return <Row key={index}>
                                             <div style={{width: 'inherit'}}>
                                                 <TextArea value={tempComment?.diagnosis} required error={!!error[`comments[${index}]`]?.diagnosis} name={`comments.diagnosis[${index}]`} label={`${t('label.diagnosis')}        Date: ${tempComment?.created}`} onChange={handleCommentChange} />
                                                 <AlertBox error={error[`comments[${index}]`]?.diagnosis} name={t('label.diagnosis')} />

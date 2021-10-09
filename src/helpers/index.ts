@@ -1,4 +1,4 @@
-import { encode } from "./enc";
+import { encode, decode } from "./enc";
 import { 
     Gender, 
     Race, 
@@ -8,6 +8,7 @@ import {
 
 export { 
     encode, 
+    decode,
     Gender, 
     Race,
     State, 

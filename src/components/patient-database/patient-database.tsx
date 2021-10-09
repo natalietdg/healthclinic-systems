@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { isEmpty } from 'lodash';
+import { encode, decode } from 'Helpers/';
 import { Table, Row, TextInput, Page } from 'Components/shared';
 import classNames from 'classnames';
 import PagePane from 'Components/shared/page/page-pane';
@@ -19,23 +20,35 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
     const [ hiddenLastPartButtons, setHiddenLastPartButtons ] = useState<any>([]);
 
     const [maxSize, setMaxSize] = useState(0);
-    const [ pageVisibility, setPageVisibility ] = useState(5);
+    const [ pageVisibility, setPageVisibility ] = useState(0);
 
     const columns = [
         {
             colName: 'ID'
         },
         {
-            colName: 'First Name'
+            colName: 'Full Name'
         },
         {
-            colName: 'Last Name'
+            colName: 'Race',
         },
         {
-            colName: 'Last Edited'
+            colName: 'Gender',
+        },
+        {
+            colName: 'Date of Birth'
         },
         {
             colName: 'IC',
+        },
+        {
+            colName: 'Email',
+        },
+        {
+            colName: 'Phone Number',
+        },
+        {
+            colName: 'Report',
         },
         {
             colName: ''
@@ -75,13 +88,18 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
         var tempArrayForCategorizing: any = [];
 
         filteredPatientData.map((filteredData: any, index: any)=> {
+            console.log('filteredData', filteredData);
             let patientData = {
-                ID: filteredData.ID,
-                'First Name':  <a href="/new-patient">{filteredData['First Name']}</a>,
-                'Last Name': <a href="/new-patient">{filteredData['Last Name']}</a>,
-                'IC': filteredData['IC'],
-                'Last Edited': filteredData['Last Edited'],
-                'Diagnosis': filteredData['Diagnosis'],
+                'ID': filteredData.id,
+                'Email': filteredData.email,
+                'Full Name':  <a href={`/patient/${encode(filteredData.id)}`}>{filteredData.fullName}</a>,
+                "Date of Birth": filteredData.dateOfBirth,
+                'IC': filteredData.ic,
+                "Phone Number": filteredData.phoneNumber,
+                "Race": filteredData.race,
+                "Gender": filteredData.gender,
+                "Report": <a href={`/report/${filteredData.reportID}`}>View Report</a>,
+                // 'Diagnosis': filteredData['Diagnosis'],
                 "": <div style={{display: 'flex'}}>
                         <button onClick={showOptions}>
                             <img src="/assets/images/menu-vertical.png" />
@@ -93,12 +111,14 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
                     </div>
             };
             tempArrayForCategorizing.push(patientData);
+
             if((index+1)%10==0 || (index+1)==filteredPatientData.length) {
                 filteredDataArray.push(tempArrayForCategorizing);
                 tempArrayForCategorizing = [];
             }
-        })
-
+        });
+        console.log('filteredDataArray', filteredDataArray);
+        console.log('filteredPatientData', filteredPatientData);
         if(filter!='') setPageVisibility(0);
         setMaxSize(filteredDataArray.length);
         setFilteredData(filteredDataArray);
@@ -158,7 +178,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
                     }
                     
                 }
-                else if (pageVisibility >= 3 && pageVisibility < (pagePaginationArray.length - 3)) {
+                else if (pageVisibility >= 3 && pageVisibility < (pagePaginationArray.length - 5)) {
                     if (x < 2) {
                         pagination.push(pagePaginationArray[x]);
                     } 
@@ -186,7 +206,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
                     if (x < 2) {
                         pagination.push(pagePaginationArray[x]);
                     } 
-                    else if(((pagePaginationArray.length-1) - x) < 4) {
+                    else if(((pagePaginationArray.length-1) - x) < 3) {
                         pagination.push(pagePaginationArray[x]);
                     }
                     else {
@@ -198,45 +218,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
                 }
             }
         }
-
-        // pagePaginationArray.map((prop: any, index: any)=> {
-        //     console.log('index', index);
-        //     if(pagePaginationArray.length < 6) {
-        //        pagination.push(prop);      
-        //     }
-        //     else if (pagePaginationArray.length > 5) {
-        //         if ((pagePaginationArray.length - pageVisibility) < 3) {
-        //             console.log('index1', index);
-        //             pagination.push(prop);
-        //         }
-        //         else {
-        //             if (index < 1 || index==(pagePaginationArray.length - 1 )|| index == pageVisibility || (pageVisibility > index && ((pageVisibility - index) < 3)) || (index - pageVisibility) < 3) {
-        //                 pagination.push(prop);
-        //                 console.log('index2', index);
-        //             }
-        //             else if (index < pageVisibility) {
-        //                 hiddenFirstPartOfArray.indexes.push(index);
-        //                 hiddenFirstPartOfArray.indexArray.push(prop);
-        //                 console.log('index3', index);
-        //             }
-        //             else {
-        //                 hiddenLastPartOfArray.indexes.push(index);
-        //                 hiddenLastPartOfArray.indexArray.push(prop);
-        //                 console.log('index4', index);
-        //             }
-        //         }
-        //     }
-        // })
-
-
-        // if(hiddenFirstPartIndexes.length != 0) {
-        //     pagination.push(hiddenFirstPartOfArray);
-        //     console.log('pagination2', pagination);
-        // }
-
-        // if(hiddenLastPartIndexes.length != 0)  {
-        //     pagination.push(hiddenLastPartOfArray);
-        //     console.log('pagination3', pagination);
         
         if(hiddenFirstPartIndexes.length !=0) setHiddenFirstPartButtons(hiddenFirstPartIndexes);
         if(hiddenLastPartIndexes.length !=0) setHiddenLastPartButtons(hiddenLastPartIndexes);
@@ -276,15 +257,17 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
     useEffect(()=> {
         updatePaginationAndFilter();
     },[filter]);
+
     useEffect(()=> {
         updatePaginationAndFilter();
     },[maxSize]);
+
     useEffect(()=> {
         updatePaginationAndFilter();
     },[pageVisibility]);
 
     useEffect(()=> {
-        updatePaginationAndFilter();
+            updatePaginationAndFilter();
     },[patients]);
 
     const showHiddenFirstPartButtons = () => {
@@ -314,13 +297,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
                 <button><img src="/assets/images/left.png" /></button>
                 <div>
                    {
-                       pagePagination != [] && pagePagination.length < 6 && 
-                       pagePagination.map((prop: any)=> {
-                           return prop.props;
-                       })
-                   }
-                   {
-                       pagePagination != [] &&  pagePagination.length > 5 &&
+                       pagePagination != [] &&  
                        pagePagination.map((prop: any, index: any)=> {
                             return prop.props;                  
                        })

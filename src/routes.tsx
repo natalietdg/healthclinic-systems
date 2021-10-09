@@ -39,6 +39,13 @@ const privateRoutes = [
         path: '/patients',
         component: <Patient.PatientDatabase />,
         withNavbar: true
+    },
+    {
+        
+        path: '/patient/:id',
+        component: <Patient.NewPatientPage />,
+        withNavbar: true
+       
     }
 ]
 
