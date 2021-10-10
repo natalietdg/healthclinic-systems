@@ -46,9 +46,9 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
         // selector.checked=!(selector.checked);
         // checked.checked = true;
         // console.log('defaultValue',defaultValue);
-        if(defaultValue==event.target.value) {
-            event.target.value = '';
-        }
+        // if(defaultValue==event.target.value) {
+        //     event.target.value = '';
+        // }
 
         if (onSelect) onSelect(name,  event.target.value);
 

@@ -17,7 +17,31 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     // console.log('location', location);
     // const query = useQuery();
     // const ref = query.get('ref');
-    const pageName = location.pathname.split('/')[1];
+    var name = '';
+    
+    const path = location.pathname.split('/')[1];
+
+    const removeItem = () => {
+        const patient = localStorage.getItem('patient');
+        const fullName = localStorage.getItem('fullName');
+        if(patient) localStorage.removeItem('patient');
+        if(fullName) localStorage.removeItem('patient')
+    }
+
+    if(typeof(Storage) !== 'undefined' && path == 'patient') {
+
+        console.log('storage', localStorage);
+        const values = Object.keys(localStorage);
+        console.log('values', values);
+        const response = localStorage.getItem("fullName");
+        console.log('response storage', response);
+        if (response != null || response != undefined) name = response;
+    }
+    else {
+        console.log('error in storage');
+    }
+
+    const pageName = name != ''? name : t(`path.${path}`);
     // console.log('ref', ref);
     // console.log('ref', query);
     return (       
@@ -27,8 +51,8 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
                 <ul className="link-list">
                     {
                         Links.map((link: any, index:number)=> {
-                            return (link.name=='placeholder')? <h3>{t(`path.${pageName}`)}</h3> : 
-                            <li key={index}><Link key={index} to={link.to}><span className="span">{link.name}</span></Link></li>
+                            return (link.name=='placeholder')? <h3>{pageName}</h3> : 
+                            <li key={index}><Link key={index} to={link.to} onClick={removeItem} ><span className="span">{link.name}</span></Link></li>
                         })
                     }
                 </ul>

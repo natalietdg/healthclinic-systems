@@ -38,9 +38,9 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
         
     }
 
-    useEffect(()=> {
-        console.log('filteredData', filteredData);
-    },[filteredData])
+    // useEffect(()=> {
+    //     console.log('filteredData', filteredData);
+    // },[filteredData])
 
     return (
         <table style={{width: width? width: '80%'}}>

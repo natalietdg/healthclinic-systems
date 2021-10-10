@@ -17,6 +17,7 @@ import ImageUpload from "./image-upload";
 import Table from "./table";
 import ProgressBar from "./progress-bar";
 import TextArea from "./text-area";
+import Button from "./button";
 
 export {
     Modal,
@@ -37,5 +38,6 @@ export {
     ImageUpload,
     Table,
     ProgressBar,
-    TextArea
+    TextArea,
+    Button
 } 

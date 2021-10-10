@@ -9,9 +9,9 @@ interface ShellProps {
 
 const Shell: React.FC<ShellProps> = ({routes}) => {
     const [ navbar, setNavbar ] = useState({ 'side-bar': {}, 'side-bar-blurred': {}});
-    
+
     useEffect(()=> {
-        getBackground();
+        getBackground();        
     },[])
 
     const getBackground = async() => {

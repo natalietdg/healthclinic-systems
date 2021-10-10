@@ -15,11 +15,13 @@ import { PatientInformationFormValidation } from './patient-information.validati
 interface PatientInformationProps {
     onSubmit: (data: any) => void;
     data: any;
+    comments: any;
 }
 
-const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=> {
+const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, comments})=> {
     const { t } = useTranslation();
     const [ weightStatus, setWeightStatus ] = useState('');
+    const [clinicComments, setClinicComments ] = useState([]);
     const [ pageVisibility, setPageVisibility ] = useState(0);
     const healthHistoryValues: any = healthHistoryValuesFunction();
     const cigarettesPerDayValues: any = cigarettesPerDayValuesFunction();
@@ -30,6 +32,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
     const yearsOption: any = yearFunction();
     const lastHundredYears = lastHundredYearsFunction();
     const averageAlcoholConsumptionValues: any = averageAlcoholConsumptionValuesFunction();
+    const [maxSize, setMaxSize] = useState(0);
+    const [ patientInformation, setPatientInformation ] = useState<any>(patientInformationAtom);
+
     const pages = [
         {
             name: 'personalInformation',
@@ -80,12 +85,17 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
         }
     ]
 
-    const [maxSize, setMaxSize] = useState(0);
-
-    const [ patientInformation, setPatientInformation ] = useState<any>(patientInformationAtom);
-
     useEffect(()=> {
-        setPatientInformation(data);
+
+        if(!isEmpty(data) && !data.error) {
+            console.log('data', data);
+            setPatientInformation(data);
+        } 
+        else if(localStorage.getItem('patient')) {
+            var patientData = JSON.parse(localStorage.getItem('patient')||'');
+            console.log('patientData', patientData);
+            setPatientInformation(patientData);
+        }
     },[data]);
 
     useEffect(()=> {
@@ -100,6 +110,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
 
     useEffect(()=> {
         console.log('patientInformaiton', patientInformation);
+        
     },[patientInformation])
 
     const [ error, setError ] = useState<any>({});
@@ -132,8 +143,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
                 abortEarly: true,
                 stripUnknown: false
             });
-            console.log(moment(patientInformation.dateOfBirth));
-            console.log('value', value);
+            // console.log(moment(patientInformation.dateOfBirth));
+            // console.log('value', value);
     
             onSubmit(value);
 
@@ -246,11 +257,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
     }
 
     const handleSelectRadio = (name: string, value: any) => {
-        // value = (value=='true' || value=='false')? (value==='true'): value;
+        value = (value=='true' || value=='false')? (value==='true'): value;
         console.log('name', name);
         console.log('value', value);
         if(name.indexOf('.')!==-1) {
             let subName = name.split('.')[1]
+            console.log('subName', subName);
             name = name.split('.')[0];
             setPatientInformation({...patientInformation, [name]: {
                 ...patientInformation[name],
@@ -391,12 +403,18 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
                                         <AlertBox error={error?.phoneNumber} name={t('label.phoneNumber')} />
                                     </div>
                                 </Row>
-                                {/* <Row>
+                                <Row>
+                                    <div style={{width: 'inherit'}}>
+                                        <TextInput value={patientInformation?.email} required error={!!error?.email} name='email' label={t('label.email')} onChange={handleTextChange} />
+                                        <AlertBox error={error?.email} name={t('label.email')} />
+                                    </div>
+                                </Row>
+                                <Row>
                                 <div style={{width: 'inherit'}}>
                                         <DateInput value={patientInformation?.dateOfBirth} required error={!!error?.dateOfBirth} name='dateOfBirth' label={t('label.dateOfBirth')} onChange={handleTextChange} />
                                         <AlertBox error={error?.dateOfBirth} name={t('label.dateOfBirth')} />
                                     </div>
-                                </Row> */}
+                                </Row>
                                 <Row>
                                     <Col style={{width: 'inherit'}}>
                                         <RadioInput values={[
@@ -1028,7 +1046,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
                                 </Row> */}
                                 
                                 {
-                                    (patientInformation.weight!=0 && patientInformation.height!=0) &&
+                                    (weightStatus) &&
                                     <Row>
                                         <div style={{display: 'flex', width: 'inherit', flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>
                                         <h3>BMI</h3>
@@ -1386,30 +1404,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data})=
                                         <AlertBox error={error?.lifestyleInformation?.fruits} name={t('label.fruits')} />
                                     </div>
                                 </Row>
-                            {/* <Table 
-                                columns = {
-                                    [
-                                        {
-                                            colName: 'haha'
-                                        },
-                                        {
-                                            colName: 'hehe'
-                                        }
-                                    ]
-                                }
-                                data = {
-                                    [
-                                        {
-                                            haha: 'blahasdasdsdasdasdassa',
-                                            hehe: 'ooh'
-                                        },
-                                        {
-                                            haha: 'bah bah1111111111111 11111111111111111',
-                                            hehe: '2'
-                                        },
-                                    ]
-                                }
-                            /> */}
                             </div>
                         </div>
                     </div>

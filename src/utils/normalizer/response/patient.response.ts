@@ -2,10 +2,17 @@ import { omitBy, isNil, isUndefined } from 'lodash';
 
 const PatientResponse = (data:any) => {
     return omitBy({
-        patientID: data.patientID,
-        fullName: data.fullName,
+        id: data.patientID,
+        name: data.fullName,
         gender: data.gender,
-        dob: data.dob,
+        email: data.email,
+        dob: data.dateOfBirth,
+        race: data.race,
+        image: data.profilePicBlob,
+        ic: data.ic,
+        phone: data.phone,
+        height: data.height,
+        weight: data.weight
 
     }, (value) => isNil(value) || isUndefined(value))
 }

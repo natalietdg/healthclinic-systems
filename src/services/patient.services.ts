@@ -14,6 +14,24 @@ export const updatePatientInformation = () => {
 
 }
 
+export const fetchComments = async(patientID: any) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+
+    try {
+        const response = await axios({
+            method:'GET',
+            url: `http://${url}:${port}/patients/${patientID}`,
+            responseType: 'json'
+        });
+
+        return response.data;
+    }
+    catch(err) {
+
+    }
+}
+
 export const fetchPatientInformation = async(patientID: any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;

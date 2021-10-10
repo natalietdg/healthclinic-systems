@@ -10,12 +10,13 @@ import { useParams } from 'react-router-dom';
 const NewPatientPage = () => {
     const [ bg, setBg ] = useState({});
     const [patientInformation, setPatientInformation] = useState({});
-    const query = useQuery();
+
     const { id } = useParams();
     console.log('id', id);
     console.log('decode(id)', decode(id));
     const patientID = id? decode(id): null;
     console.log('patientID', patientID);
+    
     const getBackground = async() => {
         const response = await fetchBackground();
         setBg(response);
@@ -28,6 +29,8 @@ const NewPatientPage = () => {
 
     const fetchPatient= async(patientID)=> {
         const response = await fetchPatientInformation(patientID);
+        
+        localStorage.setItem("fullName", response.fullName);
         setPatientInformation(response);
     }
 

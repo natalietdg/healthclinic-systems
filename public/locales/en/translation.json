@@ -2,8 +2,9 @@
     "label.staffID": "Staff ID",
     "label.password": "Password",
     "label.confirmPassword": "Confirm Password",
-    "label.fullName": "First Name",
-    "label.ic": "IC No.",
+    "label.fullName": "Full Name",
+    "label.ic": "IC",
+    "label.id": "ID",
     "label.race": "Race",
     "label.gender": "Gender",
     "label.male": "Male",
@@ -76,6 +77,9 @@
     "label.overweight":"Overweight",
     "label.moderate-obese":"Moderately Obese",
     "label.severely-obese": "Severely Obese",
+    "label.email": "Email",
+    "label.dob": "Date of Birth",
+    "label.reportID": "Report",
 
     "option.chinese": "Chinese",
     "option.malay": "Malay",
@@ -100,7 +104,6 @@
     "option.seven": "7",
     "option.eight": "8",
     "option.eightOrMore": "8+",
-    "option.other": "Other",
 
     "error.pattern": "{{field}} should match the required pattern.",
     "error.required": "{{field}} is required.",
@@ -133,5 +136,7 @@
 
     "path.new-patient": "New Patient",
     "path.dashboard": "",
-    "path.patients": "Patient Database"
+    "path.patients": "Patient Database",
+    "path.patient": "{{patient}}",
+    "path.profile": "{{profile}}"
 }
