@@ -4,12 +4,13 @@ import Navbar from 'Components/navbar';
 import { fetchBackground } from 'Services/background.services';
 
 interface ShellProps {
-    routes: any
+    routes: any;
 }
 
 const Shell: React.FC<ShellProps> = ({routes}) => {
-    const [ navbar, setNavbar ] = useState({ 'side-bar': {}, 'side-bar-blurred': {}});
 
+    const [ navbar, setNavbar ] = useState({ 'side-bar': {}, 'side-bar-blurred': {}});
+    
     useEffect(()=> {
         getBackground();        
     },[])
@@ -22,7 +23,7 @@ const Shell: React.FC<ShellProps> = ({routes}) => {
     return (
         <Switch>
             {
-                Array.isArray(routes.private) && 
+                Array.isArray(routes.private) &&
 
                 routes.private.map((route:any, index:number) => {
                     return (

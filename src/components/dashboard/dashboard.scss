@@ -17,10 +17,34 @@
         align-items: center;
         flex-direction: column;
 
+        button {
+            width: 15vw;
+            height: 10vw;
+            background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
+            color: $token-button-primary-text-color-hover;
+            
+            box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
+            border: 0px;
+            border-radius: 20px;
+    
+        }
+    
+        img {
+            width: 50px;
+            height: 50px;
+            padding: 0px 5px;
+        }
+
         h3 {
             font-family: $token-font-family-heading;
             font-size: $token-font-size-xl;
         }
+
+        h2 {
+            font-family: $token-font-family-heading;
+            font-size: $token-font-size-xl;
+        }
+        
     }
     
 }

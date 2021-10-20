@@ -2,17 +2,23 @@ import { isNil, omitBy } from 'lodash';
 
 const ValidationException = (error: any) => {
     if (isNil(error)) return false;
-
     var { path, message, type } = error;
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';
-    if (path.indexOf('.')!==-1) subPath = path.split('.')[1];
-      
     const [first, ...last] = message.split(' ');
-   errorMessage = subPath != '' ? subPath[0].toUpperCase() + subPath.substring(1):
-    path[0].toUpperCase() +path.substring(1);
-    errorMessage +=  " " + last.join(' ') + '.';
+  console.log('message'), message;
+    console.log('path', path);
+    if (path.indexOf('.')!==-1 && path != undefined) {
+        console.log('??');
+        subPath = path.split('.')[1];
+        path[0].toUpperCase() +path.substring(1);
+        errorMessage = subPath != '' ? subPath[0].toUpperCase() + subPath.substring(1):
+        errorMessage +=  " " + last.join(' ') + '.';
+    } 
+ 
+    // console.log('path', path);
+      
     // if (type?.includes('empty') || type?.includes('required')) {
     //     errorMessage = 'error.required';
     // }
@@ -31,6 +37,10 @@ const ValidationException = (error: any) => {
     // else {
     //     errorMessage = 'error.validationFailed';
     // }
+  
+    if (path=="password") {
+        return omitBy({ path, refPath, value: "Password does not match"}, isNil);
+    }
 
     if (path) {
         return omitBy({ path, refPath, value: errorMessage, message }, isNil);

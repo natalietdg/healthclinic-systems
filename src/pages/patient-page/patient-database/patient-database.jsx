@@ -11,23 +11,22 @@ const PatientDatabase = () => {
         const response = await fetchBackground();
         setBg(response);
     }
+
     const fetchPatients = async() => {
         const response = await fetchPatientList();
         console.log('response', response);
         setPatientList(response);
     }
+
     useEffect(()=> {
         getBackground();
         fetchPatients();
     },[])
 
-
     const submit = async(patientInformation) => {
         const response = await savePatientInformation(patientInformation);
         console.log('response', response);
     }
-    
-     
 
     // const tableData = 
     //     [

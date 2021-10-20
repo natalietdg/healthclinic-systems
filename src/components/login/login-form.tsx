@@ -7,15 +7,15 @@ import { useTranslation } from 'react-i18next';
 import { isEmpty } from 'lodash';
 
 interface LoginFormProp {
+    loginError: any;
     onConfirm: (data: any) => void;
 }
 
-const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
+const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
     const { t } = useTranslation();
     const initialLoginInput = {
-        staffID: '',
+        username: '',
         password: '',
-        confirmPassword: ''
     }
 
     const [ loginInput, setLoginInput ] = useState(initialLoginInput);
@@ -25,6 +25,10 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
         setLoginInput({...loginInput, [name]: value});
         setError({});
     }
+
+    useEffect(()=> {
+        if(loginError != {}) setError({ login: loginError});
+    },[loginError])
 
     const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -42,15 +46,15 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
         }
         catch(err) {
             let { path, message, type }:any = err;
-          
+        console.log('path', path);
             let value = '';
             if (message.includes('Passwords') && message.includes('match')) {
                 setError({...error, [path]: message });
             }
             else {
 
-                ({path, value} = errorHandler.validation(err));
-                
+                ({path, value} = errorHandler.validation(err)) || {};
+                console.log('path', path);
                 if (path.indexOf('.')!==-1) {
                     const str = path.split('.');
                     path = str[0];
@@ -76,21 +80,21 @@ const LoginForm: React.FC<LoginFormProp> = ({onConfirm}) => {
 
     return (
         <div>
+
             <form className="login-form">
                 <div className="form">
                     <h3 className="">Staff Sign In</h3>
                     <div className="div">
-                        <TextInput required error={!!error.staffID} label={t('label.staffID')} name='staffID' value={loginInput.staffID} onChange={handleChange} />
-                        <AlertBox error={error?.staffID} name={t('label.staffID')} />
+                        <AlertBox error={error?.login} name={t('label.login')} />
                     </div>
                     <div className="div">
-                        <TextInput required error={!!error.password} label={t('label.password')} name='password' value={loginInput.password} onChange={handleChange}/>
+                        <TextInput required error={!!error.username} label={t('label.username')} name='username' value={loginInput.username} onChange={handleChange} />
+                        <AlertBox error={error?.username} name={t('label.username')} />
+                    </div>
+                    <div className="div">
+                        <TextInput type="password" required error={!!error.password} label={t('label.password')} name='password' value={loginInput.password} onChange={handleChange}/>
                         <AlertBox error={error?.password} name={t('label.password')} />
-                    </div>  
-                    <div className="div">
-                        <TextInput required error={!!error.confirmPassword} label={t('label.confirmPassword')} name='confirmPassword' value={loginInput.confirmPassword} onChange={handleChange}/>
-                        <AlertBox error={error?.confirmPassword} name={t('label.confirmPassword')} />
-                    </div>
+                    </div> 
                 </div>
                 <div>
                     <button className="button" onClick={(event) => handleConfirm(event)}> Sign In </button>

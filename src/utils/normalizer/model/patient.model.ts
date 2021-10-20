@@ -8,7 +8,7 @@ const PatientModel = (data:any) => {
         race: data.race,
         reportID: data.report_id,
         patientID: id,
-        profilePicBlob: data.image,
+        profilePicBlob: data?.image,
         email: data.email,
         ic: data.ic,
         phoneNumber: data.phone,
@@ -16,6 +16,12 @@ const PatientModel = (data:any) => {
         weight: data.weight? data.weight: '',
         fullName: data.name,
         gender: data.gender,
+        comments: data.comments? data.comments: [],
+        healthHistory: data?.healthHistory || {},
+        familyHistory: data?.familyHistory || {},
+        lifestyleInformation: data?.lifestyleInformation || {},
+        diagnosisPicBlobArray: data?.comments?.image || [],
+        reasonForConsultation: data?.reasonForConsultation || '',
     }, (value) => isNil(value) || isUndefined(value));
 }
 

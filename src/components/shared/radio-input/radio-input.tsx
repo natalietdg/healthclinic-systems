@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './radio-input.scss';
 
 interface RadioInputProps {
-    defaultValue?: string;
+    defaultValue?: any;
     label: string;
     name: string;
     placeholder?:string;
@@ -17,6 +17,7 @@ interface RadioInputProps {
 const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, placeholder, error, required, values, multiple, onSelect}) => {
     const [ currentValue, setCurrentValue] = useState<any>('');
     useEffect(()=> {
+
         // console.log('values length', values.length);
         // if(values.length > 3) {
         //     (document.querySelector(`div[name='${name}'].radio-input--values`) as HTMLInputElement).style.flexDirection = 'column';
@@ -31,7 +32,12 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
         values.map((value:any)=> {
            
             if((value.value)==defaultValue) {
+                console.log('value', value);
+                console.log('defaultValue', defaultValue);
                 (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = true;
+            }
+            else {
+                (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = false;
             }
         })
     },[defaultValue])
@@ -65,7 +71,7 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
     return(
         <div className="radio-input">
             <h4 className={classNames("radio-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
-            <div name={name} className={"radio-input--values"}>
+            <div key={name} className={"radio-input--values"}>
                 {
                     values.map((value:any, index:number) => {
                         return  <div key={index} style={{padding: '0px 10px 0px 0px', display: 'flex'}}>

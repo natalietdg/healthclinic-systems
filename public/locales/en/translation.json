@@ -80,6 +80,9 @@
     "label.email": "Email",
     "label.dob": "Date of Birth",
     "label.reportID": "Report",
+    "label.username": "Username",
+    "label.comment": "Comment",
+    "label.login": "login",
 
     "option.chinese": "Chinese",
     "option.malay": "Malay",
@@ -135,7 +138,7 @@
     "question.fruits": "Do you consume fruits fewer than 4 times per week on average?",
 
     "path.new-patient": "New Patient",
-    "path.dashboard": "",
+    "path.home": "",
     "path.patients": "Patient Database",
     "path.patient": "{{patient}}",
     "path.profile": "{{profile}}"

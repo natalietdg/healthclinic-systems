@@ -1,19 +1,19 @@
-import { omitBy, isNil, isUndefined } from 'lodash';
+import { omitBy, isNil, isUndefined, isEmpty } from 'lodash';
 
 const PatientResponse = (data:any) => {
     return omitBy({
-        id: data.patientID,
+        id: data.patientID || undefined,
         name: data.fullName,
-        gender: data.gender,
-        email: data.email,
-        dob: data.dateOfBirth,
-        race: data.race,
-        image: data.profilePicBlob,
-        ic: data.ic,
-        phone: data.phone,
-        height: data.height,
-        weight: data.weight
-
+        gender: data.gender || undefined,
+        email: data.email || undefined,
+        dob: data.dateOfBirth || undefined,
+        race: data.race || undefined,
+        image: [data.profilePicBlob? data.profilePicBlob: "http://127.0.0.1:8000/images/1/"] ,
+        ic: data.ic || undefined,
+        phone: data.phoneNumber || undefined ,
+        height: data.height || undefined ,
+        weight: data.weight || undefined,
+        comments: !isEmpty(data.comments)? data.comments: undefined
     }, (value) => isNil(value) || isUndefined(value))
 }
 

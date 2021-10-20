@@ -140,6 +140,34 @@
             box-shadow: inset 4px 3px 6px 1px #0a6e74, inset -2px -2px 6px #83e3e9;
         }
     }
+    .delete {
+        background-color: $token-font-color-danger;
+        width: 130px;
+        height: 45px;
+        border-radius: 10px;
+        margin: 20px 10px;
+        font-family: $token-font-family-text;
+        color: $token-button-primary-text-color-base;
+        font-size: $token-font-size-md;
+        border: 0px solid white;
+        font-weight: 400;
+        
+        // box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+        box-shadow: 4px 3px 6px 1px #7a2828, 0px 0px 3px 6px #ffffff;
+        // border: 1px solid #d1d9e6;
+        // right: 3%;
+        // &:hover {
+        //     background-color: $token-color-white;
+        //     box-shadow:inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff;
+        // }
+        &:hover {
+            background: linear-gradient(153.24deg, $token-font-color-danger 12.84%, #e72424 85.76%);
+            color: $token-button-primary-text-color-hover;
+            // box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.25);
+            // box-shadow: 4px 3px 6px 1px #0a6e74, 0px 0px 3px 6px #ffffff;
+            box-shadow: inset 4px 3px 6px 1px #7a2828, inset -2px -2px 6px #e72424;
+        }
+    }
 }
 
 .scale {
@@ -209,4 +237,6 @@
         padding: 10px;
         border-radius: 10px;
     }
+
+   
 }

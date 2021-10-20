@@ -10,8 +10,9 @@ interface DashboardProps {
 
 const Dashboard:React.FC<DashboardProps> = ({}) => {
     let history = useHistory();
+    console.log('history',);
     const [ bg, setBg ] = useState<any>({});
-    const [ user, setUser ] = useState<any>({name: 'Natalie'});
+    const [ user, setUser ] = useState<any>('Natalie');
 
     const fetchProfile = () => {
 
@@ -25,14 +26,15 @@ const Dashboard:React.FC<DashboardProps> = ({}) => {
 
     useEffect(()=> {
         getBackground();
+        const username = localStorage.getItem('user');
+        setUser(username);
     },[])
 
     
     return (
         <div className="dashboard-bg" style={{backgroundImage: `url(${bg['vertical-bg']?.imageUrl})`}}>
             <div className="dashboard">
-                <h3>Application for Healthcare Intervention</h3>
-                <p>Hi, {user.name}</p>
+                <h2>Hi, <span style={{ color: 'purple', borderBottom: '1px solid purple'}}> {user}</span> </h2>
                 <div>
                     <h3> Quick Access </h3>
                     <Container flexDirection="row">

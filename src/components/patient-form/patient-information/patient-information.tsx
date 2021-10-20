@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { useTranslation } from 'react-i18next';
-import { PatientInformationType, patientInformationAtom } from 'Recoil/patient.atom';
+import { PatientInformationType, patientInformationAtom, CommentType, commentAtom} from 'Recoil/patient.atom';
+import { uploadImage } from 'Services/patient.services';
 import './patient-information.scss';
 import { healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, nicotineAmtValuesFunction, heightFunction, weightFunction, yearFunction, lastHundredYearsFunction, alcoholTypesValuesFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
 import { Container, Page, Row, Col, ImageUpload } from 'Components/shared';
@@ -11,9 +12,10 @@ import moment from 'moment';
 import PagePane from 'Components/shared/page/page-pane'
 import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
 import { PatientInformationFormValidation } from './patient-information.validation';
+import { PersonalInformationFormValidation } from './personal-information.validation';
 
 interface PatientInformationProps {
-    onSubmit: (data: any) => void;
+    onSubmit: (data: any, type: string) => void;
     data: any;
     comments: any;
 }
@@ -21,7 +23,70 @@ interface PatientInformationProps {
 const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, comments})=> {
     const { t } = useTranslation();
     const [ weightStatus, setWeightStatus ] = useState('');
-    const [clinicComments, setClinicComments ] = useState([]);
+    const [clinicComments, setClinicComments ] = useRecoilState<CommentType[]>(commentAtom);
+
+    const defaultPatientInformation = {
+        patientID: -1,
+        weight: 0,
+        height: 0,
+        fullName: '',
+        phoneNumber: '',
+        email: '',
+        profilePicBlob: {},
+        ic: '',
+        gender: "",
+        race: '',
+        // educationLevel: 'bachelors',
+        dateOfBirth: '',
+        // address: {
+        //     street1: '',
+        //     street2: '',
+        //     postcode: '',
+        //     country: '',
+        //     city: '',
+        //     state: ''
+        // },
+        reasonForConsultation: "",
+        healthHistory: {
+            // heartDisease: false,
+            heartAttack: false,
+            // stroke: false,
+            highCholesterol: false,
+            // elevatedTriglycerides: false,
+            diabetes: false,
+            hypertension:  false,
+            // sleepingDisorder: false,
+            // otherVascularCondition: false,
+            // otherVascularConditionName: '',
+            // otherVascularConditionYears: ''
+        },
+        familyHistory: {
+            // heartDisease: false,
+            heartAttack: false,
+            // stroke: false,
+            highCholesterol: false,
+            // elevatedTriglycerides: false,
+            diabetes: false,
+            hypertension: false,
+            // sleepingDisorder: false,
+            // otherVascularCondition: false,
+            // otherVascularConditionName: '',
+            // otherVascularConditionYears: ''
+        },
+        lifestyleInformation: {
+            eightHoursOfSleep: false,
+            stress: false,
+            meat: false,
+            exercise: false,
+            fruits: false,
+            friedFood: false,
+            processedFood: false,
+            vegetables: false,
+            smoking: false,
+            overweight: false,
+        },
+    };
+    const [ error, setError ] = useState<any>({});
     const [ pageVisibility, setPageVisibility ] = useState(0);
     const healthHistoryValues: any = healthHistoryValuesFunction();
     const cigarettesPerDayValues: any = cigarettesPerDayValuesFunction();
@@ -33,7 +98,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
     const lastHundredYears = lastHundredYearsFunction();
     const averageAlcoholConsumptionValues: any = averageAlcoholConsumptionValuesFunction();
     const [maxSize, setMaxSize] = useState(0);
-    const [ patientInformation, setPatientInformation ] = useState<any>(patientInformationAtom);
+    const [ patientInformation, setPatientInformation ] = useState<any>(defaultPatientInformation);
 
     const pages = [
         {
@@ -99,29 +164,34 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
     },[data]);
 
     useEffect(()=> {
+        console.log('comments', comments);
+        setClinicComments(comments);
+    },[comments])
+
+    useEffect(()=> {
         if(patientInformation.weight> 0 && patientInformation.height > 0) {
             const BMI = patientInformation.weight/(patientInformation.height * patientInformation.height);
-            console.log('BMI', BMI);
+            // console.log('BMI', BMI);
             const status = BMIStatus(BMI);
-            console.log('status', status);
+            // console.log('status', status);
             setWeightStatus(status);
         }
     },[patientInformation.weight || patientInformation.height]);
 
-    useEffect(()=> {
-        console.log('patientInformaiton', patientInformation);
+    // useEffect(()=> {
+    //     console.log('patientInformaiton', patientInformation);
         
-    },[patientInformation])
+    // },[patientInformation])
 
-    const [ error, setError ] = useState<any>({});
+ 
 
-    useEffect(()=> {
-        console.log('error pt',error);
-    },[error]);
+    // useEffect(()=> {
+    //     console.log('error pt',error);
+    // },[error]);
     
-    useEffect(()=> {
-        console.log('pageVisibility',pageVisibility);
-    },[pageVisibility]);
+    // useEffect(()=> {
+    //     console.log('pageVisibility',pageVisibility);
+    // },[pageVisibility]);
 
 
     const nextPage = () => {
@@ -137,7 +207,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
            
             const value = PatientInformationFormValidation.validateSync(omitBy({
                 ...patientInformation,
-                dateOfBirth: moment(patientInformation.dateOfBirth)
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,
                 abortEarly: true,
@@ -146,7 +215,83 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
             // console.log(moment(patientInformation.dateOfBirth));
             // console.log('value', value);
     
-            onSubmit(value);
+            onSubmit(value, 'save');
+
+        }
+        catch(err) {
+            let { path, value }:any = errorHandler.validation(err);
+            console.log('err', err);
+            var subPath = '';
+
+            if (path.indexOf('.')!==-1) {
+                const str = path.split('.');
+                path = str[0];
+                subPath = str[1];
+                setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
+            }
+            else {
+                setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
+            }
+           
+            pages.map((page, index)=> {
+               
+                if(page.fields.includes(path) || page.fields.includes(subPath)) {
+                    // console.log('page', page);
+                    setPageVisibility(page.index);
+                }
+            })
+
+            if (document.querySelector(`input[name=${path}]`)) {
+                (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
+
+            }
+            else if (document.querySelector(`div[name=${path}]`)) {
+                (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
+            }
+        }
+    }
+
+    const createPatient = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        console.log(patientInformation);
+     
+        let tempData = (patientInformation.dateOfBirth.split('-')).join('');
+        console.log('tempData', tempData);
+        tempData = tempData.slice(2, tempData.length);
+
+        let tempIC = patientInformation.ic.slice(0, 6);
+        
+        if(tempIC!==tempData) {
+            setError({
+                ic: 'IC must match date of birth',
+                dateOfBirth: 'IC must match date of birth',
+            })
+
+            return;
+        }
+        
+        try{
+           let patientData = {
+               fullName: patientInformation.fullName,
+               ic: patientInformation.ic,
+               phoneNumber: patientInformation.phoneNumber,
+               email: patientInformation.email,
+               race: patientInformation.race,
+               gender: patientInformation.gender,
+               dateOfBirth: patientInformation.dateOfBirth,
+               reasonForConsultation: patientInformation.reasonForConsultation
+           }
+            const value = PersonalInformationFormValidation.validateSync(omitBy({
+                ...patientData,
+            }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
+                strict: true,
+                abortEarly: true,
+                stripUnknown: false
+            });
+            // console.log(moment(patientInformation.dateOfBirth));
+            console.log('value', value);
+    
+            onSubmit(value, 'create');
 
         }
         catch(err) {
@@ -166,7 +311,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
             pages.map((page, index)=> {
                
                 if(page.fields.includes(path) || page.fields.includes(subPath)) {
-                    console.log('page', page);
+                    // console.log('page', page);
                     setPageVisibility(page.index);
                 }
             })
@@ -181,6 +326,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
         }
     }
 
+
     const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
         
     }
@@ -192,13 +338,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
         }
     }
 
-    // useEffect(()=> {
-    //     console.log('patientInformation.healthHistory', patientInformation);
-    // },[patientInformation])
+    useEffect(()=> {
+        console.log('patientInformation', patientInformation);
+    },[patientInformation])
 
     const handleTextChange = (name: string, value: any) => {
-        console.log('name', name);
-        console.log('value', value);
+        // console.log('name', name);
+        // console.log('value', value);
         setError({});
         if(name.indexOf('.')!==-1) {
             let subName = name.split('.')[1]
@@ -212,6 +358,26 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
             return;
         }
         setPatientInformation({...patientInformation, [name]: value });
+
+        // if(name=='ic' && value.length > 5 && patientInformation.dateOfBirth != '') {
+        //     if(patientInformation.dateOfBirth!='') {
+        //         let tempData = (patientInformation.dateOfBirth.split('-')).join('');
+        //         console.log('tempData', tempData);
+        //         tempData = tempData.slice(2, tempData.length);
+
+        //         value = value.slice(0, 6);
+        //         console.log('tempData', tempData);
+        //         if(value.includes(tempData)) {
+        //             console.log('tempData', tempData);
+        //         }
+        //         if(value!==tempData) {
+        //             setError({
+        //                 [name]: 'IC must match date of birth'
+        //             })
+        //         }
+        //     }
+            
+        // }
     }
 
      const handleCommentChange = (name: string, value: any) => {
@@ -219,21 +385,19 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
         console.log('value', value);
         setError({});
         if(name.indexOf('[')!==-1) {
-            let subName = name.split('.')[1];
-            let index:any = (subName.split('[')[1]).split(']')[0];
+            let subName = (name.split('.')[1]).toString();
+            console.log('subName', subName);
+            let index = parseInt((name.split('[')[1]).split(']')[0]);
+            console.log('index', index);
             subName = subName.split('[')[0];
             name = name.split('.')[0];
             
-            let tempArray = [...patientInformation[name]];
-            let item = {...tempArray[index]};
+            let tempArray = [...clinicComments];
+            let item: any = {...tempArray[index]};
             item[subName] = value;
             tempArray[index] = item;
 
-            setPatientInformation({...patientInformation, [name]: [
-                ...tempArray
-            ]});
-
-            return;
+            setClinicComments(tempArray);
         }
     }
 
@@ -316,63 +480,167 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
         });
     }
 
-    const handleImageChange = (name: string, blob: Blob) => {
-        console.log('name', name);
-        console.log('blob', blob);
-        setPatientInformation({
-            ...patientInformation, [name]: blob
-        })
+    const handleImageChange = (action: string = 'add', name: string, blob: any) => {
+        // const response: any = upload(blob);
+        // console.log('blob', blob);
+        // console.log('name', name);
+        // console.log('blob', blob);
+        if(name.includes('comment')){
+            let subName = name.split('.')[1];
+            // console.log('subName', subName);
+            let index = parseInt((name.split('[')[1]).split(']')[0]);
+            // console.log('index', index);
+            name = name.split('[')[0];
+            // console.log('name', name);
+            var tempArray:any = [...clinicComments];
+            // console.log('patientInformation', patientInformation);
+            // console.log('clinicComments', clinicComments);
+            if(clinicComments[index][subName].length > 0 && action == 'add') {
+                // console.log('1');
+                let item: any = {...tempArray[index]};
+                let subItem = item[subName];
+                // item[subName] = blob;
+                subItem = subItem.concat([...blob]);
+                // console.log('subItem', subItem);
+                item[subName] = subItem;
+                tempArray[index] = item;
+            }
+            else {
+                // console.log('1');
+                if(blob instanceof Blob) {
+                    let item = {...tempArray[index]};
+                    item[subName] = [blob];
+                    // tempArray[index][subName].push(blob);
+                    tempArray[index] = item;
+                }
+                else {
+                    let item = {...tempArray[index]};
+                    item[subName] = [...blob];
+                    tempArray[index] = item;  
+                }
+
+                
+            }
+            // console.log('tempArray', tempArray);
+            setClinicComments(tempArray);
+        }
+        else {
+                setPatientInformation({
+                ...patientInformation, [name]: blob
+            })
+        }
     }
 
     const newComment = () => {
-        const newcomment = {
-            diagnosis: '',
-            comments: ''
+        const newcomment: any = {
+            id: -1,
+            diagnosis: 'Bone pain.',
+            comment: 'Bone pain in pelvic area. Will refer to bone specialist.',
+            user: {},
+            image: []
         }
 
-        setPatientInformation({
-            ...patientInformation, comments: [
-                ...patientInformation.comments, newcomment
-            ]
-        })
+        setClinicComments([
+        ...clinicComments, newcomment
+        ])       
     }
 
-    const removeComment = (index: any) => {
-        console.log(index);
-        let tempComments = [...patientInformation.comments];
+    const createComment = (e: any) => {
+        const index = e.target.id;
+        // console.log('clinicComment', clinicComments[index])
+        // console.log('index', e.target.id);
+        console.log('localStorage', localStorage);
+        var user:any = localStorage.getItem('username')|| '';
+        if(user!='') {
+            user = JSON.parse(localStorage.getItem('user') || '');
+            user = {
+                username: user
+            }
+        }
+        else {
+            user= {
+                username: 'admin2'
+            }
+        }
+        let tempComment = omitBy({
+            patient: patientInformation.patientID,
+            id: clinicComments[index].id || undefined,
+            diagnosis: clinicComments[index].diagnosis,
+            comment: clinicComments[index].comment,
+            user: user,
+            image: clinicComments[index].image || undefined
+        }, isUndefined);
+        console.log('tempComment', tempComment);
+        onSubmit(tempComment, 'create comment');
+    }
+
+    const editComment = (e: any) => {
+        const index = e.target.id;
+        // console.log('clinicComment', clinicComments[index])
+        // console.log('index', e.target.id);
+        var user:any = localStorage.getItem('user')|| '';
+        if(user!='') {
+            user = JSON.parse(localStorage.getItem('user') || '');
+            user = {
+                user: user?.username
+            }
+        }
+        else {
+            user= {
+                username: 'admin1'
+            }
+        }
+        let tempComment = omitBy({
+            patientID: patientInformation.patientID,
+            id: clinicComments[index].id || undefined,
+            diagnosis: clinicComments[index].diagnosis,
+            comment: clinicComments[index].comment,
+            user: user,
+        }, isUndefined);
+       
+        onSubmit(tempComment, 'edit comment');
+    }
+
+    const removeComment = (e: any) => {
+        console.log(e);
+        let index = parseInt(e.target.id);
+        let tempComments = [...clinicComments];
         tempComments.splice(index, 1);
-        setPatientInformation({...patientInformation, 
-            comments: [
-                ...tempComments
-            ]
-        })
+        setClinicComments([
+            ...tempComments
+        ])   
     }
 
     return (
        
         <div className="patient-info">
-            <ProgressBar  
-            currentPage={pageVisibility}
-            maxSize = {maxSize}
-            pages={[
-                {
-                    name: 'new-patient',
-                    index: 0
-                },
-                {
-                    name: 'health-history',
-                    index: 1
-                },
-                {
-                    name: 'lifestyle-information',
-                    index: 2
-                },
-                {
-                    name: 'comments',
-                    index: 3
-                }
-            ]}
-            />
+            {
+                patientInformation.patientID !== -1 &&
+        
+                <ProgressBar  
+                currentPage={pageVisibility}
+                maxSize = {maxSize}
+                pages={[
+                    {
+                        name: 'new-patient',
+                        index: 0
+                    },
+                    {
+                        name: 'health-history',
+                        index: 1
+                    },
+                    {
+                        name: 'lifestyle-information',
+                        index: 2
+                    },
+                    {
+                        name: 'comments',
+                        index: 3
+                    }
+                ]}
+                />
+            }
+         
             <Page visibility= {pageVisibility} numOfChildren={setMaxSize}>
                 <PagePane index={0}>
                     <div className="division">
@@ -405,7 +673,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                                 </Row>
                                 <Row>
                                     <div style={{width: 'inherit'}}>
-                                        <TextInput value={patientInformation?.email} required error={!!error?.email} name='email' label={t('label.email')} onChange={handleTextChange} />
+                                        <TextInput disabled={false} value={patientInformation?.email} required error={!!error?.email} name='email' label={t('label.email')} onChange={handleTextChange} />
                                         <AlertBox error={error?.email} name={t('label.email')} />
                                     </div>
                                 </Row>
@@ -465,8 +733,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                                                 }
                                             ]} 
                                             defaultValue={patientInformation.gender}
-                                            required 
-                                            error={error?.gender} 
+                                            required
+                                            error={!!error?.gender} 
                                             name='gender' 
                                             label={t('label.gender')} 
                                             onSelect={handleSelectRadio} 
@@ -535,16 +803,20 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                             
                         </div>
                         <div style={{width: '80%', display: 'flex'}}> 
-                            <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
+                            <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                                 {
-                                    pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
+                                    pageVisibility > 0 && patientInformation.patientID!== -1 && <button className="standard" onClick={prevPage}>Prev</button>
                                 }  
                             </div>
-                            <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                                 {
-                                    pageVisibility < (maxSize - 1 ) &&  <button className="standard" onClick={nextPage}>Next</button>
+                                    pageVisibility < (maxSize - 1 ) && patientInformation.patientID!== -1 && <button className="standard" onClick={nextPage}>Next</button>
                                 }
-                                    <button className="save" onClick={saveAndContinue}>Save and Continue</button>
+                                {
+                                    patientInformation.patientID!== -1 ?
+                                    <button className="save" onClick={saveAndContinue}>{'Save and Continue'}</button>
+                                    :<button className="save" onClick={createPatient}>{'Create Patient'}</button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -974,6 +1246,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                         </div>
                     </div>
                 </PagePane>*/}
+                {patientInformation.patientID !== -1 && 
                 <PagePane index={1}>
                     <div className="division">
                         <div className="header">    
@@ -1085,13 +1358,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                              </Row>
                             </div>
                         </div>
-                        <div style={{width: '80%', display: 'flex'}}> 
-                            <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
+                        <div style={{width: '100%', display: 'flex'}}> 
+                            <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                                 {
                                     pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
                                 }  
                             </div>
-                            <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
+                            <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                                 {
                                     pageVisibility < (maxSize - 1 ) &&  <button className="standard" onClick={nextPage}>Next</button>
                                 }
@@ -1101,6 +1374,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                     </div>
                     
                 </PagePane>
+                }
                 {/* <PagePane index={2}>
                     <div className="content">
                         <div className="header">    
@@ -1163,6 +1437,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                         </div>
                     </div>
                 </PagePane> */}
+                {patientInformation.patientID !== -1 && 
                 <PagePane index={2}>
                     <div className="division">
                         <div className="header">   
@@ -1212,7 +1487,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                                                     value: false
                                                 },
                                             ]} 
-                                            defaultValue={patientInformation?.lifestyleInformation?.stress || ''}
+                                            defaultValue={patientInformation?.lifestyleInformation?.stress || false}
                                             required 
                                             error={!!error?.lifestyleInformation?.stress} 
                                             name='lifestyleInformation.stress' 
@@ -1407,80 +1682,88 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, data, c
                             </div>
                         </div>
                     </div>
-                    <div style={{width: '80%', display: 'flex'}}> 
-                        <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
+                    <div style={{width: '100%', display: 'flex'}}> 
+                        <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                             {
                                 pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
                             }
                             
                         </div>
-                        <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                             {
                                 pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
                             }
                             <button className="save" onClick={saveAndContinue}>Save and Continue</button>
                         </div>
                     </div>
-                </PagePane>
+                </PagePane> }
+                {patientInformation.patientID !== -1 &&
                 <PagePane index={3}>
                     <div className="division">
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
                             <button className="standard" onClick={newComment}>New Comment</button>
                         </div>
-                        <div className="content">                        
-                            <div className="divider--full">
+                        <div className="content" style={{flexDirection:'row'}}>                   
+                            <div className="divider--fifty">
+                               
                                 {/* <h3>{`${t('label.diagnosis')} & ${t('label.comments')}`}</h3> */}
                                 {
-                                    patientInformation?.comments && patientInformation?.comments.map((tempComment: any, index: any)=> {
-                                        return <Row key={index}>
-                                            <div style={{width: 'inherit'}}>
-                                                <TextArea value={tempComment?.diagnosis} required error={!!error[`comments[${index}]`]?.diagnosis} name={`comments.diagnosis[${index}]`} label={`${t('label.diagnosis')}        Date: ${tempComment?.created}`} onChange={handleCommentChange} />
-                                                <AlertBox error={error[`comments[${index}]`]?.diagnosis} name={t('label.diagnosis')} />
-                                            </div>
-                                            <div style={{width: 'inherit'}}>
-                                                <TextArea value={tempComment?.comments} required error={!!error[`comments[${index}]`]?.comments} name={`comments.comments[${index}]`} label={t('label.comments')} onChange={handleCommentChange} />
-                                                <AlertBox error={error[`comments[${index}]`]?.comments} name={t('label.comments')} />
-                                            </div>
-                                            <button style={{background: 'rgb(0, 0, 0, 0)', border: '0px solid grey',width: '103px', height: '46px'}} className="delete" onClick={(index) => {removeComment(index)}}><img src="/assets/images/remove.png" /></button>
-                                        </Row>
+                                    clinicComments !=[] && clinicComments.map((comment: any, index: any)=> {
+                                        return <>
+                                            <Row key={index}>
+                                                <div style={{width: 'inherit'}}>
+                                                    <TextInput key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `       Date: ${comment?.created}`: '')} onChange={handleCommentChange} />      
+                                                    <AlertBox error={error[`comment[${index}]`]?.diagnosis} name={t('label.diagnosis')} />
+                                                </div>
+                                                
+                                            </Row>
+                                            <Row>
+                                                <div style={{width: 'inherit'}}>
+                                                    <TextArea  key={comment?.id} value={comment?.comment} required error={!!error[`comment[${index}]`]?.comment} name={`comment[${index}].comment`} label={t('label.comment')} onChange={handleCommentChange} />
+                                                    <AlertBox error={error[`comment[${index}]`]?.comment} name={t('label.comment')} />
+                                                </div>
+                                            </Row>
+                                            <Row>
+                                                <button className="delete" id={index} onClick={(index) => {removeComment(index)}}>Remove Comment</button> {/*<img style={{width: '50px', height: '50px'}} src="/assets/images/remove.png" />*/}
+                                                {comment.id !==-1? <button id={index} className="save" onClick={(e) => {editComment(e)}}>Edit Comment</button>: <button id={index} className="save" onClick={(e) => {createComment(e)}}>Create Comment</button>}
+                                            </Row>
+                                            
+                                        </>
                                     })
                                 }
                                 
                             </div>
-                            {/* <div className="divider--fifty">
-                                <h3>{t('label.comments')}</h3>
+                            <div className="divider--fifty">
                                 {
-                                    patientInformation?.comments.map((tempComment: any, index: any)=> {
-                                        return <Row index={index}>
-                                           
-                                            <div style={{width: 'inherit'}}>
-                                                <TextArea value={tempComment?.comments} required error={error?.comments} name={`comments.comments[${index}]`} label={t('label.comments')} onChange={handleCommentChange} />
-                                                <AlertBox error={error?.comments} name={t('label.comments')} />
-                                            </div>
-                                            <button style={{background: 'rgb(0, 0, 0, 0)', border: '0px solid grey'}} className="delete" onClick={(index) => {removeComment(index)}}><img src="/assets/images/remove.png" />Remove Comment</button>
+                                    clinicComments !=[] && clinicComments.map((comment: any, index: any)=> {
+                                         return <Row>
+                                             <ImageUpload onChangeImg={handleImageChange} multiple={true} name={`comment[${index}].image`} blob={comment?.image}/>
                                         </Row>
                                     })
                                 }
+                            </div>
+                        </div>
+                    </div>
+                    <Row>
+                        <div style={{width: '100%', display: 'flex'}}> 
+                            <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
+                                {
+                                    pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
+                                }
                                 
-                            </div> */}
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
+                                {
+                                    pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
+                                }
+                                <button className="save" onClick={saveAndContinue}>Save and Continue</button>
+                            </div>
                         </div>
-                    </div>
-                    <div style={{width: '80%', display: 'flex'}}> 
-                        <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
-                            {
-                                pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
-                            }
-                            
-                        </div>
-                        <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
-                            {
-                                pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
-                            }
-                            <button className="save" onClick={saveAndContinue}>Save and Continue</button>
-                        </div>
-                    </div>
+                    </Row>
+                    
                 </PagePane>
+                }
             </Page>
             
             

@@ -18,6 +18,7 @@ import Table from "./table";
 import ProgressBar from "./progress-bar";
 import TextArea from "./text-area";
 import Button from "./button";
+import { toaster } from "./toaster/toaster";
 
 export {
     Modal,
@@ -39,5 +40,6 @@ export {
     Table,
     ProgressBar,
     TextArea,
-    Button
+    Button,
+    toaster
 } 

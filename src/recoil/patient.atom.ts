@@ -2,17 +2,18 @@ import { atom } from 'recoil';
 import { string } from 'yup/lib/locale';
 
 export type PatientInformationType = {
+    patientID: number;
     weight: number;
     height: number;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     phoneNumber: string;
+    email: string;
     // fullName: string;
     profilePicBlob: object;
     ic: string;
     gender: string;
     race: string;
-    dateOfBirth: moment.Moment | undefined;
+    dateOfBirth: string;
     // educationLevel: string;
     // address: {
     //     street1: string;
@@ -194,17 +195,18 @@ export type PatientInformationType = {
 export const patientInformationAtom = atom<PatientInformationType>({
     key: 'patientInformationAtom',
     default: {
+        patientID: -1,
         weight: 0,
         height: 0,
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
+        fullName: 'Natalie Leong',
+        phoneNumber: '0132343488',
+        email: 'natalie@mail.com',
         profilePicBlob: {},
-        ic: '',
-        gender: '',
-        race: '',
+        ic: '980314109876',
+        gender: "F",
+        race: 'CH',
         // educationLevel: 'bachelors',
-        dateOfBirth: undefined,
+        dateOfBirth: '1998-03-14',
         // address: {
         //     street1: '',
         //     street2: '',
@@ -213,7 +215,7 @@ export const patientInformationAtom = atom<PatientInformationType>({
         //     city: '',
         //     state: ''
         // },
-        reasonForConsultation: "",
+        reasonForConsultation: "Hernia in the abdominal area",
         healthHistory: {
             // heartDisease: false,
             heartAttack: false,
@@ -380,4 +382,26 @@ export const patientInformationAtom = atom<PatientInformationType>({
         //     }
         // }
     }
+})
+
+
+export type CommentType = {
+    id: number;
+    created: string;
+    diagnosis: string;
+    comment: string;
+    image: object;
+    user: object;
+}
+
+export const commentAtom = atom<CommentType[]>({
+    key: 'commentAtom',
+    default: [{
+        id: -1,
+        diagnosis: '',
+        comment: '',
+        image: [],
+        user: {},
+        created: ''
+    }]
 })

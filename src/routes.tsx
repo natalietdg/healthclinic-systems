@@ -26,7 +26,7 @@ const privateRoutes = [
         withNavbar: false
     },
     {
-        path: '/dashboard',
+        path: '/home',
         component: <DashboardPage />,
         withNavbar: true
     },

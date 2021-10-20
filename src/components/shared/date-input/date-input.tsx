@@ -17,7 +17,7 @@ const DateInput: React.FC<DateInputProps> = ({label, name, required, error, valu
     const [ date, setDate ] = useState('');
     useEffect(()=> {
         setDate(value);
-    },[])
+    },[value])
 
     const { t } = useTranslation();
 
