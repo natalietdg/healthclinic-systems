@@ -5,7 +5,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useHistory } from "react-router-dom";
 import { fetchBackground } from 'Services/background.services';
 import { login } from 'Services/auth.services';
-import { Modal, toaster } from 'Shared/index';
+import { Modal, } from 'Shared/index';
 import { LoginForm } from 'Components/index';
 import { loginAtom, LoginAtomType } from "Recoil/login.atom";
 import { encode } from "Helpers/";
@@ -28,11 +28,11 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
     },[])
 
     useEffect(()=> {
-        if(loginState.state=='success') {
-            setTimeout(function() {
-                history.push('home');
-            }, 3000);
-        }
+        // if(loginState.state=='success') {
+        //     setTimeout(function() {
+        //         history.push('/home');
+        //     }, 3000);
+        // }
     },[loginState])
 
     const getBackground = async() => {
@@ -49,7 +49,7 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
                 const response:any = await login(data);
                 console.log('response', response);
                 if(!response.error) {
-                    toaster('success', "Login Success!");
+                    // toaster('success', "Login Success!");
                     // console.log('data', data);
                     // const url = "dashboard";
                     setLoginState({state: 'success'});
@@ -57,7 +57,7 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
                 }
                 else {
                     // console.log('here');
-                    toaster("errors", response.error.message);
+                    // toaster("errors", response.error.message);
                     setLoginState({state: 'error'});
                     setError(response.error.message);
                 }
@@ -72,8 +72,6 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
     function toggleModalVisibility(visible: boolean) {
         setModalVisibility(visible);
     }
-
-    
     
     return (
         <div id="homepage" className="homepage-bg homepage" style={{backgroundImage: `url(${homePage?.imageUrl})`}}>

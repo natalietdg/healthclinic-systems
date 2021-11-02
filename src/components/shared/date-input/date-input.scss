@@ -31,7 +31,7 @@
         height: 35px;
         border-radius: 8px;
         border: 0px solid grey;
-        box-shadow: 3px 3px 6px #aab4e7;
+        box-shadow: 3px 6px 15px #aab4e7cc;
         padding: 0px 10px;
         font-size: 20px;
         font-family: $token-font-family-text;
@@ -39,7 +39,7 @@
         &:focus {
             outline: none;
             // border: 2px solid $token-button-primary-background-color-base;
-            box-shadow: 3px 3px 6px $token-button-primary-background-color-base;
+            box-shadow: 3px 6px 15px $token-button-primary-background-color-base;
         }  
     }
 

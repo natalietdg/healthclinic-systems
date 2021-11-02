@@ -6,6 +6,7 @@ interface RadioInputProps {
     defaultValue?: any;
     label: string;
     name: string;
+    subtitle?: any;
     placeholder?:string;
     error: any;
     multiple?: boolean;
@@ -14,7 +15,7 @@ interface RadioInputProps {
     onSelect?: (name: string, value: any) => void;
 }
 
-const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, placeholder, error, required, values, multiple, onSelect}) => {
+const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultValue, placeholder, error, required, values, multiple, onSelect}) => {
     const [ currentValue, setCurrentValue] = useState<any>('');
     useEffect(()=> {
 
@@ -55,13 +56,18 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
         // if(defaultValue==event.target.value) {
         //     event.target.value = '';
         // }
-
+        console.log('event', event);
+        console.log('event.target.checked', event.target.checked)
+        console.log('event.target.value', event.target.value);
         if (onSelect) onSelect(name,  event.target.value);
 
         if(multiple==false) {
             values.map((value:any)=> {
                 console.log(typeof(value.value));
-                if((name+value.name)!==event.target?.name) {
+                console.log('name', name);
+                console.log('value', value);
+                console.log('event.target.name', event.target.name);
+                if((name+"."+value.name)!==event.target?.name) {
                     (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = false;
                 }
             })
@@ -71,6 +77,7 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, defaultValue, place
     return(
         <div className="radio-input">
             <h4 className={classNames("radio-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
+            <p><i>{subtitle}</i></p>
             <div key={name} className={"radio-input--values"}>
                 {
                     values.map((value:any, index:number) => {

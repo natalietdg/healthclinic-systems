@@ -2,13 +2,23 @@ import { isNil, omitBy } from 'lodash';
 
 const ValidationException = (error: any) => {
     if (isNil(error)) return false;
+    console.log('error', error);
     var { path, message, type } = error;
+    console.log('message', message);
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';
-    const [first, ...last] = message.split(' ');
-  console.log('message'), message;
+    var first = '';
+    var last:any = '';
+   
     console.log('path', path);
+
+    if(message.includes('required')) {
+        return omitBy({ path, refPath, value: message}, isNil);
+    }else [first, ...last] = message.split(' ');
+
+    console.log('last', last);
+    console.log('message'), message;
     if (path.indexOf('.')!==-1 && path != undefined) {
         console.log('??');
         subPath = path.split('.')[1];
@@ -37,6 +47,9 @@ const ValidationException = (error: any) => {
     // else {
     //     errorMessage = 'error.validationFailed';
     // }
+    if (path=='phoneNumber') {
+        return omitBy({ path, refPath, value: "Phone number should start with '01' and have 8 digits."}, isNil)
+    }
   
     if (path=="password") {
         return omitBy({ path, refPath, value: "Password does not match"}, isNil);

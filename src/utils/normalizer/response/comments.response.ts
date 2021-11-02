@@ -1,16 +1,17 @@
 
-import { isNil, isUndefined, omitBy } from 'lodash';
+import { isNil, isUndefined, omitBy, isEmpty } from 'lodash';
 
 const CommentsResponse = (data: any ) => {
     console.log('data', data);
     return omitBy({
-        id: data.id > -1? data.id : undefined,
+        pk: data.id > -1? data.id : undefined,
         title: data.diagnosis,
         comment: data.comment,
-        patient: data.patient || undefined,
         user: data.user || undefined,
-        image: data.image || undefined,
-    }, (value)=> isNil(value) || undefined)
+        image:  Array.isArray(data.image) && data.image[0] != null && !isUndefined(data.image[0])? data?.image.filter((img:any, index: any)=> {
+            return !isUndefined(img) && img != null
+        }) : !Array.isArray(data.image) && data.image!= null && !isUndefined(data.image)? [data.image] : undefined
+    }, (value)=> isNil(value) || isUndefined(value) || value==[])
 }
 
 export default CommentsResponse;

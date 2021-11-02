@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { isEmpty } from 'lodash';
+import _,{ isEmpty, isEqual } from 'lodash';
 import { encode, decode } from 'Helpers/';
+import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Table, Row, TextInput, Page, Button } from 'Components/shared';
 import classNames from 'classnames';
@@ -12,9 +13,10 @@ import page from 'Components/shared/page';
 
 interface PatientDatabseProps {
     patients: any;
+    columnProps?: any;
 }
 
-const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
+const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) => {
     const [pagePagination, setPagePagination] = useState([]);
     const [error, setError] = useState<any>({});
     const [ hiddenFirstPartButtons, setHiddenFirstPartButtons ] = useState<any>([]);
@@ -23,9 +25,19 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
     const [ lastPartButtons, setLastPartButtons ] = useState<any>(<></>);
     const { t } = useTranslation();
     const [maxSize, setMaxSize] = useState(0);
+    const { date }:any = useParams();
+    var todaysDate: any = date? decode(date): null;
+    if(todaysDate!=null) {
+        todaysDate = (new Date (todaysDate)).toLocaleDateString([], {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+        console.log('todaysDate', todaysDate);
+    }
     const [ pageVisibility, setPageVisibility ] = useState(0);
 
-    const columns = [
+    const columns = columnProps? columnProps :[
         {
             colName: 'ID'
         },
@@ -38,9 +50,9 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
         {
             colName: 'Gender',
         },
-        {
-            colName: 'Date of Birth'
-        },
+        // {
+        //     colName: 'Date of Birth'
+        // },
         {
             colName: 'IC',
         },
@@ -51,7 +63,10 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
             colName: 'Phone Number',
         },
         {
-            colName: 'Report',
+            colName: 'Obesity and Disease Prediction Report',
+        },
+        {
+            colName: 'Medical Report',
         },
         {
             colName: ''
@@ -71,7 +86,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
     // }
 
     const setLocalStorage = (key: any) => {
-        console.log('patients', patients);
+        // console.log('patients', patients);
         let page = parseInt(key.split(',')[0]);
         key = parseInt(key.split(',')[1]);
         var patientData =  filteredData[page][key];
@@ -215,7 +230,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
         if(patients) {    
             setError({});
             if(patients.length == 0 || patients.error ) {
-                patients = tempPatientData;
+                patients =tempPatientData ;
                 setError({error: 'Unable to fetch patients'})
             }
             const filteredPatientData = patients.filter((patientData: any, index: any) => {
@@ -232,34 +247,87 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients}) => {
             var tempArrayForCategorizing: any = [];
             let currLength = 0;
             filteredPatientData.map((filteredData: any, index: any)=> {
-                
                 if((index+1)%10==0) {
                     currLength++;
                 }
+                
+                var patientData = {}
+                if(todaysDate== null) {
+                    patientData = {
+                        "ID": filteredData.patientID || filteredData['ID'],
+                        'Email': filteredData.email || filteredData['Email'],
+                        'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
+                        // "Date of Birth": filteredData.dateOfBirth || filteredData['Date of Birth'],
+                        'IC': filteredData.ic || filteredData['IC'],
+                        "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
+                        "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
+                        "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
+                        "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                    <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
+                                        <img src="/assets/images/view.png"/><br />
+                                        View Report
+                                    </a><br></br>
+                                </Button>,
+                        // 'Diagnosis': filteredData['Diagnosis'],
+                        "": <div style={{display: 'flex'}}>
+                                <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                    <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
+                                    <br></br>
+                                </Button>
+                            </div>
+                    };
+                }
+                else{
+                    var hasDiagnosis = false;
+                    console.log('filteredData', filteredData);
+                    console.log('todaysDate', todaysDate);
+                    if(filteredData.comments) {
+                        hasDiagnosis = filteredData.comments.some((comment: any)=> {
+                            let tempDate = (new Date(comment.created)).toLocaleDateString([], {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric'
+                            });
+                            console.log('comment.created',tempDate);
+                            if(_.isEqual(tempDate, todaysDate)) console.log('haha true');
+                            if (_.isEqual(tempDate, todaysDate))  return true;
+                        })
+                    }
+                    
+                    
 
-            let patientData = {
-                    "ID": filteredData.patientID || filteredData['ID'],
-                    'Email': filteredData.email || filteredData['Email'],
-                    'Full Name':  <a href={`/patient/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
-                    "Date of Birth": filteredData.dateOfBirth || filteredData['Date of Birth'],
-                    'IC': filteredData.ic || filteredData['IC'],
-                    "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
-                    "Race": filteredData.race || filteredData['Race'],
-                    "Gender": filteredData.gender || filteredData['Gender'],
-                    "Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                <a href={`/report/${filteredData.reportID}` || filteredData['Report']}>
-                                    <img src="/assets/images/view.png"/><br />
-                                    View Report
-                                </a><br></br>
-                            </Button>,
-                    // 'Diagnosis': filteredData['Diagnosis'],
-                    "": <div style={{display: 'flex'}}>
-                            <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                <a href={`/patient/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/edit-dark.png"/>Edit</a>
-                                <br></br>
-                            </Button>
-                        </div>
-                };
+                    patientData = {
+                        "ID": filteredData.patientID || filteredData['ID'],
+                        'Email': filteredData.email || filteredData['Email'],
+                        'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
+                        // "Date of Birth": filteredData.dateOfBirth || filteredData['Date of Birth'],
+                        'IC': filteredData.ic || filteredData['IC'],
+                        "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
+                        "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
+                        "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
+                        "Consultation Status": hasDiagnosis==true?<div className="done">Completed</div> : <div className="not-done">Pending</div>,
+                        "Obesity and Diseases Prediction": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                                        <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
+                                                            <img src="/assets/images/view.png"/><br />
+                                                            View Report
+                                                        </a><br></br>
+                                                    </Button>,
+                        "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                    <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
+                                        <img src="/assets/images/view.png"/><br />
+                                        View Report
+                                    </a><br></br>
+                                </Button>,
+                        // 'Diagnosis': filteredData['Diagnosis'],
+                        "": <div style={{display: 'flex'}}>
+                                <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                    <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
+                                    <br></br>
+                                </Button>
+                            </div>
+                    }
+                }
+             
                 tempArrayForCategorizing.push(patientData);
     
                 if((index+1)%10==0 || (index+1)==filteredPatientData.length) {

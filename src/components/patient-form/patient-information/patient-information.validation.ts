@@ -4,7 +4,7 @@ import moment from 'moment';
 export const PatientInformationFormValidation = Yup.object().shape({
     weight: Yup.number().min(20).required(),
     height: Yup.number().min(1).required(),
-    profilePic: Yup.string().required(),
+    profilePic: Yup.string().optional(),
     firstName: Yup.string().min(3).max(100).required(),
     lastName: Yup.string().min(3).max(100).required(),
     phoneNumber: Yup.string().matches(/01(\d){8}/).required(),

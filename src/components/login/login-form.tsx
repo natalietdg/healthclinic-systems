@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
            
             const value = LoginFormValidation.validateSync(loginInput, {
                 strict: true,
-                abortEarly: true,
+                abortEarly: false,
                 stripUnknown: false
             });
             

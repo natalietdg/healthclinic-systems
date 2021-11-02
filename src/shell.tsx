@@ -27,7 +27,7 @@ const Shell: React.FC<ShellProps> = ({routes}) => {
 
                 routes.private.map((route:any, index:number) => {
                     return (
-                        <Route key={index} exact path={route.path}>
+                        <Route exact key={index} path={route.path}>
                             <div>
                                 {
                                     route.withNavbar && 
@@ -45,7 +45,7 @@ const Shell: React.FC<ShellProps> = ({routes}) => {
             {
                 Array.isArray(routes.public) &&
                 routes.public.map((route:any, index: number) => {
-                    return <Route key={index} exact path={route.path}>
+                    return <Route exact key={index} path={route.path}>
                         {route.component}
                     </Route>
                 })

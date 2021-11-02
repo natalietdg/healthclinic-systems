@@ -4,41 +4,58 @@ import React from "react";
 export const healthHistoryValuesFunction = () => { 
     const { t } = useTranslation();
     return ([
+        {
+            name:'highCholesterol',
+            value: 'High Cholesterol',
+            label: t('label.highCholesterol')
+        },
+        {
+            name:'heartAttack',
+            value: 'Heart Attack',
+            label: t('label.heartAttack')
+        },
+        {
+            name: 'heartOperation',
+            value: 'Heart Operation',
+            label: "Heart Operation"
+        },
+        {
+            name: 'congenitalHeartDisease',
+            value: 'Congenital Heart Disease',
+            label: 'Congenital Heart Disease'
+        },
+        {
+            name:'noCondition',
+            value: 'NO CONDITION',
+            label: "No Condition"
+        },
         // {
         //     name:'heartDisease',
         //     value: 'heartDisease',
         //     label: t('label.heartDisease')
         // },
-        {
-            name:'heartAttack',
-            value: 'heartAttack',
-            label: t('label.heartAttack')
-        },
         // {
         //     name:'stroke',
         //     value: 'stroke',
         //     label: t('label.stroke')
         // },
-        {
-            name:'highCholesterol',
-            value: 'highCholesterol',
-            label: t('label.highCholesterol')
-        },
+        
         // {
         //     name:'elevatedTriglycerides',
         //     value: 'elevatedTriglycerides',
         //     label: t('label.elevatedTriglycerides')
         // },
-        {
-            name:'diabetes',
-            value: 'diabetes',
-            label: t('label.diabetes')
-        },
-        {
-            name:'hypertension',
-            value: 'hypertension',
-            label: t('label.hypertension')
-        },
+        // {
+        //     name:'diabetes',
+        //     value: 'diabetes',
+        //     label: t('label.diabetes')
+        // },
+        // {
+        //     name:'hypertension',
+        //     value: 'hypertension',
+        //     label: t('label.hypertension')
+        // },
+        
         // {
         //     name:'sleepingDisorder',
         //     value: 'sleepingDisorder',
@@ -98,30 +115,35 @@ export const cigarettesPerDayValuesFunction = () => {
     const { t } = useTranslation();
     return ([
         {
+            "label": 'Non-smoker',
+            "name": "cigarettesPerDay",
+            "value": 'NON-SMOKER'
+        },
+        {
             "label": t('label.numberOfCigarettesPerDay', {'min': 1, 'max': 9}),
             "name": "cigarettesPerDay",
-            "value": ["1", "9"]
+            "value": '1-9 cigarette sticks per day'
         },
         {
             "label": t('label.numberOfCigarettesPerDay', {'min': 10, 'max': 19}),
             "name": "cigarettesPerDay",
-            "value": ["10", "19"]
+            "value": '10-19 cigarette sticks per day'
         },
         {
             "label": t('label.numberOfCigarettesPerDay', {'min': 20, 'max': 29}),
             "name": "cigarettesPerDay",
-            "value": ["20", "29"]
+            "value": '20-29 cigarette sticks per day'
         },
-        {
-            "label": t('label.numberOfCigarettesPerDay', {'min': 30, 'max': 39}),
-            "name": "cigarettesPerDay",
-            "value": ["30", "39"]
-        },
-        {
-            "label": t('label.moreThanNumberOfCigarettes', {'min': 40, 'max': 40}),
-            "name": "cigarettesPerDay",
-            "value": ["40", "40"]
-        }
+        // {
+        //     "label": t('label.numberOfCigarettesPerDay', {'min': 30, 'max': 39}),
+        //     "name": "cigarettesPerDay",
+        //     "value": ["30", "39"]
+        // },
+        // {
+        //     "label": t('label.moreThanNumberOfCigarettes', {'min': 40, 'max': 40}),
+        //     "name": "cigarettesPerDay",
+        //     "value": ["40", "40"]
+        // }
      ])
 }
 
@@ -136,12 +158,12 @@ export const  nicotineAmtValuesFunction = () => {
         {
             label: t("label.nicotineAmt", {percentage: 3, amt: 0.3}),
             name: "nicotineAmt",
-            value: ["3"]
+            value: [3]
         },
         {
             label: t("label.nicotineAmt", {percentage: 6, amt: 0.6}),
             name: "nicotineAmt",
-            value: ["6"]
+            value: [6]
         },
         {
             label: t("label.nicotineAmt", {percentage: 12, amt: 1.2}),
@@ -190,29 +212,34 @@ export const averageAlcoholConsumptionValuesFunction = () => {
     const { t } = useTranslation();
     return [
         {
-            "label": t('label.noAlcoholConsumption', {'min': 0, 'max': 0}),
+            "label": "Do not consume alcohol",
             "name": "avgAlcoholConsumption",
-            "value": ["0", "0", "none"]
+            "value": "DO NOT CONSUME ALCOHOL"
         },
+        // {
+        //     "label": t('label.noAlcoholConsumption', {'min': 0, 'max': 0}),
+        //     "name": "avgAlcoholConsumption",
+        //     "value": ["0", "0", "none"]
+        // },
         {
             "label": t('label.avgAlcoholConsumptionRange', {'min': 2, 'max': 3, 'period': 'month'}),
             "name": "avgAlcoholConsumption",
-            "value": ["2", "3", "month"]
+            "value": '2-3 drinks per month'
         },
         {
             "label": t('label.avgAlcoholConsumptionRange', {'min': 1, 'max': 2, 'period': 'day'}),
             "name": "avgAlcoholConsumption",
-            "value": ["1", "2", "day"]
+            "value": '1-2 drinks per day'
         },
         {
             "label": t('label.avgAlcoholConsumptionRange', {'min': 2, 'max': 3, 'period': 'week'}),
             "name": "avgAlcoholConsumption",
-            "value": ["2", "3", "week"]
+            "value": '2-3 drinks per week'
         },
         {
             "label": t('label.moreThanAvgAlcoholConsumption', {'min': 3, 'max': 3, 'period': 'day'}),
             "name": "avgAlcoholConsumption",
-            "value": ["3", "3", "day"]
+            "value": '3 or more drinks per day'
         },
     ]
 }
@@ -263,4 +290,528 @@ export const BMIStatus = (BMIWeight: any) => {
 
     console.log('category', category);
     return category;
+}
+
+export const meatFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "Daily",
+            "name": "meatFrequency",
+            "value": "Daily"
+        },
+        {
+            "label": "Once per week",
+            "name": "meatFrequency",
+            "value": "Once per week",
+        },
+        {
+            "label": "1-2 times per week",
+            "name": "meatFrequency",
+            "value": "1-2 times per week"
+        },
+        {
+            "label": "2-3 times per month",
+            "name": "meatFrequency",
+            "value": "2-3 times per month"
+        },
+        {
+            "label": "Less than two times per month",
+            "name": "meatFrequency",
+            "value": "Less than two times per month"
+        },
+    ]
+}
+
+export const dairyFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "Daily",
+            "name": "dairyFrequency",
+            "value": "Daily"
+        },
+        {
+            "label": "Once per week",
+            "name": "dairyFrequency",
+            "value": "Once per week",
+        },
+        {
+            "label": "1-2 times per week",
+            "name": "dairyFrequency",
+            "value": "1-2 times per week"
+        },
+        {
+            "label": "2-3 times per month",
+            "name": "dairyFrequency",
+            "value": "2-3 times per month"
+        },
+        {
+            "label": "Less than two times per month",
+            "name": "dairyFrequency",
+            "value": "Less than two times per month"
+        },
+        {
+            "label": "Never or once per month",
+            "name": "dairyFrequency",
+            "value": "Never or once per month"
+        },
+    ]
+}
+
+export const friedFoodFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "7 or more times per week",
+            "name": "friedFoodFrequency",
+            "value": "7 or more times per week"
+        },
+        {
+            "label": "5-6 times per week",
+            "name": "friedFoodFrequency",
+            "value": "5-6 times per week",
+        },
+        {
+            "label": "2-4 times per week",
+            "name": "friedFoodFrequency",
+            "value": "2-4 times per week"
+        },
+        {
+            "label": "0-1 times per week",
+            "name": "friedFoodFrequency",
+            "value": "0-1 times per week"
+        }
+    ]
+}
+
+export const eggFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "12 or more eggs per week",
+            "name": "friedFoodFrequency",
+            "value": "12 or more eggs per week"
+        },
+        {
+            "label": "8-11 eggs per week",
+            "name": "friedFoodFrequency",
+            "value": "8-11 eggs per week",
+        },
+        {
+            "label": "5-7 eggs per week",
+            "name": "friedFoodFrequency",
+            "value": "5-7 eggs per week"
+        },
+        {
+            "label": "2-4 eggs per week",
+            "name": "friedFoodFrequency",
+            "value": "2-4 eggs per week"
+        },
+        {
+            "label": "0-1 eggs per week",
+            "name": "friedFoodFrequency",
+            "value": "0-1 eggs per week"
+        },
+        // {
+        //     "label": "Less than 2 eggs per week",
+        //     "name": "friedFoodFrequency",
+        //     "value": "Less than 2 eggs per week"
+        // }
+    ]
+}
+
+export const milkTeaCoffeeLowfatValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "7 or more times per week",
+            "name": "milkTeaCoffeeLowfat",
+            "value": "7 or more times per week"
+        },
+        {
+            "label": "4-6 times per week",
+            "name": "milkTeaCoffeeLowfat",
+            "value": "4-6 times per week",
+        },
+        {
+            "label": "2-3 times per week",
+            "name": "milkTeaCoffeeLowfat",
+            "value": "2-3 times per week"
+        },
+        {
+            "label": "0-1 time per week",
+            "name": "milkTeaCoffeeLowfat",
+            "value": "0-1 time per week"
+        }
+    ]
+}
+
+export const dessertFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        // {
+        //     "label": "7 or more times per week",
+        //     "name": "dessertFrequency",
+        //     "value": "7 or more times per week"
+        // },
+        {
+            "label": "4-6 times per week",
+            "name": "dessertFrequency",
+            "value": "4-6 times per week",
+        },
+        {
+            "label": "2-3 times per week",
+            "name": "dessertFrequency",
+            "value": "2-3 times per week"
+        },
+        {
+            "label": "0-1 time per week",
+            "name": "dessertFrequency",
+            "value": "0-1 time per week"
+        }
+    ]
+}
+
+export const snacksFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        // {
+        //     "label": "7 or more times per week",
+        //     "name": "snacksFrequency",
+        //     "value": "7 or more times per week"
+        // },
+        {
+            "label": "4-6 times per week",
+            "name": "snacksFrequency",
+            "value": "4-6 times per week",
+        },
+        {
+            "label": "2-3 times per week",
+            "name": "snacksFrequency",
+            "value": "2-3 times per week"
+        },
+        {
+            "label": "0-1 time per week",
+            "name": "snacksFrequency",
+            "value": "0-1 time per week"
+        }
+    ]
+}
+
+export const sodaCandyFrequencyValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "4-6 times per week",
+            "name": "snacksFrequency",
+            "value": "4-6 times per week",
+        },
+        {
+            "label": "2-3 times per week",
+            "name": "snacksFrequency",
+            "value": "2-3 times per week"
+        },
+        {
+            "label": "0-1 time per week",
+            "name": "snacksFrequency",
+            "value": "0-1 time per week"
+        }
+    ]
+}
+
+export const vegetableIntakeValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "5 or more servings per day",
+            "name": "vegetableIntake",
+            "value": "5 or more servings per day"
+        },
+        {
+            "label": "3-4 servings per day",
+            "name": "vegetableIntake",
+            "value": "3-4 servings per day",
+        },
+        {
+            "label": "1-2 servings per day",
+            "name": "vegetableIntake",
+            "value": "1-2 servings per day"
+        },
+        {
+            "label": "0 servings per day",
+            "name": "vegetableIntake",
+            "value": "0 servings per day"
+        }
+    ]
+}
+
+export const grainBeansIntakeValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "5 or more servings per day",
+            "name": "grainBeansIntake",
+            "value": "5 or more servings per day"
+        },
+        {
+            "label": "3-4 servings per day",
+            "name": "grainBeansIntake",
+            "value": "3-4 servings per day",
+        },
+        {
+            "label": "1-2 servings per day",
+            "name": "grainBeansIntake",
+            "value": "1-2 servings per day"
+        },
+        {
+            "label": "0 servings per day",
+            "name": "grainBeansIntake",
+            "value": "0 servings per day"
+        }
+    ]
+}
+
+export const fruitsIntakeValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "5 or more servings per day",
+            "name": "fruitsIntake",
+            "value": "5 or more servings per day"
+        },
+        {
+            "label": "3-4 servings per day",
+            "name": "fruitsIntake",
+            "value": "3-4 servings per day",
+        },
+        {
+            "label": "1-2 servings per day",
+            "name": "fruitsIntake",
+            "value": "1-2 servings per day"
+        },
+        {
+            "label": "0 servings per day",
+            "name": "fruitsIntake",
+            "value": "0 servings per day"
+        }
+    ]
+}
+
+export const processedFoodIntakeValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        // {
+        //     "label": "3 or more per day",
+        //     "name": "processedFoodIntake",
+        //     "value": "3 or more per day"
+        // },
+        {
+            "label": "1-2 per day",
+            "name": "processedFoodIntake",
+            "value": "1-2 per day",
+        },
+        {
+            "label": "2-3 per week",
+            "name": "processedFoodIntake",
+            "value": "2-3 per week"
+        },
+        {
+            "label": "Once per week or less",
+            "name": "processedFoodIntake",
+            "value": "Once per week or less"
+        }
+    ]
+}
+
+export const occupationValuesFunction = () => {
+    const { t } = useTranslation();
+    return [
+        {
+            "label": "Housewife",
+            "name": "occupation",
+            "value": 0
+        },
+        {
+            "label": "Manager",
+            "name": "occupation",
+            "value": 1,
+        },
+        {
+            "label": "Director",
+            "name": "occupation",
+            "value": 1
+        },
+        {
+            "label": "Officer",
+            "name": "occupation",
+            "value": 1
+        },
+        {
+            "label": "Retired",
+            "name": "occupation",
+            "value": 2
+        }
+        ,
+        {
+            "label": "Medical Field",
+            "name": "occupation",
+            "value": 3
+        },
+        {
+            "label": "Engineer",
+            "name": "occupation",
+            "value": 3
+        }
+        ,
+        {
+            "label": "Architect",
+            "name": "occupation",
+            "value": 3
+        },
+        {
+            "label": "Science Field",
+            "name": "occupation",
+            "value": 3
+        },
+        {
+            "label": "Teacher",
+            "name": "occupation",
+            "value": 4
+        },
+        {
+            "label": "Professor",
+            "name": "occupation",
+            "value": 4
+        },
+        {
+            "label": "Postman",
+            "name": "occupation",
+            "value": 5
+        },
+        {
+            "label": "Security Guard",
+            "name": "occupation",
+            "value": 5
+        }
+        ,
+        {
+            "label": "Delivery",
+            "name": "occupation",
+            "value": 5
+        },
+        {
+            "label": "Accountant",
+            "name": "occupation",
+            "value": 6
+        },
+        {
+            "label": "Clerk",
+            "name": "occupation",
+            "value": 6
+        },
+        {
+            "label": "Secretary",
+            "name": "occupation",
+            "value": 6
+        },
+        {
+            "label": "General Worker",
+            "name": "occupation",
+            "value": 6
+        },
+        {
+            "label": "Businessman",
+            "name": "occupation",
+            "value": 7
+        },
+        {
+            "label": "Priest",
+            "name": "occupation",
+            "value": 8
+        }
+    ]
+}
+
+export const computerHoursValuesFunction = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            label: "More than 6 hours",
+            name: "computerHours",
+            value: "More than 6 hours"
+        },
+        {
+            label: "4 to 6 hours",
+            name: "computerHours",
+            value: "Less than 6 hours"
+        },
+        {
+            label: "1 to 3 hours",
+            name: "computerHours",
+            value: "Less than 4 hours"
+        },
+        {
+            label: "Do not use the computer",
+            name: "computerHours",
+            value: "Less than 4 hours"
+        }
+        
+    ]
+}
+
+export const seatedHoursValuesFunction = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            label: "More than 8 hours",
+            name: "computerHours",
+            value: "More than 8 hours"
+        },
+        {
+            label: "4 to 7 hours",
+            name: "computerHours",
+            value: "Less than 6 hours"
+        },
+        {
+            label: "1 to 3 hours",
+            name: "computerHours",
+            value: "Less than 4 hours"
+        },
+        {
+            label: "Less than an hour",
+            name: "computerHours",
+            value: "Less than 4 hours"
+        }
+        
+    ]
+}
+
+export const sleepHoursValuesFunction = () => {
+    const { t } = useTranslation();
+
+    return [
+        {
+            label: "More than 10 hours",
+            name: "computerHours",
+            value: "More than 10 hours"
+        },
+        {
+            label: "7 to 8 hours",
+            name: "computerHours",
+            value: "Less than 8 hours"
+        },
+        {
+            label: "Less than 6 hours",
+            name: "computerHours",
+            value: "Less than 6 hours",
+        },
+        // {
+        //     label: "Less than an hour",
+        //     name: "computerHours",
+        //     value: "Less than 4 hours"
+        // }
+    ]
 }

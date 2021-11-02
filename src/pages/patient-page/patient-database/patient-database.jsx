@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PatientDatabse from 'Components/patient-database';
 import  { fetchPatientList } from 'Services/patient.services';
 import { fetchBackground } from 'Services/background.services';
+import tempPatientData from 'src/data/patientData.json';
 
 import './patient-database.scss';
 const PatientDatabase = () => {
@@ -15,7 +16,15 @@ const PatientDatabase = () => {
     const fetchPatients = async() => {
         const response = await fetchPatientList();
         console.log('response', response);
-        setPatientList(response);
+
+        if(response.length == 0 || response.error ) {
+            setPatientList(tempPatientData);
+            // setError({error: 'Unable to fetch patients'})
+        }
+        else {
+            setPatientList(response);
+        }
+       
     }
 
     useEffect(()=> {
@@ -66,7 +75,7 @@ const PatientDatabase = () => {
     
 
     return (
-        <div className="patient-database-bg" style={{backgroundImage:`url(${bg['vertical-bg-3']?.imageUrl})`}}>
+        <div className="patient-database-bg" style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}>
 
             {/* <div style={{backgroundPositionY: '1128px', backgroundSize: 'cover', display: 'flex', justifyContent: 'center', width: '100%', height: '20%', alignContent: 'center', alignItems: 'center'}}>   
                 <h2>Patient Database</h2>

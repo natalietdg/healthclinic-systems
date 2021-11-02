@@ -1,15 +1,28 @@
 import React, { useEffect } from 'react';
 import './container.scss';
+
 interface ContainerProps {
     onClose?:(data?: any) => void;
     flexDirection: string;
+    alignItems?: string;
 }
 
-const Container: React.FC<ContainerProps> = ({ onClose, flexDirection, children }) => {
+const Container: React.FC<ContainerProps> = ({ onClose, flexDirection, children, alignItems='center' }) => {
 
     useEffect(()=> {
-        document.querySelector<HTMLElement>('.container')?.style.setProperty('--flexDirection', flexDirection);
- 
+        var containerArray:any =  containerArray = [...document.querySelectorAll('.container')];
+       
+        console.log(containerArray);
+
+       
+        if (containerArray.length > 0) {
+            containerArray.map((container: any)=> {
+                (container as HTMLElement)?.style.setProperty('--flexDirection', flexDirection);
+                (container as HTMLElement)?.style.setProperty('--alignItems', alignItems);
+            });
+        }
+        
+
     },[]);
 
     function closeContainer() {
@@ -20,9 +33,9 @@ const Container: React.FC<ContainerProps> = ({ onClose, flexDirection, children 
     return (
         
         <div className="container">
-            {
+            {/* {
                 onClose && <button className="close" onClick={closeContainer}><img style={{width: '30px', }} src="/assets/images/close-window.png"/></button>
-            }
+            } */}
             {children}
         </div>
        

@@ -2,12 +2,17 @@ export const Links = [
     {
         to: '/home',
         img: 'assets/images/users.png',
-        name: '',
+        name: 'home',
     },
     {
         to: '/patients',
         img: '/assets/images/users.png',
         name: 'Patients Database',
+    },
+    {
+        to: '/patients/:date',
+        img: '',
+        name: 'Patients for Today'
     },
     {
         to: '',
@@ -29,4 +34,5 @@ export const Links = [
         img: '/assets/images/user.png',
         name: 'profile'
     },
+   
 ]

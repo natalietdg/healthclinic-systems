@@ -19,7 +19,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, visible, children }) => {
                 <div className="modal">
                     <div className="modal-content">
                         <button className="close" onClick={closeModal}><img style={{width: '30px', }} src="/assets/images/close-window.png"/></button>
-                        <div style={{zIndex: 3}}> {children} </div>
+                        <div style={{padding: '30px'}}> {children} </div>
                     </div>  
                 </div>
             }

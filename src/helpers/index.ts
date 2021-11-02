@@ -5,6 +5,7 @@ import {
     State, 
     EducationLevel 
 } from './enum';
+import { generateTodaysDate } from "./dates";
 
 export { 
     encode, 
@@ -12,5 +13,6 @@ export {
     Gender, 
     Race,
     State, 
-    EducationLevel
+    EducationLevel,
+    generateTodaysDate
  }

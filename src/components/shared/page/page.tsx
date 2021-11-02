@@ -9,8 +9,8 @@ const Page: React.FC<PageProps> = ({children, visibility, numOfChildren}) => {
 
     useEffect(()=> {
         console.log('children', children);
-        numOfChildren(children.length);
-    },[])
+        numOfChildren(children?.length);
+    },[]);
 
     return(
         <div style={{width: 'inherit', display: 'flex', flexDirection: 'row', justifyContent: 'center',  padding: '40px 0px'}}>

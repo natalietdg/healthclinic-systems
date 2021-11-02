@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import addressInput from '../address-input';
 interface SelectInputProps {
     defaultValue?:any;
+    subtitle?: any;
     selectOptions: any[];
     name: string;
     required?: boolean;
@@ -14,7 +15,7 @@ interface SelectInputProps {
     onSelect: (name: string, value: any) => void;
 }
 
-const SelectInput: React.FC<SelectInputProps> = ({defaultValue, selectOptions, label, name, required, error, value, onSelect}) => {
+const SelectInput: React.FC<SelectInputProps> = ({defaultValue, subtitle, selectOptions, label, name, required, error, value, onSelect}) => {
 
     const { t } = useTranslation();
 
@@ -25,6 +26,7 @@ const SelectInput: React.FC<SelectInputProps> = ({defaultValue, selectOptions, l
     return (
         <div className="select-input">
             <h4 className={classNames("select-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
+            {subtitle && <p><i>{subtitle}</i></p>}
             <select className={classNames("select-input--input", {'error-input': !!error })} onChange={(e:any) => handleSelect(e)} defaultValue={value}>
                 {
                     selectOptions.map((option, index) => {

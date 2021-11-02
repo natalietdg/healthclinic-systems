@@ -9,12 +9,36 @@
     align-content: center;
     // margin: 50px 0px;
 
+    .done {
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        background-color: $token-color-secondary-base;
+        color: white;
+        position: relative;
+        left: 0%;
+        top: 50%;
+    }
+
+    .not-done {
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        background-color: #9ba8a9;
+        color: white;
+        position: relative;
+        left: 0%;
+        top: 50%;
+    }
+
+
     .pagination {
+        margin-bottom: 40px;
         margin-top: 40px;
         background: white;
         width: 320px;
         border-radius: 20px;
-        box-shadow: 3px 3px 6px #aab4e7;
+        box-shadow: 3px 6px 15px #aab4e7cc;
         display: flex;
         flex-direction: row;
         justify-content: space-between;

@@ -5,6 +5,7 @@ import ProfilePage from 'Pages/profile-page';
 import ReportPage from 'Pages/report-page';
 import DashboardPage from 'Pages/dashboard-page';
 import Patient from 'Pages/patient-page';
+import TodayPatients from 'Pages/today-page';
 
 const publicRoutes = [
     {
@@ -42,8 +43,22 @@ const privateRoutes = [
     },
     {
         
-        path: '/patient/:id',
+        path: '/patient/edit/:id/:page?',
         component: <Patient.NewPatientPage />,
+        withNavbar: true
+       
+    },
+    {
+        
+        path: '/patient/view/:id',
+        component: <Patient.ViewPatientPage />,
+        withNavbar: true
+       
+    },
+    {
+        
+        path: '/patients/:date',
+        component: <TodayPatients />,
         withNavbar: true
        
     }

@@ -6,6 +6,32 @@
     align-items: center;
     flex-direction: column;
 
+    .box {
+        min-height: 100px;
+        min-width: 232px;
+        max-width: 300px;
+        overflow: scroll;
+        width: auto;
+        height: auto;
+        padding: 10px;
+        box-shadow: 3px 3px 6px rgb(0 0 0 / 25%);
+        border-radius: 20px;
+        margin: 10px;
+        font-family: $token-font-family-text;
+        &:hover {
+            cursor: pointer;
+            border: 1px dashed $token-button-primary-background-color-base;
+        }
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+
+        @media(min-width: 300px) {
+            justify-content: initial;
+        }
+    }
+
     .required {
         color: $token-font-color-danger;
     }
@@ -15,8 +41,8 @@
     }
 
     img {
-        width: 120px;
-        height: 120px;
+        width: 150px;
+        height: 150px;
         border-radius: 50%;
         padding: 10px 10px;
         box-shadow: 3px 3px 6px rgb(0 0 0 / 25%);
@@ -36,7 +62,7 @@
         border: 0px solid grey;
         // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;
         // box-shadow: 4px 3px 6px 1px rgb(128 105 169 / 60%);
-        box-shadow: 4px 4px 8px #48297d;
+        
         // font-size: 16px;
         font-size: 20px;
         cursor: pointer;

@@ -1,5 +1,8 @@
 import { atom } from 'recoil';
-import { string } from 'yup/lib/locale';
+
+export type submitStatusType = {
+    
+}
 
 export type PatientInformationType = {
     patientID: number;
@@ -405,3 +408,5 @@ export const commentAtom = atom<CommentType[]>({
         created: ''
     }]
 })
+
+

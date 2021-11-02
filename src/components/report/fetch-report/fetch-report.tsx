@@ -2,24 +2,22 @@ import React, { useState } from 'react';
 import TextInput from 'Components/shared/text-input';
 import { useHistory } from 'react-router-dom';
 import './fetch-report.scss';
-interface FetchReportProps {
-
-}
-
-const FetchReport: React.FC<FetchReportProps> = ({}) => {
+import {encode} from 'Helpers/';
+const FetchReport: React.FC = ({}) => {
     const [ reportNumber, setReportNumber ] = useState('');
     let history = useHistory();
     const [ error, setError ] = useState<any>({});
 
     function handleChange(name: string, value: string) {
         console.log('')
+        console.log('value', value);
         setReportNumber(value);
     }
     
     const fetchReport = () => {
         // const reportID = encode(123);
         console.log('pushh');
-        history.push('/report/'+123);
+        history.push('/report/'+encode(reportNumber));
     }
     
     return(

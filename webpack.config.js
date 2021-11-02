@@ -67,7 +67,7 @@ module.exports = {
                 use: ['file-loader']
             },
             {
-                test: /\.s?css$/i,
+                test: /\.(s?css|css|sass)$/i,
                 include: path.resolve(__dirname, 'src'),
                 use: ['style-loader', 'css-loader', 'sass-loader', {
                     loader: 'sass-resources-loader',

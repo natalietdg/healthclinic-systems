@@ -8,6 +8,7 @@
         "vertical-bg-2": {"imageUrl": "/assets/images/vertical-background-2.png"},
         "vertical-bg-3": {"imageUrl": "/assets/images/vertical-background-3.png"},
         "background": {"imageUrl": "/assets/images/Background.png"},
+        "background-2": {"imageUrl": "/assets/images/Background-2.png"},
         "background-dark": {"imageUrl": "/assets/images/Background-dark.png"}
     }
 }

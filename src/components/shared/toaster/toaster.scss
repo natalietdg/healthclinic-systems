@@ -1,13 +1,15 @@
 .success {
-    display: block;
-    position: absolute;
-    top: 0;
+    display: flex;
+    position: relative;
+    top: -8%;
     background: #ffffff;
     justify-content: center;
-    right: 2%;
+    right: -82%;
     padding: 10px;
+    align-items: center;
     box-shadow: 3px 3px 3px rgb(0 0 0 / 25%);
     min-height: 100px;
+    max-width: 212px;
     min-width: 212px;
     border-left: 20px solid #46df46;
     /* border: 1px solid #f7f7f7; */
@@ -18,17 +20,19 @@
 }
 
 .errors {
-    display: block;
-    position: absolute;
+    display: flex;
+    position: relative;
     top: 0;
     background: #ffffff;
+    align-items: center;
     justify-content: center;
-    right: 2%;
+    right: 0%;
     padding: 10px;
     box-shadow: 3px 3px 3px rgb(0 0 0 / 25%);
     min-height: 100px;
     font-size: 14px;
     font-family: $token-font-family-text;
+    max-width: 212px;
     min-width: 212px;
     border-left: 20px solid #dd2121;
     /* border: 1px solid #f7f7f7; */

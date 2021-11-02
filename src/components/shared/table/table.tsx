@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import _, { isEmpty , omit} from 'lodash';
-import { HelmetProvider } from 'react-helmet-async';
+import Radium from 'radium';
+import { styles } from '../animation';
+import { fadeIn } from 'react-animations';
 import './table.scss';
 
 interface TableProps {
@@ -12,7 +14,24 @@ interface TableProps {
 }
 
 const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
-    const [rows, setRows ] = useState<any>();
+
+
+    const DisplayWaiting = () => {
+      
+           return( 
+            <Radium.StyleRoot>
+                <h4 style={{...styles.fadeIn, textAlign: 'center', color: '#7e4ed1'}}>Fetching patient data
+                {
+                    
+                    [1,2,3].map((number)=> {
+                        return <span style={{...styles.fadeIn}}>.</span>
+                    })
+                    
+                }
+            </h4>
+            </Radium.StyleRoot>)
+        
+    }
 
     const subMenu = () => {
         
@@ -20,8 +39,9 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
 
     return (
         <table style={{width: width? width: '80%'}}>
-            <tbody>
-                <tr onMouseEnter={(e) => { e.target.parentElement.style.boxShadow = "3px 3px 6px white"}}>
+            {
+                filteredData.length > 0 ? <tbody>
+                <tr onMouseEnter={(e: any) => { e.target.parentElement.style.boxShadow = "3px 3px 6px white"}}>
                     {
                         columns.map((column: any, index: number)=> {
                             return (
@@ -47,6 +67,9 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
                     })
                 }
             </tbody>
+            : 
+                <DisplayWaiting />
+            }
             
         </table>
     )

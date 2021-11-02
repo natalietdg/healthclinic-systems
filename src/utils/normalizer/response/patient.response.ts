@@ -8,7 +8,7 @@ const PatientResponse = (data:any) => {
         email: data.email || undefined,
         dob: data.dateOfBirth || undefined,
         race: data.race || undefined,
-        image: [data.profilePicBlob? data.profilePicBlob: "http://127.0.0.1:8000/images/1/"] ,
+        image: data.profilePicBlob || undefined,
         ic: data.ic || undefined,
         phone: data.phoneNumber || undefined ,
         height: data.height || undefined ,
