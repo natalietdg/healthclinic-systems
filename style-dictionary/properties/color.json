@@ -14,7 +14,7 @@
             "blue-purple": { "value": "linear-gradient(328.91deg, #6D3BC2 13.25%, #008AFF 85.78%)" },
             "blue-green": { "value": "linear-gradient(153.24deg, #008AFF 12.84%, #08B696 85.76%)" },
             "green-teal": { "value": "linear-gradient(328.91deg, #0DEAE2 13.25%, #2DE49D 85.78%)" },
-            "purple-gradient": { "value": "linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%)"}
+            "purple-gradient": { "value": "linear-gradient(102.45deg, #d5befd 0%, #6D3BC2 72.25%, #5D379E 98.73%)"}
         },
         "white": { "value": "#ffffff" },
         "black": { "value": "#3D3D3D"}

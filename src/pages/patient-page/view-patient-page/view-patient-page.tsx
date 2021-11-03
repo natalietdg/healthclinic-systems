@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { styles } from 'Components/shared/animation';
 import { useHistory } from 'react-router-dom';
 import { encode, decode } from 'Helpers/';
 import { Toaster, Container, Row, Button } from 'Components/shared';
@@ -72,7 +73,7 @@ const ViewPatientPage = () => {
 
     return (
         <div className="view-patient-bg" style={{backgroundImage:`url(${bg['background-2']?.imageUrl})`}}>
-            <Toaster props={toasterProps}/>
+             <Toaster toasterID="viewPatient-toaster" style={{...styles.fadeInRight}} props={toasterProps}/>
             <div className="view-patient-page">
                 {/* <Report.DisplayReport patientData={patientInformation}/> */}
                 <Container flexDirection='column' alignItems='flex-start'>

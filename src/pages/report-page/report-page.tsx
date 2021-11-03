@@ -50,9 +50,7 @@ const ReportPage = ({}) => {
     },[])
     return(
         <div className="report-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-3']?.imageUrl})`}}>
-            <Radium.StyleRoot>
-                <Toaster style={{...styles.fadeInRight}} props={toasterProps}/>
-            </Radium.StyleRoot>
+            <Toaster toasterID="reportPage-toaster" style={{...styles.fadeInRight}} props={toasterProps}/>
             <div className="report-page">
                 <DisplayReport patientData={patientData}/>
             </div>

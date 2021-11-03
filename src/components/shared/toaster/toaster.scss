@@ -1,41 +1,63 @@
 .success {
-    display: flex;
-    position: relative;
-    top: -8%;
-    background: #ffffff;
-    justify-content: center;
-    right: -82%;
-    padding: 10px;
+    display: var(--displayAttribute);
     align-items: center;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    position: absolute;
+    top: 2%;
+    // background: rgb(255, 255, 255, 0.5);
+    background: #00ff138f;
+    right: 1%;
+    padding: 10px;
     box-shadow: 3px 3px 3px rgb(0 0 0 / 25%);
     min-height: 100px;
-    max-width: 212px;
-    min-width: 212px;
-    border-left: 20px solid #46df46;
+    max-width: 250px;
+    min-width: 246px;
+    // border-left: 20px solid #46df46;
     /* border: 1px solid #f7f7f7; */
     z-index: 999;
     font-size: 14px;
     font-family: $token-font-family-text;
-    border-radius: 0px 10px 10px 0px;
+    color: white;
+    border-radius: 10px;
 }
 
 .errors {
-    display: flex;
-    position: relative;
-    top: 0;
-    background: #ffffff;
-    align-items: center;
+    position: absolute;
+    top: 2%;
+    // background: rgb(255, 255, 255, 0.5);
+    background: #ff0000c4;
+    display: var(--displayAttribute);
+    align-items: flex-start;
     justify-content: center;
-    right: 0%;
+    align-content: center;
+    flex-direction: column;
+    padding: 20px;
+    right: 1%;
     padding: 10px;
     box-shadow: 3px 3px 3px rgb(0 0 0 / 25%);
     min-height: 100px;
-    font-size: 14px;
+    color: white;
+    font-size: 16px;
     font-family: $token-font-family-text;
-    max-width: 212px;
-    min-width: 212px;
-    border-left: 20px solid #dd2121;
+    max-width: 250px;
+    min-width: 246px;
+    // border-left: 20px solid #dd2121;
     /* border: 1px solid #f7f7f7; */
     z-index: 44;
-    border-radius: 0px 10px 10px 0px;
+    // border-radius: 0px 10px 10px 0px;
+    border-radius: 10px;
+}
+
+.toasterArray {
+    display: flex;
+    width: auto;
+    height: auto;
+    position: absolute;
+    justify-content: center;
+    align-content: flex-start;
+    top: 0;
+    right: 15px;
+    background: black;
 }

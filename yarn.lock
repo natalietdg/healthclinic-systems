@@ -1968,6 +1968,13 @@
   resolved "https://registry.yarnpkg.com/@types/react-animations/-/react-animations-1.0.0.tgz#2ae2881384db7946662c193b999e708c12774ed2"
   integrity sha512-ItPuRqOf7UML26hc0kaALEtlzeXtbflqI2VtPxsJh/DcqDZFbPIVNi2apSs+1WuhRfmU6YqhZPXmpxns7zPZKg==
 
+"@types/react-dom@^17.0.10":
+  version "17.0.10"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.10.tgz#d6972ec018d23cf22b99597f1289343d99ea9d9d"
+  integrity sha512-8oz3NAUId2z/zQdFI09IMhQPNgIbiP8Lslhv39DIDamr846/0spjZK0vnrMak0iB8EKb9QFTTIdg2Wj2zH5a3g==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-helmet@^6.1.2":
   version "6.1.4"
   resolved "https://registry.npmjs.org/@types/react-helmet/-/react-helmet-6.1.4.tgz"

@@ -31,7 +31,7 @@
         height: 35px;
         border-radius: 8px;
         border: 0px solid grey;
-        box-shadow: 3px 6px 15px #aab4e7cc;
+        box-shadow: 3px 5px 9px 0px #aab4e7cc;
         padding: 0px 10px;
         font-size: 20px;
         font-family: $token-font-family-text;
@@ -39,16 +39,16 @@
         &:focus {
             outline: none;
             // border: 2px solid $token-button-primary-background-color-base;
-            box-shadow: 3px 6px 15px $token-button-primary-background-color-base;
+            box-shadow: 3px 5px 9px 0px $token-button-primary-background-color-base;
         }  
     }
 
     .error-input {
         // border: 2px solid $token-font-color-danger !important;
-        box-shadow: 3px 3px 6px $token-font-color-danger !important;
+        box-shadow: 3px 5px 9px 0px $token-font-color-danger !important;
         &:focus {
              // border: 2px solid $token-font-color-danger !important;
-        box-shadow: 3px 3px 6px $token-font-color-danger !important;
+        box-shadow: 3px 5px 9px 0px $token-font-color-danger !important;
         }
        
     }

@@ -38,7 +38,7 @@
         background: white;
         width: 320px;
         border-radius: 20px;
-        box-shadow: 3px 6px 15px #aab4e7cc;
+        box-shadow: 3px 5px 9px 0px #aab4e7cc;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -51,7 +51,7 @@
 
     span {
         font-size: 12px;
-        box-shadow: 3px 3px 6px #b8b9be;
+        box-shadow: 3px 5px 9px 0px #b8b9be;
         display: none;
         position: relative;
         height: auto;
@@ -77,7 +77,7 @@
     .button-array {
         background: white;
         border-radius: 10px;
-        box-shadow: 3px 3px 6px #b8b9be;
+        box-shadow: 3px 5px 9px 0px #b8b9be;
         height: auto;
         position: absolute;
         width: 140px;

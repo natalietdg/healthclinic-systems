@@ -50,6 +50,8 @@
     "label.lastSmoked": "Last Smoked",
     "label.YearsSmoked": "Years Smoked",
     "label.noAlcoholConsumption": "None",
+    "label.errors": "Error",
+    "label.success": "Success",
    
     "label.avgAlcoholConsumptionRange": "{{min}} - {{max}} drinks per {{period}}",
     "label.moreThanAvgAlcoholConsumption": "{{min}} or more drinks per {{period}}",

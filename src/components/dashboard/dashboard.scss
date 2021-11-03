@@ -59,7 +59,7 @@
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: -6px -7px 18px #e5e5e5, 10px 5px 15px #3f1b7c;
-            box-shadow: -6px -7px 10px -1px #e5e5e5, 10px 5px 15px #3f1b7cbf;
+            box-shadow: -6px -7px 10px -1px #e5e5e5, 9px 9px 12px -3px #3f1b7c;
             border-left: 1px solid #ffffff99;
             border-top: 1px solid #ffffff99;
             margin: 10px;
@@ -68,7 +68,7 @@
 
             &:hover {
                 background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
-                box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
+                box-shadow: inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
             }
     
         }

@@ -504,6 +504,11 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         console.log('name', name);
         console.log('value', value);
         setToaster({ type:'success', message: value});
+        // let tempProps: any = {
+        //     type: 'success', message: value
+        // }
+
+        // Toaster(tempProps, styles.fadeInRight);
         let tempError = error;
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
 
@@ -1117,9 +1122,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     return (
         <div className="patient-info">
-            
-                <Toaster props={toaster}/>
-             
              <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                     <Row>
                     

@@ -72,9 +72,7 @@ const Dashboard:React.FC<DashboardProps> = ({}) => {
     return (
       
         <div className="dashboard-bg" style={{backgroundImage: `url(${bg['vertical-bg']?.imageUrl})`}}>
-            <Radium.StyleRoot>
-                <Toaster style={{...styles.fadeInRight}} props={toaster} />
-            </Radium.StyleRoot>
+             <Toaster toasterID="dashboard-toaster" style={{...styles.fadeInRight}} props={toaster}/>
             
         
             <div className="dashboard">
