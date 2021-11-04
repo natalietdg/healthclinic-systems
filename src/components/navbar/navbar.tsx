@@ -43,10 +43,12 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
      
         const response:any = await refreshAccessToken();
         if (response.error) {
-            setToaster({
-                type: 'errors',
-                message: 'Could not refresh token'
-            })
+            // setToaster({
+            //     type: 'errors',
+            //     message: 'Could not refresh token'
+            // })
+            alert('Please login again.');
+            history.push('/');
         }
         return response;
 
@@ -153,6 +155,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
                                 
                             </li>
                             : link.name=='Patients for Today'? <li key={index}><Link key={index} to={`/patients/${dates.todaysDate}`}><span className="span">{link.name}</span></Link></li>
+                            : link.img!='' ? <li key={index} style={{padding: "7px"}}><Link key={index} to={link.to}><span className="span"><img style={{boxShadow: '3px 5px 9px 0px rgb(0 0 0 / 25%)', borderRadius: '50%', padding: '5px'}} src={link.img} /></span></Link></li>
                             :<li key={index}><Link key={index} to={link.to}><span className="span">{link.name}</span></Link></li>
                         })
                     }

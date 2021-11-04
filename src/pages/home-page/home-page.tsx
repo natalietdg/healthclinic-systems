@@ -3,11 +3,13 @@ import { useRecoilState } from "recoil";
 import { isEmpty } from 'lodash';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useHistory } from "react-router-dom";
+import { Toaster } from "Shared/index";
 import { fetchBackground } from 'Services/background.services';
 import { login } from 'Services/auth.services';
 import { Modal, } from 'Shared/index';
 import { LoginForm } from 'Components/index';
 import { loginAtom, LoginAtomType } from "Recoil/login.atom";
+import { styles } from "Components/shared/animation";
 import { encode } from "Helpers/";
 import './home-page.scss';
 import FetchReport from 'Components/report/fetch-report';
@@ -17,6 +19,7 @@ interface HomePageProp {
 }
 
 const HomePage: React.FC<HomePageProp> = ({}) => {
+    const [ toasterProps, setToasterProps ] = useState<any>({});
     const [ homePage, setHomePage ] = useState({ imageUrl: '' });
     const [ error, setError ] = useState<any>('');
     const [ loginState, setLoginState ] = useRecoilState<LoginAtomType>(loginAtom);
@@ -27,13 +30,13 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
         getBackground();
     },[])
 
-    useEffect(()=> {
-        // if(loginState.state=='success') {
-        //     setTimeout(function() {
-        //         history.push('/home');
-        //     }, 3000);
-        // }
-    },[loginState])
+    // useEffect(()=> {
+    //     if(loginState.state=='success') {
+    //         setTimeout(function() {
+    //             history.push('/home');
+    //         }, 5000);
+    //     }
+    // },[loginState])
 
     const getBackground = async() => {
         const response = await fetchBackground();
@@ -52,6 +55,10 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
                     // toaster('success', "Login Success!");
                     // console.log('data', data);
                     // const url = "dashboard";
+                    setToasterProps({
+                        type: 'success',
+                        message: 'Login Successful'
+                    })
                     setLoginState({state: 'success'});
                     toggleModalVisibility(false);
                 }
@@ -60,6 +67,10 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
                     // toaster("errors", response.error.message);
                     setLoginState({state: 'error'});
                     setError(response.error.message);
+                    setToasterProps({
+                        type: 'errors',
+                        message: 'Login Failed. Please key in the correct username and password.'
+                    })
                 }
             }
             catch(err) {
@@ -75,6 +86,7 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
     
     return (
         <div id="homepage" className="homepage-bg homepage" style={{backgroundImage: `url(${homePage?.imageUrl})`}}>
+            <Toaster toasterID="newPatient.toaster" style={{...styles.fadeInRight}} props={toasterProps} />
             <HelmetProvider>
                 <Helmet>
                     <title>Application for Healthcare Intervention</title>

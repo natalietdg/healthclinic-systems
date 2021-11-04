@@ -4,7 +4,6 @@ import Radium from 'radium';
 import { toasterAtom, ToasterAtomType } from 'Recoil/toaster.atom';
 import { useTranslation } from 'react-i18next';
 import './toaster.scss';
-import { ProgressPlugin } from 'webpack';
 
 type Type = 'errors' | 'success' | ''
 
@@ -36,8 +35,6 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
 
     useEffect(()=> {
         if(fadeOut == true) {
-            // (document.getElementById(toasterID) as HTMLElement).style.display = 'none'; 
-            // hideToaster();
             setTimeout(function () {                                         
                 hideToaster();
             }, 2000);
@@ -46,30 +43,17 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
 
     (async()=> {
         new Promise(async function (resolve, reject) {
-            // (document.getElementById('toasterArea') as HTMLElement).appendChild(document.getElementById(toasterID) as HTMLElement);
-            // (document.getElementById(`${toasterID}`) as HTMLElement).style.display = 'flex'; 
              setTimeout( async function () {                                         
-                console.log('styles.fadeOutRight', styles.fadeOutRight);
-                console.log('(document.getElementById(toasterID) as HTMLElement)', (document.getElementById(`${toasterID}`) as HTMLElement));
-                // (document.getElementById(toasterID) as HTMLElement).style.animation = styles.fadeOutRight.animation;
-                // (document.getElementById(toasterID) as HTMLElement).style.animationName = styles.fadeOutRight.animationName;
-                console.log(document.getElementById(`${toasterID}`) as HTMLElement);
                 setToasterStyle(styles.fadeOutRight);
                 setFadeOut(true);
                 resolve('done');
-            }, 8000);
-           
-            // resolve("done");
+            }, 10000);
         })
-        .then( (success) => {
-            console.log('success', success);
-            console.log('done');
-            setTimeout(function () {                                         
-                (document.getElementById(`${toasterID}`) as HTMLElement).style.display = 'none'; 
-            }, 3000);
-            
-            console.log('done2');
-        });
+        // .then( (success) => {
+        //     setTimeout(function () {                                         
+        //         (document.getElementById(`${toasterID}`) as HTMLElement).style.display = 'none'; 
+        //     }, 3000);
+        // });
     })();
     
     const hideToaster = () => {
@@ -79,9 +63,17 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
 
     return(
         <Radium.StyleRoot>
-            { toasterProps.type != '' &&
-                <div id={toasterID} style={{...toasterStyle}} className={toasterProps.type}>
-                    <span><img src="" /><h4>{t(`label.${toasterProps.type}`)}</h4><button onClick={hideToaster}>x</button></span>
+            { toasterProps.type != '' && toasterProps.type != undefined &&
+                <div id={toasterID} style={{...toasterStyle, zIndex: '997'}} className={toasterProps.type}>
+                    <span className="title-row">
+                        <span className="title-row--iconTitle">{
+                            toasterProps.type=='errors'?
+                            <img style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/error.gif" />
+                            :<img style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/success.gif" />}
+                            <p>{t(`label.${toasterProps.type}`)}</p>
+                        </span>
+                    <span className="title-row--button">
+                    <button onClick={hideToaster}><img src="/assets/images/close.png" /></button></span></span>
                     <span>
                         {toasterProps.message}
                     </span>
@@ -93,40 +85,3 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
 }
   
 export default Toaster;
-
-// : React.FC<ToasterProps>
-// useEffect(()=> {
-//     if(props.type != '' && props.message != '') {
-//         if()
-//         setToastList([...toastList, props]);
-//     }
-    
-// },[props])
-
-
-
-// const ToasterComponent: React.FC<ToasterProps> = ({props, style}) => {
-//     const { t } = useTranslation();     
-//     const [ toasterProps, setToasterProps ] = useState<any>({
-//         type: '',
-//         message: ''
-//     });
-    
-// }
-    // useEffect(()=> {
-    //     showToaster();
-    // }, [toastList]);
-
-    
-
-    // const hideToaster = () => {
-    //     console.log('end');
-    //     (document.getElementById('toaster') as HTMLElement).style.animation = styles.fadeOutRight.animation;
-    //     (document.getElementById('toaster') as HTMLElement).style.animationName = styles.fadeOutRight.animationName;
-    //     // setTimeout(function () {
-
-    //     //     (document.getElementById('toaster') as HTMLElement).style.display="none";   
-    //     // }, 6000)
-    // }
-
-   

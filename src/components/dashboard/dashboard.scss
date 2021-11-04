@@ -54,29 +54,86 @@
         }
 
         button {
-            width: 15vw;
-            height: 10vw;
+            // width: 15vw;
+            // height: 10vw;
+            width: 9vw;
+            height: 5vw;
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: -6px -7px 18px #e5e5e5, 10px 5px 15px #3f1b7c;
             box-shadow: -6px -7px 10px -1px #e5e5e5, 9px 9px 12px -3px #3f1b7c;
             border-left: 1px solid #ffffff99;
             border-top: 1px solid #ffffff99;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
             margin: 10px;
             border: 0px;
-            border-radius: 20px;
+            // border-radius: 20px;
+            border-radius: 10px;
 
             &:hover {
                 background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
                 box-shadow: inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
             }
+
+            &:focus, &:active {
+                background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
+                box-shadow: inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
+            }
     
+        }
+
+        .see-more-button {
+            box-shadow: none;
+            background: rgb(0,0,0,0);
+            color: #5D379E; 
+            width: 100%;
+            
+            // display: flex;
+            position: relative;
+            border-radius: 0px;
+            // flex-direction: row;
+            // align-items: center;
+            padding: 0px 10px;
+            // justify-content: flex-start;
+            display: flex;
+            flex-direction: row;
+            
+            h4 {
+                font-size: 20px;
+                font-family: $token-font-family-heading;
+                width: 36%;
+            }
+            &:hover {
+                background: rgb(0,0,0,0);
+                box-shadow: none;
+                border-bottom: 3px solid #5D379E;
+            }
+
+            &:focus, &:active {
+                background: rgb(0,0,0,0);
+                box-shadow: none;
+                border-bottom: 3px solid #5D379E;
+            }
+        }
+
+        .see-more-img {
+            width: 30px;
+            height: 30px;
+            filter: none;
+            padding: 0px 10px;
         }
     
         img {
-            width: 50px;
-            height: 50px;
+            // width: 50px;
+            // height: 50px;
+            // padding: 0px 5px;
+            width: 30px;
+            height: 30px;
             padding: 0px 5px;
+            filter: brightness(0) invert(1);
         }
 
         h3 {

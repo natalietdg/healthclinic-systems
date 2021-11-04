@@ -80,7 +80,6 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
 
     return (
         <div>
-
             <form className="login-form">
                 <div className="form">
                     <h3 className="">Staff Sign In</h3>

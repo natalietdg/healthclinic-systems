@@ -246,9 +246,7 @@ const NewPatientPage = () => {
             {/* <div style={{borderBottom: '2px solid #CCCCCC', display: 'flex', justifyContent: 'center', width: '100%', height: '15%', alignContent: 'center', alignItems: 'center'}}>   
                 <h2>New Patient</h2>
             </div> */}
-            <Radium.StyleRoot>
-                <Toaster toasterID="newPatient.toaster" style={{...styles.fadeInRight}} props={toaster} />
-            </Radium.StyleRoot>
+           
             <div className="new-patient-page">
                 <Patient.PatientInformation page={pageNumber} onSubmit={submit} comments = {patientComments} data={patient}/>
 

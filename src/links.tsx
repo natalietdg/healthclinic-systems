@@ -1,12 +1,13 @@
 export const Links = [
     {
         to: '/home',
-        img: 'assets/images/users.png',
-        name: 'home',
+        img: '/assets/images/home.png',
+        name: 'Home',
     },
     {
         to: '/patients',
-        img: '/assets/images/users.png',
+        img: '',
+        // img: '/assets/images/users.png',
         name: 'Patients Database',
     },
     {
@@ -21,12 +22,14 @@ export const Links = [
     },
     {
         to: '/analyze-data',
-        img: '/assets/images/machine-learning.png',
+        img: '',
+        // img: '/assets/images/machine-learning.png',
         name: 'Generate Report'
     },
     {
         to: '/new-patient',
-        img: '/assets/images/new-patient.png',
+        img: '',
+        // img: '/assets/images/new-patient.png',
         name: 'Add New Patient'
     },
     {
