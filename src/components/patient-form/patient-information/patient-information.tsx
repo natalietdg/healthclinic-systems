@@ -145,7 +145,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const defaultLifestyleInformation = {
-        occupation: -1,
+        occupation: '',
         smokingFrequency: '',
         ergonomicWorkspace: false,
         computerHours: '',

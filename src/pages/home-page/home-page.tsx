@@ -39,7 +39,7 @@ const HomePage: React.FC<HomePageProp> = () => {
         if(loginState.state=='success') {
             setTimeout(function() {
                 history.push('/home');
-            }, 3000);
+            }, 3500);
         }
     },[loginState])
 
@@ -47,7 +47,7 @@ const HomePage: React.FC<HomePageProp> = () => {
         if(toasterProps.type=='success' && reportNumber) {
             setTimeout(function() {
                 history.push('/report/'+encode(reportNumber));
-            }, 3000);
+            }, 3500);
         }
     },[toasterProps])
 

@@ -15,7 +15,7 @@
         height: 100%;
     }
 
-    h2 {
+    h1 {
         font-family: $token-font-family-heading;
         width: inherit;
         // height: 100%;
@@ -26,7 +26,6 @@
         // align-items: center;
         color: #5d00fb;
         padding: 20px 10px;
-        font-size: 28px;
     }
 
     .content-container {
@@ -41,6 +40,11 @@
     }
     h3 {
         margin-right: 10px;
+    }
+
+    .sub-title {
+        color: #af91e5;
+    
     }
 
     .view-patient-page {
@@ -91,6 +95,7 @@
             padding: 10px;
             border-radius: 10px;
             margin: 0px;
+            font-weight: 400;
         }
     }
 

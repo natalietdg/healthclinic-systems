@@ -37,7 +37,7 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
         if(fadeOut == true) {
             setTimeout(function () {                                         
                 hideToaster();
-            }, 2000);
+            }, 1500);
         }
     },[fadeOut]);
 
