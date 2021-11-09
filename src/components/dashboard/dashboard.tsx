@@ -17,7 +17,7 @@ interface DashboardProps {
 
 }
 
-const Dashboard:React.FC<DashboardProps> = ({}) => {
+const Dashboard:React.FC<DashboardProps> = () => {
     var loaded = false;
     let history = useHistory();
     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
@@ -100,16 +100,15 @@ const Dashboard:React.FC<DashboardProps> = ({}) => {
                     <div className="dashboard">
                         <h2>Hi, <span style={{ color: '#7e4ed1'}}> {user}</span> </h2> {/* , borderBottom: '1px solid purple' */}
                         <div className="page-container--row">
-                            <div className="page-container--sixty">
+                            {/* <div className="page-container--sixty">
                                 <div className='sub-container'>
                                
                                     <h3>Today's Patients</h3>
                                     
-                                        {/* <PatientDatabse patients={[]} columnProps={[{colName: 'ID'}, {colName: 'Full Name'}]}/> */}
-                                        
-                                            <Table filteredData={miniPatientList} columns={[{colName: 'ID'}, {colName: 'Full Name'}]} />
+                                
+                                            <Table visibility="Today" filteredData={miniPatientList} columns={[{colName: 'ID'}, {colName: 'Full Name'}]} />
                                     <div style={{width: '80%'}}>
-                                        <button onMouseOver={animationSlideIn} className="see-more-button" onClick={() => {history.push(`/patients/${todaysDate}`)}}>
+                                        <button onMouseOver={animationSlideIn} className="see-more-button" onClick={() => {history.push(`/patients/`)}}>
                                             <h4>See full list of patients</h4>
                                             <span style={{width: '60%'}}>
                                                 <img className="see-more-img" src="/assets/images/right-arrow.png" />
@@ -119,8 +118,8 @@ const Dashboard:React.FC<DashboardProps> = ({}) => {
                                         
                                     
                                 </div>
-                            </div>
-                            <div className="page-container--forty">
+                            </div> */}
+                            <div className="page-container--full">
                                 {
                                     miniPatientList.length > 0 &&
                                     // <Radium.StyleRoot>

@@ -21,7 +21,7 @@
         align-content: center;
         // margin-left: 46px;
 
-        &:hover {
+        &:hover, &:focus{
             text-decoration: underline 2px solid $token-button-primary-background-color-base;
             background-color: white;
             border-radius: 10px;
@@ -115,6 +115,7 @@
         margin: 20px 10px;
         font-family: $token-font-family-text;
         color: $token-button-primary-text-color-base;
+        box-shadow: 3px 4px 9px -2px #aab4e7cc;
         font-size: $token-font-size-md;
         border: 0px solid white;
         font-weight: 400;
@@ -127,7 +128,7 @@
         //     background-color: $token-color-white;
         //     box-shadow:inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff;
         // }
-        &:hover {
+        &:hover, &:focus{
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: 3px 5px 9px 0px rgba(0, 0, 0, 0.25);
@@ -157,7 +158,7 @@
         //     background-color: $token-color-white;
         //     box-shadow:inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff;
         // }
-        &:hover {
+        &:hover, &:focus{
             background: linear-gradient(153.24deg, #008AFF 12.84%, #08B696 85.76%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: 3px 5px 9px 0px rgba(0, 0, 0, 0.25);
@@ -185,7 +186,7 @@
         //     background-color: $token-color-white;
         //     box-shadow:inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff;
         // }
-        &:hover {
+        &:hover, &:focus {
             background: linear-gradient(153.24deg, $token-font-color-danger 12.84%, #e72424 85.76%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: 3px 5px 9px 0px rgba(0, 0, 0, 0.25);
@@ -203,17 +204,18 @@
     align-items: center;
     
     .severely-underweight {
-        background-color: #00a1ff;
+        background-color: #dfff7e;
         height: 50px;
         margin: 2px; 
         width: auto;
         padding: 10px;
         display: flex;
         align-items: center;
+        color: white;
         border-radius: 10px;
     }
     .underweight {
-        background-color: #00ffdc;
+        background-color: #ffd920;
         height: 50px;
         margin: 2px; margin: 2px; 
         display: flex;
@@ -221,9 +223,10 @@
         width: auto;
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
     .normal {
-        background-color: #19cb19;
+        background-color: #0dff15;
         height: 50px;
         display: flex;
         align-items: center;
@@ -231,6 +234,7 @@
         width: auto;
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
     .overweight {
         background-color: #ffb020;
@@ -241,6 +245,7 @@
         width: auto;
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
     .moderate-obese {
         background-color: #e7530d;
@@ -251,6 +256,7 @@
         width: auto;
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
     .severely-obese {
         background-color: #dd2121;
@@ -261,6 +267,7 @@
         width: auto;
         padding: 10px;
         border-radius: 10px;
+        color: white;
     }
 
    

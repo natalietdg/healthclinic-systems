@@ -1,6 +1,7 @@
-import _, {omit} from 'lodash';
+import _, {omit, omitBy, isEmpty, isUndefined} from 'lodash';
 import axios from 'axios';
 import normalizer from 'Utils/normalizer';
+import { isEmptyBindingElement } from 'typescript';
 
 export const uploadImage = async(data: any)=> {
     const url = process.env.PUBLIC_PATH;
@@ -29,18 +30,17 @@ export const uploadImage = async(data: any)=> {
     }
 }
 
-export const savePatientInformation = async(data: any) => {
+export const savePatientInformation = async(data:any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
-    const accessToken =  localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem('accessToken');
+    
     console.log('data', data);
-    console.log('saved');
-    const patientID = data.patientID;
-
+    console.log(normalizer.response.patient(data));
     try {
         const response = await axios({
-            method: 'POST',
-            url: `http://${url}:${port}/patients/${patientID}`,
+            method: 'PUT',
+            url: `http://${url}:${port}/patients/${data.patientID}/`,
             responseType: 'json',
             data: normalizer.response.patient(data),
             headers: {
@@ -49,10 +49,10 @@ export const savePatientInformation = async(data: any) => {
         })
 
         console.log('create patient', response);
-        return response.data;
+        return normalizer.model.patient(response.data);
     }
     catch(err:any) {
-        const { error } = err?.response?.data || {};
+        const { error }:any = err?.response?.data || {};
         console.log('err', err);
         return { error: { message: err?.message } };
     }
@@ -130,22 +130,22 @@ export const fetchComments = async(patientID: any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
-    console.log('patientID', patientID);
+    // console.log('patientID', patientID);
     try {
         const response = await axios({
             method:'GET',
-            url: `http://${url}:${port}/patients/${patientID}/comments/`,
+            url: `http://${url}:${port}/patients/${parseInt(patientID)}/comments/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
         });
-        console.log('response', response);
+        // console.log('response', response);
 
         const patientComments = response.data.map((comment: any)=> {
             return normalizer.model.comment(comment);
         })
-        console.log('patientsCommenst', patientComments);
+        // console.log('patientsCommenst', patientComments);
        
         return patientComments;
     }
@@ -258,7 +258,7 @@ export const fetchPatientInformation = async(patientID: any) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `http://${url}:${port}/patients/${patientID}/`,
+            url: `http://${url}:${port}/patients/${parseInt(patientID)}/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
@@ -350,20 +350,60 @@ export const fetchReport = async(reportID: string) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
+    const accessTokenExpiry = localStorage.getItem('accessTokenExpiry');
     //url: http://127.0.0.1:8000/patients/?expand=report_id/34uLYKmnJ94B9UAx89NLtE/
     try{
         const response = await axios({
             method: 'GET',
             url: `http://${url}:${port}/patienthealthrecords/?search=${reportID}`,
             responseType: 'json',
-            headers: {
-                'Authorization': `Bearer ${accessToken}`        
-            },
+            // headers: {
+            //     'Authorization': `Bearer ${accessToken}`        
+            // },
         });
 
         console.log('response', response);
+        var patientReport = normalizer.model.patient(response.data[0]);
 
-        return response.data;
+            console.log('patientReport', patientReport);
+            patientReport.obesityPredictionReports = await Promise.all(patientReport.obesityPredictionReports.map(async(report: any)=> {
+                var response:any = '';
+                var inputData: any = {}; 
+                if (accessToken && accessTokenExpiry && parseInt(accessTokenExpiry) > Math.trunc(new Date().getTime() /1000)) {
+                    response = await fetchObesityPredictionReport(report.id);
+                    inputData = normalizer.model.obesityPrediction(JSON.parse(response.data.input_data));
+                }
+                let probability = (report.fullResponse.probability.split(/\n/g)).slice(1, 5);
+                
+                probability = probability.reduce(function(prob: any, curr: any) {
+                    // console.log('prob', prob);
+                    // console.log('curr', curr);
+                    curr = curr.replace(/                /, "");
+                    let name = curr.split(' is ')[0];
+                    let prediction = parseInt((curr.split(' is ')[1]).split('%')[0]);
+                    prob[name] = prediction;
+                    //  console.log('prob', prob);
+                    return prob;
+                }, {});
+                // console.log('probability', probability);
+                // console.log('inputData', inputData);
+                // console.log('report', report);
+                // console.log('report.id', report.id);
+                let tempReport:any = omitBy({
+                    ...report,
+                    inputData: inputData,
+                    fullResponse: {
+                        ...report.fullResponse,
+                        probability: probability
+                    },
+                }, (value) => isEmpty(value));
+                tempReport.feedback =report.feedback;
+                tempReport.id = report.id;
+                return tempReport;
+            }));
+       
+        // console.log('patientReport', patientReport);
+        return patientReport;
         // .then((response) => { return response.data.filter((patient: any, index: any)=> {
         //     if(patient.report_id==reportID){
         //         console.log('true', patient.name);
@@ -384,11 +424,11 @@ export const fetchReport = async(reportID: string) => {
         //     return tempPatient;
         // })
        
-        console.log('response.data', response);
+        // console.log('response.data', response);
         // const patientsData = response.data.map(async (patient: any)=> {
         //     patient.image = await fetchPatientProfilePic(patient.image[0])
         // })
-        return response;
+        // return response;
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
@@ -402,6 +442,7 @@ export const generateObesityPrediction = async(data: any) => {
         const url = process.env.PUBLIC_PATH;
         const port = process.env.PORT;
         const accessToken = localStorage.getItem('accessToken');
+        console.log('accessToken', accessToken);
         console.log(normalizer.response.obesityPrediction(data));
 
         const normalizedData = normalizer.response.obesityPrediction(data);
@@ -411,58 +452,168 @@ export const generateObesityPrediction = async(data: any) => {
             method: 'POST',
             responseType: 'json',
             url: `http://${url}:${port}/obesity/v1/comorbidities_classifier/predict`,
-            data: { 
-                "occupation":6,
-                "gender":"Female",
-                "race":"Indian",
-                "bmi":21,
-                "family-history": "High Cholesterol",
-                "smoke-freq":"1-9 cigarette sticks per day",
-                "active-scale":3,
-                "alcohol-freq":"1-2 drinks per day",
-                "meat-freq":"Daily",
-                "dairy":"1-2 times per week",
-                "fried-food":"2-4 times per week",
-                "egg":"12 or more eggs per week",
-                "meat-over-fried":"No",
-                "vegetarian":"Yes",
-                "milk-tea-coffee-lowfat":"4-6 times per week",
-                "desserts":"4-6 times per week",
-                "snacks":"0-1 time per week",
-                "soda-candy":"4-6 times per week",
-                "vegetable":"3-4 servings per day",
-                "grain-bean":"5 or more servings per day",
-                "fruits":"1-2 servings per day",
-                "processed-food":"1-2 per day",
-                "5-fruit":"No",
-                "4-citrus":"No",
-                "less-5-orange-yellow-fruit-vege":"Yes",
-                "cruciferous-vege":"No",
-                "smoked-meat-fish":"Yes",
-                "nitrate-salt-meat":"Yes",
-                "bbq":"No",
-                "more-3-coffee":"No",
-                "less-2-dairy-day":"Yes",
-                "less-3-mamak-nasilemak-percik-week":"No",
-                "ergo-workspace":"No","computer-hours":
-                "Less than 6 hours",
-                "seated-hours":"Less than 4 hours",
-                "sleep":"Less than 6 hours",
-                "stress":"No",
-                "exercise-programme":"Yes",
-                "personal-trainer":"Yes",
-                "dietary-plan":"No",
-            },
+            data: normalizedData,
+            // data: { 
+            //     '4-citrus' : 'No',
+            //     '5-fruit' : 'Yes',
+            //     'active-scale' : 9,//8,//7,//6,//5,//4, //2,//1, //3,
+            //     'alcohol-freq' : '3 or more drinks per day', 
+            //     'bbq' : 'No',
+            //     'bmi' : 400,//300,//200, //101//100, 
+            //     'computer-hours' : "More than 6 hours", 
+            //     'cruciferous-vege' : "No", 
+            //     'dairy' : "Never or once per month", 
+            //     'desserts' : "4-6 times per week",
+            //     'dietary-plan' : "Yes", 
+            //     'egg' : "2-4 eggs per week",
+            //     'ergo-workspace' : "Yes", 
+            //     'exercise-programme' : "Yes", 
+            //     'family-history' : 'NO CONDITIONS', //'Congenital Heart Disease', 
+            //     'fried-food' : "5-6 times per week",
+            //     'fruits' : "3-4 servings per day",
+            //     'gender' : 'Female', 
+            //     'grain-bean' : "3-4 servings per day",
+            //     'less-2-dairy-day' : 'No', 
+            //     'less-3-mamak-nasilemak-percik-week' : 'No', 
+            //     'less-5-orange-yellow-fruit-vege' : 'No', 
+            //     'meat-freq' : "Less than two times per month",
+            //     'meat-over-fried' : 'No', 
+            //     'milk-tea-coffee-lowfat' : "0-1 time per week",
+            //     'more-3-coffee' : 'Yes', 
+            //     'nitrate-salt-meat' : 'No', 
+            //     'personal-trainer' : 'Yes', 
+            //     'processed-food' : "Once per week or less", 
+            //     'race' : 'Chinese', 
+            //     'seated-hours' : "Less than 4 hours", 
+            //     'sleep' : "More than 10 hours", 
+            //     "smoked-meat-fish" : "No",
+            //     'smoke-freq' : 'NON SMOKER',  
+            //     'snacks' : "2-3 more times per week",
+            //     'soda-candy' : "0-1 times per week",
+            //     'stress' : 'Yes', 
+            //     'vegetable' : "5 or more servings per day",
+            //     'vegetarian' : "Yes", 
+            //     'occupation' : 8//7//6,//5//4//3, //1, 2
+            // },
             headers: {
-                'Authorization': `Bearer ${accessToken}`        
+                'Authorization': `Bearer ${accessToken}`,
+                'Content-Type': 'application/json'     
             },
         });
         console.log('response', response);
-        console.log('response', response.data);
+        // console.log('response', response.data);
 
-        // return response?.data;
+        return response?.data;
     }
     catch(err:any) {
+        const { error } = err?.response?.data || {};
+        console.log('err', err);
+        return { error: { message: err?.message } };
+    }
+}
+
+export const setPatientandFeedbackMLRequest = async(data: any) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+    const accessToken = localStorage.getItem('accessToken');
+    let tempData = omitBy({
+        patient: data.patientID? data.patientID: undefined,
+        feedback: data.feedback? data.feedback : undefined
+    }, (value) => isUndefined(value));
+    console.log('tempData', tempData);
+    try {
+        const response = await axios({
+            method: 'PUT',
+            url: `http://${url}:${port}/obesity/v1/mlrequests/${data.reportID}`,
+            data: tempData,
+            responseType: 'json',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        return response;
+    }
+    catch(err: any) {
+        const { error }:any = err?.response?.data || {};
+        console.log('err', err);
+        return { error: { message: err?.message } };
+    }
+}
+
+export const fetchAllObesityPredictionReport = async(patientID: any) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+    const accessToken = localStorage.getItem('accessToken');
+    const self = this;
+    var patient = patientID;
+    try {
+        const response = await axios({
+            method: 'GET',
+            url: `http://${url}:${port}/obesity/v1/mlrequests`,
+            responseType: 'json',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        .then((response) => { 
+            console.log('patient', patient);
+            return response.data.filter((MLReport: any, index: any)=> {
+           
+                if(MLReport.patient==patientID){
+                    console.log('true', MLReport);
+                }
+                return MLReport.patient==patientID && MLReport.response != 'error'
+                })
+            }).then( (MLReports)=> {
+                console.log('MLReports', MLReports);
+                const parsedReports = MLReports.map((report: any) => {
+                    let input_data = JSON.parse(report.input_data);
+                    let full_response = JSON.parse(report.full_response.replace(/'/g, "\""));
+                    let probability = (full_response.probability.split(/\n/g)).slice(1, 4);
+                    probability = probability.map((prob: any) => {
+                        return prob.replace(/                /, "");
+                    })
+                    console.log('probability', probability);
+                    full_response.probability = probability;
+                    const tempParsedReport = normalizer.model.mlReport({
+                        ...report,
+                        input_data: input_data,
+                        full_response: full_response
+                    });
+
+                    return tempParsedReport;
+                });
+                return parsedReports;
+            });
+
+        return response;
+    }
+    catch (err: any) {
+        const { error } = err?.response?.data || {};
+        console.log('err', err);
+        return { error: { message: err?.message } };
+    }
+}
+
+export const fetchObesityPredictionReport = async(reportID: any) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+    const accessToken = localStorage.getItem('accessToken');
+
+    try {
+        const response = await axios({
+            method: 'GET',
+            url: `http://${url}:${port}/obesity/v1/mlrequests/${reportID}`,
+            responseType: 'json',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        });
+
+        return response;
+    }
+    catch (err: any) {
         const { error } = err?.response?.data || {};
         console.log('err', err);
         return { error: { message: err?.message } };

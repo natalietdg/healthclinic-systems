@@ -38,7 +38,7 @@
         width: 400px;
         height: 480px;
         border-radius: 40px;
-        box-shadow: 24px 17px 25px -4px rgb(0 0 0 / 54%), -2px 0px 25px 0px white;
+        box-shadow: 23px 14px 25px -11px #aab4e7e0, -2px 0px 25px 0px white;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -96,6 +96,31 @@
             // box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
             border: 1px solid rgb(0, 0, 0, 0);
             box-shadow:inset 3px 3px 6px #48297d, inset -2px -2px 6px #ba9dec;
+        }
+    }
+}
+.terms-and-conditions-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .button {
+        background-color: $token-color-secondary-base;
+        width: 200px;
+        height: auto;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 20px 10px;
+        font-family: $token-font-family-text;
+        color: $token-button-primary-text-color-base;
+        font-size: $token-font-size-md;
+        border: 0px solid white;
+        font-weight: 500;
+    
+        &:hover, &:focus{
+            background: linear-gradient(153.24deg, #008AFF 12.84%, #08B696 85.76%);
+            color: $token-button-primary-text-color-hover;
+            box-shadow: inset 4px 3px 6px 1px #0a6e74, inset -2px -2px 6px #83e3e9;
         }
     }
 }

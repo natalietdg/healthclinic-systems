@@ -10,22 +10,22 @@ export const Links = [
         // img: '/assets/images/users.png',
         name: 'Patients Database',
     },
-    {
-        to: '/patients/:date',
-        img: '',
-        name: 'Patients for Today'
-    },
+    // {
+    //     to: '/patients/:date',
+    //     img: '',
+    //     name: 'Patients for Today'
+    // },
     {
         to: '',
         img: '',
         name: 'placeholder'
     },
-    {
-        to: '/analyze-data',
-        img: '',
-        // img: '/assets/images/machine-learning.png',
-        name: 'Generate Report'
-    },
+    // {
+    //     to: `/patient/edit/:id/:page?`,
+    //     img: '',
+    //     // img: '/assets/images/machine-learning.png',
+    //     name: 'Generate Obesity Prediction Report'
+    // },
     {
         to: '/new-patient',
         img: '',

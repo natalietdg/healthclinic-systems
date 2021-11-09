@@ -20,16 +20,22 @@ export const login = async(data: any) => {
         const accessToken = response.data.access;
   
         const validatedAccessToken = validateToken(accessToken);
+        // console.log('validatedAccessToken', validatedAccessToken);
         const validatedRefreshToken = validateToken(refreshToken);
-      
+        // console.log('validatedRefreshToken', validatedRefreshToken);
+
         if (validatedAccessToken.error || validatedRefreshToken.error) {
             return { error: 'Invalid Token'};
         }
         else {
             localStorage.setItem('refreshToken', refreshToken);
             localStorage.setItem('accessToken', accessToken);
+
+            localStorage.setItem('accessTokenExpiry', validatedAccessToken.payload.exp);
+            localStorage.setItem('refreshTokenExpiry', validatedRefreshToken.payload.exp);
+
             if(refreshToken && accessToken) localStorage.setItem('user', data.username);
-            console.log('localStorage', localStorage);
+            // console.log('localStorage', localStorage);
     
             return "success";
         }
@@ -58,12 +64,13 @@ export const refreshAccessToken = async() => {
         console.log('response', response);
 
         const validatedAccessToken = validateToken(response.data.access);
-        
+        console.log('validatedAccessToken', validatedAccessToken);
         if(validatedAccessToken.error) {
             return validatedAccessToken;
         }
         else {
             localStorage.setItem('accessToken', response.data.access);
+            localStorage.setItem('accessTokenExpiry', validatedAccessToken.payload.exp);
 
             return "success";
         }

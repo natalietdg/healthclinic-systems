@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import Radium from "radium";
 import { useRecoilState } from "recoil";
 import { isEmpty } from 'lodash';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
@@ -9,6 +10,8 @@ import { login } from 'Services/auth.services';
 import { Modal, } from 'Shared/index';
 import { LoginForm } from 'Components/index';
 import { loginAtom, LoginAtomType } from "Recoil/login.atom";
+import TermsAndConditionsPage from 'Pages/terms-and-conditions-page';
+import { fetchReport } from 'Services/patient.services';
 import { styles } from "Components/shared/animation";
 import { encode } from "Helpers/";
 import './home-page.scss';
@@ -18,8 +21,10 @@ interface HomePageProp {
 
 }
 
-const HomePage: React.FC<HomePageProp> = ({}) => {
+const HomePage: React.FC<HomePageProp> = () => {
     const [ toasterProps, setToasterProps ] = useState<any>({});
+    const [ termsAndConditionsModal, setTermsAndConditionsModal ] = useState<any>(false);
+    const [ reportNumber, setReportNumber ] = useState<any>('');
     const [ homePage, setHomePage ] = useState({ imageUrl: '' });
     const [ error, setError ] = useState<any>('');
     const [ loginState, setLoginState ] = useRecoilState<LoginAtomType>(loginAtom);
@@ -30,13 +35,21 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
         getBackground();
     },[])
 
-    // useEffect(()=> {
-    //     if(loginState.state=='success') {
-    //         setTimeout(function() {
-    //             history.push('/home');
-    //         }, 5000);
-    //     }
-    // },[loginState])
+    useEffect(()=> {
+        if(loginState.state=='success') {
+            setTimeout(function() {
+                history.push('/home');
+            }, 3000);
+        }
+    },[loginState])
+
+    useEffect(()=> {
+        if(toasterProps.type=='success' && reportNumber) {
+            setTimeout(function() {
+                history.push('/report/'+encode(reportNumber));
+            }, 3000);
+        }
+    },[toasterProps])
 
     const getBackground = async() => {
         const response = await fetchBackground();
@@ -47,30 +60,25 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
 
     const signIn = async(data: any) => {
         if (!isEmpty(data))  {
-        //submit form data
             try{
                 const response:any = await login(data);
                 console.log('response', response);
                 if(!response.error) {
-                    // toaster('success', "Login Success!");
-                    // console.log('data', data);
-                    // const url = "dashboard";
                     setToasterProps({
                         type: 'success',
                         message: 'Login Successful'
-                    })
+                    });
+
                     setLoginState({state: 'success'});
                     toggleModalVisibility(false);
                 }
                 else {
-                    // console.log('here');
-                    // toaster("errors", response.error.message);
                     setLoginState({state: 'error'});
                     setError(response.error.message);
                     setToasterProps({
                         type: 'errors',
                         message: 'Login Failed. Please key in the correct username and password.'
-                    })
+                    });
                 }
             }
             catch(err) {
@@ -83,24 +91,60 @@ const HomePage: React.FC<HomePageProp> = ({}) => {
     function toggleModalVisibility(visible: boolean) {
         setModalVisibility(visible);
     }
+
+    const fetchUserReport = async() => {
+        // const reportID = encode(123);
+        setTermsAndConditionsModal(false);
+        
+        const response = await fetchReport(reportNumber);
+
+        if(response.error) {
+            setError({reportNumber: 'Invalid report number.'})
+            setToasterProps({
+                type: 'errors',
+                message: "Please double check the report number or request for assistance from our friendly staff."
+            })
+        }
+        else {
+            setToasterProps({
+                type: 'success',
+                message: "Redirecting you to your report."
+            });
+        }
+        
+    }
+
+    const openTermsAndConditionsModal = (reportNumber: string) => {
+        setReportNumber(reportNumber);
+        setTermsAndConditionsModal(true);
+    }
     
     return (
-        <div id="homepage" className="homepage-bg homepage" style={{backgroundImage: `url(${homePage?.imageUrl})`}}>
-            <Toaster toasterID="newPatient.toaster" style={{...styles.fadeInRight}} props={toasterProps} />
-            <HelmetProvider>
-                <Helmet>
-                    <title>Application for Healthcare Intervention</title>
-                    <meta name="description" content="Caring about your needs, one step at a time." />
-                </Helmet>
-                <div>
-                    <button className="login-button" onClick={()=> toggleModalVisibility(true)}>Staff Login</button>
-                    <Modal onClose={toggleModalVisibility} visible={modalVisibility}>
-                        <LoginForm loginError={error} onConfirm={signIn} />
-                    </Modal>
-                </div>
-                <FetchReport />
-            </HelmetProvider>
-        </div>
+        <Radium.StyleRoot>
+            <div id="homepage" className="homepage-bg homepage" style={{backgroundImage: `url(${homePage?.imageUrl})`, ...styles.fadeIn}}>
+                <Toaster toasterID="homepage.toaster" style={{...styles.fadeInRight}} props={toasterProps} />
+                <Modal visible={termsAndConditionsModal} onClose={()=> {setTermsAndConditionsModal(false)}}>
+                    <TermsAndConditionsPage />
+                    <div className="terms-and-conditions-button">
+                        <button className="button" onClick={fetchUserReport}>I agree with the terms and conditions.</button>
+                    </div>
+                
+                </Modal>
+                <HelmetProvider>
+                    <Helmet>
+                        <title>Application for Healthcare Intervention</title>
+                        <meta name="description" content="Caring about your needs, one step at a time." />
+                    </Helmet>
+                    <div>
+                        <button className="login-button" onClick={()=> toggleModalVisibility(true)}>Staff Login</button>
+                        <Modal onClose={toggleModalVisibility} visible={modalVisibility}>
+                            <LoginForm loginError={error} onConfirm={signIn} />
+                        </Modal>
+                    </div>
+                    <FetchReport error={error} onFetch={openTermsAndConditionsModal}/>
+                </HelmetProvider>
+            </div>
+        </Radium.StyleRoot>
     )
 }
 

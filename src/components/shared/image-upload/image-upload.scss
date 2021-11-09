@@ -18,7 +18,7 @@
         border-radius: 20px;
         margin: 10px;
         font-family: $token-font-family-text;
-        &:hover {
+        &:hover, &:focus{
             cursor: pointer;
             border: 1px dashed $token-button-primary-background-color-base;
         }
@@ -69,7 +69,7 @@
         font-weight: 400;
         font-family: $token-font-family-text;
 
-        &:hover, &:active {
+        &:hover{
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
             // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;

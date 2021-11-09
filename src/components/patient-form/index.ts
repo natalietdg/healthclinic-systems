@@ -1,7 +1,7 @@
-import MedicalRecord from "./medical-record";
+import MLPredictionReport from "./ml-prediction-report";
 import PatientInformation from "./patient-information";
 
 export default {
-    MedicalRecord: MedicalRecord,
+    MLPredictionReport: MLPredictionReport,
     PatientInformation: PatientInformation
 }

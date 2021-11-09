@@ -13,10 +13,11 @@ import page from 'Components/shared/page';
 
 interface PatientDatabseProps {
     patients: any;
+    visible: string;
     columnProps?: any;
 }
 
-const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) => {
+const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, visible}) => {
     const [pagePagination, setPagePagination] = useState([]);
     const [error, setError] = useState<any>({});
     const [ hiddenFirstPartButtons, setHiddenFirstPartButtons ] = useState<any>([]);
@@ -237,7 +238,8 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) 
                 let values = Object.values(patientData);
                 
                 let filteredValues:any = values.reduce(function(allFilteredValues: any, value) {
-                    if(typeof(value)=='string') if((value.toLowerCase()).includes(filter) || filter=='') allFilteredValues.push(value);
+                    if(typeof(value)=='string') if((value.toLowerCase()==filter) || filter=='') allFilteredValues.push(value);
+                    // if(typeof(value)=='string') if((value.toLowerCase()).includes(filter) || filter=='') allFilteredValues.push(value);
                     return allFilteredValues;
                 },[])
     
@@ -253,6 +255,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) 
                 
                 var patientData = {}
                 if(todaysDate== null) {
+                    // console.log('filteredData', filteredData);
                     patientData = {
                         "ID": filteredData.patientID || filteredData['ID'],
                         'Email': filteredData.email || filteredData['Email'],
@@ -271,7 +274,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) 
                         // 'Diagnosis': filteredData['Diagnosis'],
                         "": <div style={{display: 'flex'}}>
                                 <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                    <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
+                                    <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
                                     <br></br>
                                 </Button>
                             </div>
@@ -279,8 +282,8 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) 
                 }
                 else{
                     var hasDiagnosis = false;
-                    console.log('filteredData', filteredData);
-                    console.log('todaysDate', todaysDate);
+                    // console.log('filteredData', filteredData);
+                    // console.log('todaysDate', todaysDate);
                     if(filteredData.comments) {
                         hasDiagnosis = filteredData.comments.some((comment: any)=> {
                             let tempDate = (new Date(comment.created)).toLocaleDateString([], {
@@ -484,6 +487,8 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps}) 
             <Table 
                 columns={columns}
                 filteredData={filteredData[pageVisibility]? filteredData[pageVisibility]: []}
+                filter={filter}
+                visibility={visible}
             />
             <Row className="pagination">
                 <button onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img src="/assets/images/left.png" /></button>

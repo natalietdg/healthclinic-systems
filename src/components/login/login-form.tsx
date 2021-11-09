@@ -45,7 +45,7 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
 
         }
         catch(err) {
-            let { path, message, type }:any = err;
+            var { path, message, type }:any = err;
         console.log('path', path);
             let value = '';
             if (message.includes('Passwords') && message.includes('match')) {
@@ -53,7 +53,7 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
             }
             else {
 
-                ({path, value} = errorHandler.validation(err)) || {};
+                let {path, value} = errorHandler.validation(err) || {};
                 console.log('path', path);
                 if (path.indexOf('.')!==-1) {
                     const str = path.split('.');

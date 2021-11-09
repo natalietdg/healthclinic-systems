@@ -7,11 +7,13 @@
     background-size: cover;
     position: absolute;
     // padding: 20px 0px;
+    backdrop-filter: blur(30px);
     top: 10%;
 
     // background-position-y: -110px;
     @media (min-width: $token-media-query-lg) {
         width: 100%;
+        height: 100%;
     }
 
     h2 {
@@ -35,5 +37,6 @@
         flex-direction: row;
         align-items: center;
         // backdrop-filter: blur(30px);
+
     }
 }

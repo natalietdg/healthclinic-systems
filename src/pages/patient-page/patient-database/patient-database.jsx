@@ -24,7 +24,6 @@ const PatientDatabase = () => {
         else {
             setPatientList(response);
         }
-       
     }
 
     useEffect(()=> {
@@ -81,7 +80,7 @@ const PatientDatabase = () => {
                 <h2>Patient Database</h2>
             </div> */}
             <div className="patient-database">
-                <PatientDatabse patients={patientList}/>    
+                <PatientDatabse visible={"Database"} patients={patientList}/>    
             </div>
            
         </div>

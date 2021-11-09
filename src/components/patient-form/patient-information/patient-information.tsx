@@ -9,7 +9,7 @@ import { ToasterAtomType, toasterAtom } from 'Recoil/toaster.atom';
 import { PatientInformationType, CommentType, commentAtom} from 'Recoil/patient.atom';
 import { uploadImage } from 'Services/patient.services';
 import './patient-information.scss';
-import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValuesFunction, sodaCandyFrequencyValuesFunction, occupationValuesFunction, processedFoodIntakeValuesFunction, fruitsIntakeValuesFunction, grainBeansIntakeValuesFunction, vegetableIntakeValuesFunction, snacksFrequencyValuesFunction, dessertFrequencyValuesFunction, milkTeaCoffeeLowfatValuesFunction, eggFrequencyValuesFunction, friedFoodFrequencyValuesFunction, dairyFrequencyValuesFunction, meatFrequencyValuesFunction, healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, nicotineAmtValuesFunction, heightFunction, weightFunction, yearFunction, lastHundredYearsFunction, alcoholTypesValuesFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
+import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValuesFunction, sodaCandyFrequencyValuesFunction, occupationValuesFunction, processedFoodIntakeValuesFunction, fruitsIntakeValuesFunction, grainBeansIntakeValuesFunction, vegetableIntakeValuesFunction, snacksFrequencyValuesFunction, dessertFrequencyValuesFunction, milkTeaCoffeeLowfatValuesFunction, eggFrequencyValuesFunction, friedFoodFrequencyValuesFunction, dairyFrequencyValuesFunction, meatFrequencyValuesFunction, healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, nicotineAmtValuesFunction, heightFunction, weightFunction, yearFunction, lastHundredYearsFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
 import { Container, Page, Row, Col, ImageUpload, Modal, Toaster } from 'Components/shared';
 import errorHandler from 'Utils/error-handler';
 import _, { omitBy, isEmpty, isUndefined, isEqual } from 'lodash';
@@ -18,6 +18,7 @@ import PagePane from 'Components/shared/page/page-pane'
 import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
 import { PatientInformationFormValidation } from './patient-information.validation';
 import { PersonalInformationFormValidation } from './personal-information.validation';
+import { ObesityPredictionValidation } from './obesity-prediction.validation';
 import patientInformation from '.';
 
 interface PatientInformationProps {
@@ -161,7 +162,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const healthHistoryValues: any = healthHistoryValuesFunction();
     const cigarettesPerDayValues: any = cigarettesPerDayValuesFunction();
     const nicotineAmtValues: any = nicotineAmtValuesFunction();
-    const alcoholTypeValues: any = alcoholTypesValuesFunction();
     const height: any = heightFunction();
     const weight: any = weightFunction();
     const yearsOption: any = yearFunction();
@@ -264,6 +264,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
          
             setPersonalInformation(patientData);
         }
+        setTimeout( function() {
+            (document.querySelector('.patient-info') as HTMLElement).style.display = 'flex';
+        }, 3000);
+        
     },[data]);
 
     useEffect(()=> {
@@ -274,7 +278,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     useEffect(()=> {
         console.log('comments', comments);
         setClinicComments(comments);
-    },[comments])
+    },[comments]);
 
     useEffect(()=> {
         if(healthAndFamilyHistory.weight> 0 && healthAndFamilyHistory.height > 0) {
@@ -282,7 +286,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             console.log('BMI', BMI);
             console.log('typeof(BMI)', typeof(BMI));
             const status = BMIStatus(BMI);
-            // console.log('status', status);
+            console.log('status', status);
             setHealthAndFamilyHistory({...healthAndFamilyHistory, BMI: BMI})
             setWeightStatus(status);
         }
@@ -310,12 +314,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
     }
 
-    const saveAndContinue = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const saveAndContinue = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         try{
            
-            const value = PatientInformationFormValidation.validateSync(omitBy({
+            const value = await PersonalInformationFormValidation.validateSync(omitBy({
                 ...personalInformation,
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,
@@ -323,69 +327,191 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 stripUnknown: false
             });
             // console.log(moment(personalInformation.dateOfBirth));
-            // console.log('value', value);
+            console.log('value', value);
     
             onSubmit(value, 'save');
 
         }
-        catch(err) {
-            let { path, value }:any = errorHandler.validation(err);
+        catch(err: any) {
             console.log('err', err);
+            console.log('err.inner', err?.inner);
+            var tempErrors:any = {};
+
+            err?.inner.map((error: any, index: number)=> {
+                let { path, value }:any = errorHandler.validation(error);
+
+                if(value.includes('required')) {
+                    const [ first, ...last] = value.split(' ');
+                    console.log(last);
+                   
+                    value =  t(`${value}`, { field: t(`label.${path}`)} );
+                }
+
+                if (path.indexOf('.')!==-1) {
+                    const str = path.split('.');
+                    path = str[0];
+                    subPath = str[1];
+                    // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
+                }
+                // else {
+                //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
+                // }
+               
+                pages.map((page, index)=> {
+                   
+                    if(page.fields.includes(path) || page.fields.includes(subPath)) {
+                        // console.log('page', page);
+                        setPageVisibility(page.index);
+                    }
+                })
+    
+                if (document.querySelector(`input[name=${path}]`)) {
+                    (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
+    
+                }
+                else if (document.querySelector(`div[name=${path}]`)) {
+                    (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
+                }
+                
+                tempErrors[path]= value;
+                console.log('tempErrors', tempErrors);
+            })
+            console.log('tempErrors', tempErrors);
+            setError(tempErrors);
             var subPath = '';
 
-            if (path.indexOf('.')!==-1) {
-                const str = path.split('.');
-                path = str[0];
-                subPath = str[1];
-                setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
-            }
-            else {
-                setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-            }
-           
-            // pages.map((page, index)=> {
-               
-            //     if(page.fields.includes(path) || page.fields.includes(subPath)) {
-            //         // console.log('page', page);
-            //         setPageVisibility(page.index);
-            //     }
-            // })
-
-            if (document.querySelector(`input[name=${path}]`)) {
-                (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
-
-            }
-            else if (document.querySelector(`div[name=${path}]`)) {
-                (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
-            }
+            
         }
     }
 
-    const submitObesityPredictionData = () => {
+    const submitObesityPredictionData = async(event: any) => {
+        event.preventDefault();
         let tempHealthAndFamilyHistory:any = _.omit(healthAndFamilyHistory, ['height', 'weight']);
-        var tempFamilyHistory:any = "";
-        let familyHistoryKeys = Object.keys(tempHealthAndFamilyHistory.familyHistory);
+        // var tempFamilyHistory:any = "";
+        // let familyHistoryKeys = Object.keys(tempHealthAndFamilyHistory.familyHistory);
 
-        console.log(familyHistoryKeys);
-        familyHistoryKeys.map((key)=> {
-            if(tempHealthAndFamilyHistory.familyHistory[key]==true)
-            // tempFamilyHistory.push(key);
-            tempFamilyHistory = key;
-        });
-        console.log(tempFamilyHistory);
-        tempHealthAndFamilyHistory.familyHistory = tempFamilyHistory;
+        // console.log(familyHistoryKeys);
+        // familyHistoryKeys.map((key)=> {
+        //     if(tempHealthAndFamilyHistory.familyHistory[key]==true)
+        //     // tempFamilyHistory.push(key);
+        //     tempFamilyHistory = key;
+        // });
+        // console.log(tempFamilyHistory);
+        // tempHealthAndFamilyHistory.familyHistory = tempFamilyHistory;
         console.log(tempHealthAndFamilyHistory);  
         const fullData = {
-            ...lifestyleInformation,
-            activeScale: parseInt(lifestyleInformation.activeScale),
-            BMI: parseInt(lifestyleInformation.BMI),
-            ...dietaryIntake,
-            ...tempHealthAndFamilyHistory,
+            patientID: personalInformation.patientID,
+            reportID: personalInformation.reportID,
+            healthAndFamilyHistory: {
+                BMI: parseInt(lifestyleInformation.BMI),
+                ...tempHealthAndFamilyHistory,
+            },   
+            lifestyleInformation: {
+                ...lifestyleInformation,
+                activeScale: parseInt(lifestyleInformation.activeScale),
+                occupation: parseInt(lifestyleInformation.occupation),
+            },
+            dietaryIntakeInformation: {
+                ...dietaryIntake,
+            },
             gender: t(`label.${personalInformation.gender.toLowerCase()}`),
             race: t(`label.${personalInformation.race.toLowerCase()}`)
         }
+        try {
+            const value = await ObesityPredictionValidation.validateSync(omitBy({
+                ...fullData,
+            }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
+                strict: true,
+                abortEarly: false,
+                stripUnknown: false
+            });
+            console.log('value', value);
+            console.log('fullData', fullData);
+            onSubmit(value, "prediction");
+        }
+        catch(err: any) {
+            console.log('err', err);
+            console.log('err.inner', err?.inner);
+            var tempErrors:any = {};
 
-        onSubmit(fullData, "prediction");
+            err?.inner.map((error: any, index: number)=> {
+                console.log('error', error);
+                let { path, message, type } = error;
+                console.log('value', message);
+                
+                var [ first, ...last] = message.split(' ');
+                console.log(last);
+              
+                if (path.indexOf('.')!==-1) {
+                    const str = path.split('.');
+                    path = str[0];
+                    subPath = str[1];
+
+                    if(message.includes('must be one of')) {
+                        message = "This question is required."
+                    }
+                    else if (message.includes('type,')) {
+                        last = (last.join(' ')).split('type, ')[0];
+                        message = t(`label.${subPath}`) + ' ' + last;
+                    }
+                    else {
+                        message = t(`label.${subPath}`) + " " + last.join(' ') + '.';
+                    }
+                    
+                    // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
+                }
+                else {
+                    if(message.includes('must be one of')) {
+                        message = "This question is required."
+                    }
+                    else if (message.includes('type,')) {
+                        message = message.split('type,')[0];
+                    }
+                    else {
+                        message = t(`label.${path}`) + " " + last.join(' ') + '.';
+                    }
+                    
+                }
+                // else {
+                //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
+                // }
+               
+                pages.map((page, index)=> {
+                   
+                    if(page.fields.includes(path) || page.fields.includes(subPath)) {
+                        // console.log('page', page);
+                        setPageVisibility(page.index);
+                    }
+                })
+    
+                if (document.querySelector(`input[name=${path}]`)) {
+                    (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
+    
+                }
+                else if (document.querySelector(`div[name=${path}]`)) {
+                    (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
+                }
+
+                tempErrors = {
+                    ...tempErrors,
+                    [subPath]: message
+                }
+                // tempErrors[path] = {
+                //     ...tempErrors[path],
+                //     [subPath]: message
+                // };
+                console.log('tempErrors', tempErrors);
+            })
+            console.log('tempErrors', tempErrors);
+            setError(tempErrors);
+            var subPath = '';
+
+            setToaster({
+                type: 'errors',
+                message: 'Please double check your answers or input.'
+            })
+        }
+       
     }
 
     const createPatient = async(event: React.MouseEvent<HTMLButtonElement> , action: string) => {
@@ -428,12 +554,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             console.log('value', value);
             // console.log(moment(personalInformation.dateOfBirth));
 
-            let newAction = '';
-
-            if(action=='create') newAction = 'create';
-           else newAction = 'save'
-            
-           onSubmit(value, newAction);
+    
+           onSubmit(value, action);
 
         }
         catch(err: any) {
@@ -498,7 +620,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             setPageVisibility(pageVisibility - 1);
         }
     }
-
 
     const handleTextChange = (name: string, value: any) => {
         console.log('name', name);
@@ -647,6 +768,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const handleSelectRadio = (name: string, value: any) => {
+        console.log('name', name);
         value = (value=='true' || value=='false')? (value==='true'): value;
         let tempError = error;
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
@@ -1040,8 +1162,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             user: user,
             image: image,
         }, isUndefined);
-       
-       
         
         let action = tempComment?.id > -1? 'edit comment': 'create comment';
         onSubmit(tempComment, action);
@@ -1121,7 +1241,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     return (
-        <div className="patient-info">
+        <div className="patient-info" style={{display: 'none'}}>
              <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                     <Row>
                     
@@ -1151,7 +1271,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
                 </Modal>
                 { personalInformation.patientID !==-1 && 
-                    <div className="back"><button className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.patientID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
+                    <div className="back"><button className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.reportID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
                 }
             {/* {
                 personalInformation.patientID !== -1 &&
@@ -1198,10 +1318,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <TextInput value={personalInformation?.fullName} required error={!!error?.fullName} name='personalInformation.fullName' label={t('label.fullName')} onChange={handleTextChange} />
                                         <AlertBox error={error?.fullName} name={t('label.fullName')} />
                                     </div>
-                                    {/* <div style={{width: 'inherit'}}>
-                                        <TextInput value={personalInformation?.lastName} required error={!!error?.lastName} name='lastName' label={t('label.lastName')} onChange={handleTextChange} />
-                                        <AlertBox error={error?.lastName} name={t('label.lastName')} />
-                                    </div> */}
                                 </Row>
                                 <Row>
                                     <div style={{width: 'inherit'}}>
@@ -1286,53 +1402,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <AlertBox error={error?.gender} name={t('label.gender')} />
                                     </Col>
                                 </Row>
-                                {/* <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SelectInput 
-                                            name="educationLevel"
-                                            label={t('label.educationLevel')}
-                                            required
-                                            defaultValue={personalInformation.educationLevel}
-                                            error={!!error.educationLevel}
-                                            selectOptions={[
-                                                {
-                                                    name: "bachelors",
-                                                    label: t('label.bachelors'),
-                                                    value: t('label.bachelors')
-                                                },
-                                                {
-                                                    name: "secondarySchool",
-                                                    label: t('label.secondarySchool'),
-                                                    value: t('label.secondarySchool')
-                                                },
-                                                {
-                                                    name: "masters",
-                                                    label: t('label.masters'),
-                                                    value: t('label.masters')
-                                                },
-                                                {
-                                                    name: 'phd',
-                                                    label: t('label.phd'),
-                                                    value: t('label.phd')
-                                                }
-                                            ]}
-                                            onSelect={handleSelectChange}
-                                        />
-                                        <AlertBox error={error?.educationLevel} name={t('label.educationLevel')} />
-                                    </div>
-                                </Row> */}
-                                {/* <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <AddressInput 
-                                            addressInput={personalInformation.address}
-                                            error={error?.address}
-                                            onChange={handleAddressChange}
-                                        />  
-                                    </div>
-                                </Row> */}
+                                
                                 <Row>
                                     <div style={{width: 'inherit'}}>
-                                        <TextArea value={personalInformation.reasonForConsultation} required error={error?.reasonForConsultation} name='reasonForConsultation' label={t('label.reasonForConsultation')} onChange={handleTextChange} />
+                                        <TextArea value={personalInformation.reasonForConsultation} required error={error?.reasonForConsultation} name='personalInformation.reasonForConsultation' label={t('label.reasonForConsultation')} onChange={handleTextChange} />
                                         <AlertBox error={error?.reasonForConsultation} name={t('label.reasonForConsultation')} />
                                     </div>
                                 </Row>
@@ -1360,8 +1433,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                     personalInformation.patientID!== -1 ?
                                     <button className="save" onClick={saveAndContinue}>{'Save and Continue'}</button>
                                     :<Row>
-                                        <button className="save" onClick={(event)=>createPatient(event, 'save')}>{'Save Patient'}</button>
-                                        <button className="save" onClick={(event)=>createPatient(event, 'add another')}>{'Save Patient and Add Another'}</button>
+                                        <button className="save" onClick={(event)=>createPatient(event, 'create')}>{'Add Patient'}</button>
+                                        <button className="save" onClick={(event)=>createPatient(event, 'add another')}>{'Add Patient and Add Another'}</button>
                                     </Row>
                                 }
                             </div>
@@ -1369,431 +1442,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     </div>
                     
                 </PagePane>
-                {/*<PagePane index={2}>
-                     <div className="content">
-                        <div className="header">   
-                            <h3>Smoking Status</h3>
-                        </div>
-                        
-                        <div className="divider">
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <RadioInput 
-                                        multiple={false}
-                                        values={[
-                                            {
-                                                name: 'yes',
-                                                label: t('option.yes'),
-                                                value: 'true'
-                                            },
-                                            {
-                                                name: 'no',
-                                                label: t('option.no'),
-                                                value: 'false'
-                                            },
-                                            {
-                                                name: 'exSmoker',
-                                                label: t('option.exSmoker'),
-                                                value: 'Ex-Smoker'
-                                            }
-                                        ]} 
-                                        defaultValue={personalInformation.smokingStatus.status}
-                                        required 
-                                        error={!!error?.smokingStatus?.status} 
-                                        name='smokingStatus.status' 
-                                        label={t('question.smokingStatus', {smoking: 'cigarettes'})} 
-                                        onSelect={handleSelectRadio} 
-                                    />
-                                    <AlertBox error={error?.smokingStatus?.status} name={t('label.smokingStatus')} />
-                                </div>
-                                
-                            </Row>
-                            {   personalInformation.smokingStatus.status != 'false' &&
-                                <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <SelectInput 
-                                        name="smokingStatus.cigarettesPerDay"
-                                        label={t('label.cigarettesPerDay')}
-                                        required
-                                        value={personalInformation.smokingStatus.cigarettesPerDay}
-                                        error={!!error?.smokingStatus?.cigarettesPerDay}
-                                        selectOptions={cigarettesPerDayValues}
-                                        onSelect={handleSelectChange}
-                                    />
-                                    <AlertBox error={error?.smokingStatus?.cigarettesPerDay} name={t('label.educationLevel')} />
-                                </div>
-                                </Row>
-                            }
-                            { 
-                                personalInformation.smokingStatus.status=='Ex-Smoker' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.smokingStatus?.lastSmoked} required error={!!error?.smokingStatus?.lastSmoked} name='smokingStatus.lastSmoked' label={t('question.lastSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.lastSmoked} name={t('label.lastSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus?.startedSmokingAge} required error={!!error?.startedSmokingAge} name='smokingStatus.startedSmokingAge' label={t('question.startedSmokingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.startedSmokingAge} name={t('label.startedSmokingAge')} />
-                                    </div>
-                                </Row>
-                            }
-                            
-                            { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus?.yearsSmoked} required error={!!error?.smokingStatus?.yearsSmoked} name='smokingStatus.yearsSmoked' label={t('question.yearsSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.yearsSmoked} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            {
-                                (personalInformation.smokingStatus.status == 'true' || personalInformation.smokingStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.smokingStatus.causeOfSmoking}
-                                            name="smokingStatus.causeOfSmoking" 
-                                            label={t('question.causeOfSmoking')}
-                                            error={!!error?.smokingStatus?.causeOfSmoking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.smokingStatus?.causeOfSmoking} name={t('label.causeOfSmoking')}/>
-                                    </div>
-                                </Row>
-                            }
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <RadioInput 
-                                        multiple={false}
-                                        values={[
-                                            {
-                                                name: 'cigarettes',
-                                                label: t('option.cigarettes'),
-                                                value: "Cigarettes"
-                                            },
-                                            {
-                                                name: 'eCigarettes',
-                                                label: t('option.eCigarettes'),
-                                                value: "E-Cigarettes"
-                                            },
-                                            {
-                                                name: 'no',
-                                                label: t('option.no'),
-                                                value: false
-                                            },
-                                            {
-                                                name: 'exSmoker',
-                                                label: t('option.exSmoker'),
-                                                value: 'Ex-Smoker'
-                                            }
-                                        ]} 
-                                        defaultValue={personalInformation.familyHasSmoker}
-                                        required 
-                                        error={error?.familyHasSmoker} 
-                                        name='familyHasSmoker' 
-                                        label={t('question.familyHasSmoker')} 
-                                        onSelect={handleSelectRadio} 
-                                    />
-                                    <AlertBox error={error?.familyHasSmoker} name={t('label.familyHasSmoker')} />
-                                </div>
-                                
-                            </Row>
-                            
-                        </div>
-                        <div className="divider">
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <RadioInput 
-                                        multiple={false}
-                                        values={[
-                                            {
-                                                name: 'yes',
-                                                label: t('option.yes'),
-                                                value: 'true'
-                                            },
-                                            {
-                                                name: 'no',
-                                                label: t('option.no'),
-                                                value: 'false'
-                                            },
-                                            {
-                                                name: 'exSmoker',
-                                                label: t('option.exSmoker'),
-                                                value: 'Ex-Smoker'
-                                            }
-                                        ]} 
-                                        defaultValue={personalInformation.eCigaretteStatus.status}
-                                        required 
-                                        error={error?.eCigaretteStatus?.status} 
-                                        name='eCigaretteStatus.status' 
-                                        label={t('question.smokingStatus', {smoking: 'e-cigarettes'})} 
-                                        onSelect={handleSelectRadio} 
-                                    />
-                                    <AlertBox error={error?.eCigaretteStatus?.status} name={t('label.eCigaretteStatus')} />
-                                </div>
-                                
-                            </Row>
-                            {   personalInformation.eCigaretteStatus.status != 'false' &&
-                                <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <SelectInput 
-                                        name="eCigaretteStatus.nicotineAmt"
-                                        label={t('question.nicotineAmt')}
-                                        required
-                                        value={personalInformation.eCigaretteStatus.nicotineAmt}
-                                        error={!!error?.eCigaretteStatus?.nicotineAmt}
-                                        selectOptions={nicotineAmtValues}
-                                        onSelect={handleSelectChange}
-                                    />
-                                    <AlertBox error={error?.eCigaretteStatus?.nicotineAmt} name={t('label.eCigaretteStatus.nicotineAmt')} />
-                                </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus.startedSmokingAge} required error={!!error?.startedSmokingAge} name='startedSmokingAge' label={t('question.startedSmokingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.startedSmokingAge} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            
-                            { 
-                                personalInformation.eCigaretteStatus.status=='Ex-Smoker' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.eCigaretteStatus?.lastSmoked} required error={!!error?.eCigaretteStatus?.lastSmoked} name='eCigaretteStatus.lastSmoked' label={t('question.lastSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.eCigaretteStatus?.lastSmoked} name={t('label.lastSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.eCigaretteStatus.status=='Ex-Smoker'|| personalInformation.eCigaretteStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation.eCigaretteStatus?.yearsSmoked} required error={!!error?.eCigaretteStatus?.yearsSmoked} name='eCigaretteStatus.yearsSmoked' label={t('question.yearsSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.eCigaretteStatus?.yearsSmoked} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            {
-                                (personalInformation.eCigaretteStatus.status == 'true' || personalInformation.eCigaretteStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.eCigaretteStatus.causeOfSmoking}
-                                            name="eCigaretteStatus.causeOfSmoking" 
-                                            label={t('question.causeOfSmoking')}
-                                            error={!!error?.eCigaretteStatus?.causeOfSmoking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.eCigaretteStatus?.causeOfSmoking} name={t('label.causeOfSmoking')}/>
-                                    </div>
-                                </Row>
-                            }
-                            
-                        </div>
-                        
-                    </div>
-                    <div className="content">
-                            <div className="header">
-                                <h3>Alcohol Status</h3>
-                            </div>
-                            <div className="divider">
-                                <Row>
-                                   
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: 'true'
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: 'false'
-                                                },
-                                                {
-                                                    name: 'reformedAlcoholic',
-                                                    label: t('option.reformedAlcoholic'),
-                                                    value: 'Reformed Alcoholic'
-                                                }
-                                            ]} 
-                                            defaultValue={personalInformation.alcoholStatus.status}
-                                            required 
-                                            error={error?.alcoholStatus?.status} 
-                                            name='alcoholStatus.status' 
-                                            label={t('question.alcoholStatus')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.alcoholStatus?.status} name={t('label.alcoholStatus')} />
-                                    
-                                   
-                                    
-                                </Row>
-                                {   (personalInformation.alcoholStatus.status == 'true' || personalInformation.alcoholStatus.status == 'Reformed Alcoholic') &&
-                                    <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <SelectInput 
-                                                name="alcoholStatus.alcoholType"
-                                                label={t('label.alcoholType')}
-                                                required
-                                                value={personalInformation?.alcoholStatus?.alcoholType}
-                                                error={!!error?.alcoholStatus?.alcoholType}
-                                                selectOptions={alcoholTypeValues}
-                                                onSelect={handleSelectChange}
-                                            />
-                                            <AlertBox error={error?.alcoholStatus?.alcoholType} name={t('label.alcoholType')} />
-                                        </div>
-                                    </Row>
-                                }
-                                 {    (personalInformation.alcoholStatus.status == 'true' || personalInformation.alcoholStatus.status == 'Reformed Alcoholic') &&
-                                    <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <SelectInput 
-                                                name="alcoholStatus.avgAlcoholConsumption"
-                                                label={personalInformation.alcoholStatus.status=='true'?t('label.avgAlcoholConsumption'): t('label.avgAlcoholConsumptionEx')}
-                                                required
-                                                value={personalInformation?.alcoholStatus?.avgAlcoholConsumption}
-                                                error={!!error?.alcoholStatus?.avgAlcoholConsumption}
-                                                selectOptions={averageAlcoholConsumptionValues}
-                                                onSelect={handleSelectChange}
-                                            />
-                                            <AlertBox error={error?.alcoholStatus?.avgAlcoholConsumption} name={t('label.avgAlcoholConsumption')} />
-                                        </div>
-                                    </Row>
-                                }
-                                 { 
-                                personalInformation.alcoholStatus.status=='Reformed Alcoholic' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.alcoholStatus?.lastDrank} required error={!!error?.alcoholStatus?.lastDrank} name='alcoholStatus.lastDrank' label={t('question.lastDrank')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.lastDrank} name={t('label.lastDrank')} />
-                                    </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic'|| personalInformation.alcoholStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.alcoholStatus?.startedDrinkingAge} required error={!!error?.startedDrinkingAge} name='alcoholStatus.startedDrinkingAge' label={t('question.startedDrinkingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.startedDrinkingAge} name={t('label.startedDrinkingAge')} />
-                                    </div>
-                                </Row>
-                            }
-                            
-                            { 
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic'|| personalInformation.alcoholStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.alcoholStatus?.yearsConsumed} required error={!!error?.alcoholStatus?.yearsConsumed} name='alcoholStatus.yearsConsumed' label={t('question.yearsConsumed')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.yearsConsumed} name={t('label.yearsConsumed')} />
-                                    </div>
-                                </Row>
-                            }
-                            {
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic' || personalInformation.alcoholStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.alcoholStatus.causeOfDrinking}
-                                            name="alcoholStatus.causeOfDrinking" 
-                                            label={t('question.causeOfDrinking')}
-                                            error={!!error?.alcoholStatus?.causeOfDrinking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.alcoholStatus?.causeOfDrinking} name={t('label.causeOfDrinking')}/>
-                                    </div>
-                                </Row>
-                            }
-                            </div>
-                            <div className="divider"></div>
-                    </div> 
-                    <div style={{width: '80%', display: 'flex'}}> 
-                        <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
-                        {
-                            pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
-                        }
-                            
-                        </div>
-                        <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
-                            {
-                                pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
-                            }
-                            <button className="save" onClick={saveAndContinue}>Save and Continue</button>
-                        </div>
-                    </div>
-                </PagePane>*/}
-                {personalInformation.patientID !== -1 && 
+                
                 <PagePane index={1}>
                     <div className="division">
                         <div className="header">    
@@ -1804,66 +1453,16 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                 <Row>
                                     <div style={{width: 'inherit'}}>
                                         <SearchInput searchOptions={height || []} value={healthAndFamilyHistory?.height} required error={!!error?.height} name='healthAndFamilyHistory.height' label={t('question.height')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.height} name={t('label.height')}/>
+                                        <AlertBox error={error?.BMI} name={t('label.height')}/>
                                     </div>
                                     <div style={{width: 'inherit'}}>
                                         <SearchInput searchOptions={weight || []} value={healthAndFamilyHistory?.weight} required error={!!error?.weight} name='healthAndFamilyHistory.weight' label={t('question.weight')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.weight} name={t('label.weight')}/>
+                                        <AlertBox error={error?.BMI} name={t('label.weight')}/>
                                     </div>
                                 </Row>
-                                {/* <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={healthAndFamilyHistory.healthHistory}
-                                            name="healthAndFamilyHistory.healthHistory" 
-                                            label={t('question.healthHistory')}
-                                            error={!!error.healthHistory}
-                                            values={healthHistoryValues}
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.healthHistory} name={t('label.healthHistory')}/>
-                                    </div>
-                                </Row> */}
-                                    {/* {
-                                        
-                                        personalInformation.healthHistory.otherVascularCondition && 
-
-                                        <Row>
-                                            <div style={{width: 'inherit'}}>
-                                                <h5>If you have selected 'Other Vascular Condition', please state the name of the condition.</h5>
-                                                <TextInput value={personalInformation.healthHistory.otherVascularConditionName} required error={error?.otherVascularConditionName} name='healthHistory.otherVascularConditionName' label={t('label.otherVascularConditionName')} onChange={handleTextChange} />
-                                                <AlertBox  error={error?.otherVascularConditionName} name={t('label.otherVascularConditionName')}/>
-                                            </div>
-                                        </Row>
-                                    }
-                                        {
-                                        personalInformation.healthHistory.otherVascularCondition && 
-
-                                        <Row>
-                                            <div style={{width: 'inherit'}}>
-                                                <h5>If you have selected 'Other Vascular Condition', please state how long you have been living with this condition.</h5>
-                                                <SearchInput searchOptions={yearsOption || []} value={personalInformation.healthHistory.otherVascularConditionYears} required error={!!error?.healthHistory.otherVascularConditionYears} name='healthHistory.otherVascularConditionYears' label={t('label.otherVascularConditionYears')} onSearch={handleSearchChange} />
-                                                <AlertBox  error={error?.otherVascularConditionYears} name={t('label.otherVascularConditionYears')}/>
-                                            </div>
-                                        </Row>
-                                    } */}
+                               
                             </div>
                             <div className="divider--fifty">
-                                {/* <Row>
-                                    <div  style={{display: 'flex', width: 'inherit', flexDirection: 'column', justifyContent: 'center', alignItems:'center'}}>   
-                                        <div></div>
-                                        <div className="scale">
-                                            <span className="severely-underweight"></span> 
-                                            <span className="underweight"></span>
-                                            <span className="normal"></span>
-                                            <span className="overweight"></span>
-                                            <span className="moderate-obese"></span>
-                                            <span className="severely-obese"></span>
-                                        </div>
-                                    </div>
-                                   
-                                </Row> */}
                                 
                                 {
                                     weightStatus &&
@@ -1891,14 +1490,14 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             <div className="divider--fifty">
                                 <Row>
                                     <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={healthAndFamilyHistory.familyHistory}
+                                        <RadioInput
+                                            defaultValue={healthAndFamilyHistory.familyHistory}
                                             name="healthAndFamilyHistory.familyHistory" 
                                             label={t('question.familyHistory')}
                                             error={!!error.familyHistory}
                                             values={healthHistoryValues}
                                             required
-                                            onCheck={handleChecked}
+                                            onSelect={handleSelectRadio}
                                         />
                                         <AlertBox error={error?.familyHistory} name={t('label.familyHistory')}/>
                                     </div>
@@ -1921,69 +1520,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     </div>
                     
                 </PagePane>
-                }
-                {/* <PagePane index={2}>
-                    <div className="content">
-                        <div className="header">    
-                            <h3>Family History</h3>
-                        </div>
-                    
-                        <div className="divider">
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <Checkbox
-                                        input={personalInformation.familyHistory}
-                                        name="familyHistory" 
-                                        label={t('question.familyHistory')}
-                                        error={!!error.familyHistory}
-                                        values={healthHistoryValues}
-                                        required
-                                        onCheck={handleChecked}
-                                    />
-                                    <AlertBox error={error?.familyHistory} name={t('label.familyHistory')}/>
-                                </div>
-                            </Row>
-                                {/* {
-                                    
-                                    personalInformation.familyHistory.otherVascularCondition && 
-
-                                    <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <h5>If you have selected 'Other Vascular Condition', please state the name of the condition.</h5>
-                                            <TextInput value={personalInformation.familyHistory?.otherVascularConditionName} required error={error?.familyHistory?.otherVascularConditionName} name='familyHistory.otherVascularConditionName' label={t('label.otherVascularConditionName')} onChange={handleTextChange} />
-                                            <AlertBox  error={error?.familyHistory?.otherVascularConditionName} name={t('label.otherVascularConditionName')}/>
-                                        </div>
-                                    </Row>
-                                }
-                                {
-                                    personalInformation.familyHistory.otherVascularCondition && 
-
-                                    <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <h5>If you have selected 'Other Vascular Condition', please state how long you have been living with this condition.</h5>
-                                            <SearchInput searchOptions={yearsOption || []} value={personalInformation.familyHistory?.otherVascularConditionYears} required error={!!error?.familyHistory?.otherVascularConditionYears} name='familyHistory.otherVascularConditionYears' label={t('label.otherVascularConditionYears')} onSearch={handleSearchChange} />
-                                            <AlertBox  error={error?.familyHistory?.otherVascularConditionYears} name={t('label.otherVascularConditionYears')}/>
-                                        </div>
-                                    </Row>
-                                } 
-                        </div>
-                        <div className="divider">
-                        </div>
-                    </div>
-                    <div style={{width: '80%', display: 'flex'}}> 
-                        <div style={{ justifyContent: 'flex-end', float: 'right', width: '43%', alignSelf: 'flex-start', display: 'flex'}}>
-                            {
-                                pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
-                            }  
-                        </div>
-                        <div style={{display: 'flex', flexDirection: 'row', width: '50%', justifyContent: 'flex-end'}}>
-                            {
-                                pageVisibility < (maxSize - 1 ) &&  <button className="standard" onClick={nextPage}>Next</button>
-                            }
-                                <button className="save" onClick={saveAndContinue}>Save and Continue</button>
-                        </div>
-                    </div>
-                </PagePane> */}
                 {personalInformation.patientID !== -1 && 
                 <PagePane index={2}>
                     <div className="division">
@@ -1992,7 +1528,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                         </div>
                         <div className="content">                        
                             <div className="divider--seventy">
-                                 {/* {    (personalInformation.alcoholStatus.status == 'true' || personalInformation.alcoholStatus.status == 'Reformed Alcoholic') && */}
+                              
                                  <Row>
                                     <div style={{width: 'inherit'}}>
                                         <SelectInput 
@@ -2004,7 +1540,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                             selectOptions={averageAlcoholConsumptionValues}
                                             onSelect={handleSelectChange}
                                         />
-                                        <AlertBox error={error?.avgAlcoholConsumption} name={t('label.avgAlcoholConsumption')} />
+                                        <AlertBox error={error?.alcoholFrequency} name={t('label.avgAlcoholConsumption')} />
                                     </div>
                                 </Row>
                                 {/* } */}
@@ -2502,570 +2038,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <AlertBox error={error?.lessThanThreeTimesNLMGMRCAYWeeklyIntake} name={t('label.lessThanThreeTimesNLMGMRCAYWeeklyIntake')} />
                                     </div>
                                 </Row>
-                            {/*{ 
-                                personalInformation.smokingStatus.status=='Ex-Smoker' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.smokingStatus?.lastSmoked} required error={!!error?.smokingStatus?.lastSmoked} name='smokingStatus.lastSmoked' label={t('question.lastSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.lastSmoked} name={t('label.lastSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus?.startedSmokingAge} required error={!!error?.startedSmokingAge} name='smokingStatus.startedSmokingAge' label={t('question.startedSmokingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.startedSmokingAge} name={t('label.startedSmokingAge')} />
-                                    </div>
-                                </Row>
-                            }
                             
-                            { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus?.yearsSmoked} required error={!!error?.smokingStatus?.yearsSmoked} name='smokingStatus.yearsSmoked' label={t('question.yearsSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.yearsSmoked} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            {
-                                (personalInformation.smokingStatus.status == 'true' || personalInformation.smokingStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.smokingStatus.causeOfSmoking}
-                                            name="smokingStatus.causeOfSmoking" 
-                                            label={t('question.causeOfSmoking')}
-                                            error={!!error?.smokingStatus?.causeOfSmoking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.smokingStatus?.causeOfSmoking} name={t('label.causeOfSmoking')}/>
-                                    </div>
-                                </Row>
-                            }
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <RadioInput 
-                                        multiple={false}
-                                        values={[
-                                            {
-                                                name: 'cigarettes',
-                                                label: t('option.cigarettes'),
-                                                value: "Cigarettes"
-                                            },
-                                            {
-                                                name: 'eCigarettes',
-                                                label: t('option.eCigarettes'),
-                                                value: "E-Cigarettes"
-                                            },
-                                            {
-                                                name: 'no',
-                                                label: t('option.no'),
-                                                value: false
-                                            },
-                                            {
-                                                name: 'exSmoker',
-                                                label: t('option.exSmoker'),
-                                                value: 'Ex-Smoker'
-                                            }
-                                        ]} 
-                                        defaultValue={personalInformation.familyHasSmoker}
-                                        required 
-                                        error={error?.familyHasSmoker} 
-                                        name='familyHasSmoker' 
-                                        label={t('question.familyHasSmoker')} 
-                                        onSelect={handleSelectRadio} 
-                                    />
-                                    <AlertBox error={error?.familyHasSmoker} name={t('label.familyHasSmoker')} />
-                                </div>
-                                
-                            </Row>
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <RadioInput 
-                                        multiple={false}
-                                        values={[
-                                            {
-                                                name: 'yes',
-                                                label: t('option.yes'),
-                                                value: 'true'
-                                            },
-                                            {
-                                                name: 'no',
-                                                label: t('option.no'),
-                                                value: 'false'
-                                            },
-                                            {
-                                                name: 'exSmoker',
-                                                label: t('option.exSmoker'),
-                                                value: 'Ex-Smoker'
-                                            }
-                                        ]} 
-                                        defaultValue={personalInformation.eCigaretteStatus.status}
-                                        required 
-                                        error={error?.eCigaretteStatus?.status} 
-                                        name='eCigaretteStatus.status' 
-                                        label={t('question.smokingStatus', {smoking: 'e-cigarettes'})} 
-                                        onSelect={handleSelectRadio} 
-                                    />
-                                    <AlertBox error={error?.eCigaretteStatus?.status} name={t('label.eCigaretteStatus')} />
-                                </div>
-                                
-                            </Row> */}
-                            {/* {   personalInformation.eCigaretteStatus.status != 'false' &&
-                                <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <SelectInput 
-                                        name="eCigaretteStatus.nicotineAmt"
-                                        label={t('question.nicotineAmt')}
-                                        required
-                                        value={personalInformation.eCigaretteStatus.nicotineAmt}
-                                        error={!!error?.eCigaretteStatus?.nicotineAmt}
-                                        selectOptions={nicotineAmtValues}
-                                        onSelect={handleSelectChange}
-                                    />
-                                    <AlertBox error={error?.eCigaretteStatus?.nicotineAmt} name={t('label.eCigaretteStatus.nicotineAmt')} />
-                                </div>
-                                </Row>
-                            } */}
-                            {/* { 
-                                (personalInformation.smokingStatus.status=='Ex-Smoker'|| personalInformation.smokingStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.smokingStatus.startedSmokingAge} required error={!!error?.startedSmokingAge} name='startedSmokingAge' label={t('question.startedSmokingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.smokingStatus?.startedSmokingAge} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            
-                            { 
-                                personalInformation.eCigaretteStatus.status=='Ex-Smoker' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.eCigaretteStatus?.lastSmoked} required error={!!error?.eCigaretteStatus?.lastSmoked} name='eCigaretteStatus.lastSmoked' label={t('question.lastSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.eCigaretteStatus?.lastSmoked} name={t('label.lastSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            { 
-                                (personalInformation.eCigaretteStatus.status=='Ex-Smoker'|| personalInformation.eCigaretteStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation.eCigaretteStatus?.yearsSmoked} required error={!!error?.eCigaretteStatus?.yearsSmoked} name='eCigaretteStatus.yearsSmoked' label={t('question.yearsSmoked')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.eCigaretteStatus?.yearsSmoked} name={t('label.yearsSmoked')} />
-                                    </div>
-                                </Row>
-                            }
-                            {
-                                (personalInformation.eCigaretteStatus.status == 'true' || personalInformation.eCigaretteStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.eCigaretteStatus.causeOfSmoking}
-                                            name="eCigaretteStatus.causeOfSmoking" 
-                                            label={t('question.causeOfSmoking')}
-                                            error={!!error?.eCigaretteStatus?.causeOfSmoking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.eCigaretteStatus?.causeOfSmoking} name={t('label.causeOfSmoking')}/>
-                                    </div>
-                                </Row>
-                            } */}
-                            
-                            {/* <Row>
-                                   
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: 'true'
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: 'false'
-                                                },
-                                                {
-                                                    name: 'reformedAlcoholic',
-                                                    label: t('option.reformedAlcoholic'),
-                                                    value: 'Reformed Alcoholic'
-                                                }
-                                            ]} 
-                                            defaultValue={lifestyleInformation.alcoholStatus}
-                                            required 
-                                            error={error?.alcoholStatus?.status} 
-                                            name='alcoholStatus.status' 
-                                            label={t('question.alcoholStatus')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.alcoholStatus?.status} name={t('label.alcoholStatus')} />
-                                    
-                                   
-                                    
-                                </Row> */}
-                                {/* {   (personalInformation.alcoholStatus.status == 'true' || personalInformation.alcoholStatus.status == 'Reformed Alcoholic') &&
-                                    <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <SelectInput 
-                                                name="alcoholStatus.alcoholType"
-                                                label={t('label.alcoholType')}
-                                                required
-                                                value={personalInformation?.alcoholStatus?.alcoholType}
-                                                error={!!error?.alcoholStatus?.alcoholType}
-                                                selectOptions={alcoholTypeValues}
-                                                onSelect={handleSelectChange}
-                                            />
-                                            <AlertBox error={error?.alcoholStatus?.alcoholType} name={t('label.alcoholType')} />
-                                        </div>
-                                    </Row>
-                                } */}
-                                
-                                 {/* { 
-                                personalInformation.alcoholStatus.status=='Reformed Alcoholic' && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={lastHundredYears || []} value={personalInformation?.alcoholStatus?.lastDrank} required error={!!error?.alcoholStatus?.lastDrank} name='alcoholStatus.lastDrank' label={t('question.lastDrank')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.lastDrank} name={t('label.lastDrank')} />
-                                    </div>
-                                </Row>
-                            } */}
-                            {/* { 
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic'|| personalInformation.alcoholStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.alcoholStatus?.startedDrinkingAge} required error={!!error?.startedDrinkingAge} name='alcoholStatus.startedDrinkingAge' label={t('question.startedDrinkingAge')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.startedDrinkingAge} name={t('label.startedDrinkingAge')} />
-                                    </div>
-                                </Row>
-                            } */}
-                            
-                            {/* { 
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic'|| personalInformation.alcoholStatus.status=='true') && 
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <SearchInput searchOptions={yearsOption || []} value={personalInformation?.alcoholStatus?.yearsConsumed} required error={!!error?.alcoholStatus?.yearsConsumed} name='alcoholStatus.yearsConsumed' label={t('question.yearsConsumed')} onSearch={handleSearchChange} />
-                                        <AlertBox error={error?.alcoholStatus?.yearsConsumed} name={t('label.yearsConsumed')} />
-                                    </div>
-                                </Row>
-                            } */}
-                            {/* {
-                                (personalInformation.alcoholStatus.status=='Reformed Alcoholic' || personalInformation.alcoholStatus.status == 'Ex-Smoker') &&
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <Checkbox
-                                            input={personalInformation.alcoholStatus.causeOfDrinking}
-                                            name="alcoholStatus.causeOfDrinking" 
-                                            label={t('question.causeOfDrinking')}
-                                            error={!!error?.alcoholStatus?.causeOfDrinking}
-                                            values={
-                                                [
-                                                    {
-                                                        name:'stress',
-                                                        value: 'stress',
-                                                        label: t('label.stress')
-                                                    },
-                                                    {
-                                                        name:'friendsFamily',
-                                                        value: 'friends/family',
-                                                        label: t('label.friendsFamily')
-                                                    },
-                                                    {
-                                                        name:'social',
-                                                        value: 'social',
-                                                        label: t('label.social')
-                                                    },
-                                                ]
-                                            }
-                                            required
-                                            onCheck={handleChecked}
-                                        />
-                                        <AlertBox error={error?.alcoholStatus?.causeOfDrinking} name={t('label.causeOfDrinking')}/>
-                                    </div>
-                                </Row>
-                            } */}
                         </div>
                     </div>                        
                     </div>
-                                {/*<Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.eightHoursOfSleep}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.eightHoursOfSleep} 
-                                            name='lifestyleInformation.eightHoursOfSleep' 
-                                            label={t('question.eightHoursOfSleep')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.eightHoursOfSleep} name={t('label.eightHoursOfSleep')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.stress || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.stress} 
-                                            name='lifestyleInformation.stress' 
-                                            label={t('question.stress')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.stress} name={t('label.stress')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.exercise || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.exercise} 
-                                            name='lifestyleInformation.exercise' 
-                                            label={t('question.exercise')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.exercise} name={t('label.exercise')} />
-                                    </div>
-                                </Row>
-                                 <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.smoking || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.smoking} 
-                                            name='lifestyleInformation.smoking' 
-                                            label={t('question.smoking')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.smoking} name={t('label.smoking')} />
-                                    </div>
-                                </Row> *
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.friedFood || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.friedFood} 
-                                            name='lifestyleInformation.friedFood' 
-                                            label={t('question.friedFood')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.friedFood} name={t('label.friedFood')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.meat || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.meat} 
-                                            name='lifestyleInformation.meat' 
-                                            label={t('question.meat')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.meat} name={t('label.meat')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.processedFood || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.processedFood} 
-                                            name='lifestyleInformation.processedFood' 
-                                            label={t('question.processedFood')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.processedFood} name={t('label.processedFood')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.vegetables || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.vegetables} 
-                                            name='lifestyleInformation.vegetables' 
-                                            label={t('question.vegetables')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.vegetables} name={t('label.vegetables')} />
-                                    </div>
-                                </Row>
-                                <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <RadioInput 
-                                            multiple={false}
-                                            values={[
-                                                {
-                                                    name: 'yes',
-                                                    label: t('option.yes'),
-                                                    value: true
-                                                },
-                                                {
-                                                    name: 'no',
-                                                    label: t('option.no'),
-                                                    value: false
-                                                },
-                                            ]} 
-                                            defaultValue={personalInformation?.lifestyleInformation?.fruits || false}
-                                            required 
-                                            error={!!error?.lifestyleInformation?.fruits} 
-                                            name='lifestyleInformation.fruits' 
-                                            label={t('question.fruits')} 
-                                            onSelect={handleSelectRadio} 
-                                        />
-                                        <AlertBox error={error?.lifestyleInformation?.fruits} name={t('label.fruits')} />
-                                    </div>
-                                </Row> */}
-                            
-                    
                     <div style={{width: '100%', display: 'flex'}}> 
                         <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                             {
@@ -3090,39 +2066,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             </div>
                             <div className="content">
                                 <div className="divider--full">
-                                    {/* <Row>
-                                        <div style={{width: 'inherit'}}>
-                                            <RadioInput 
-                                                multiple={false}
-                                                values={[
-                                                    {
-                                                        name: 'yes',
-                                                        label: t('option.yes'),
-                                                        value: 'true'
-                                                    },
-                                                    {
-                                                        name: 'no',
-                                                        label: t('option.no'),
-                                                        value: 'false'
-                                                    },
-                                                    {
-                                                        name: 'exSmoker',
-                                                        label: t('option.exSmoker'),
-                                                        value: 'Ex-Smoker'
-                                                    }
-                                                ]} 
-                                                defaultValue={personalInformation.smokingStatus.status}
-                                                required 
-                                                error={!!error?.smokingStatus?.status} 
-                                                name='smokingStatus.status' 
-                                                label={t('question.smokingStatus', {smoking: 'cigarettes'})} 
-                                                onSelect={handleSelectRadio} 
-                                            />
-                                            <AlertBox error={error?.smokingStatus?.status} name={t('label.smokingStatus')} />
-                                        </div>
-                                    
-                                    </Row> */}
-                                    {/* {   personalInformation.smokingStatus.status != 'false' && */}
                                     <Row>
                                         <div style={{width: 'inherit'}}>
                                             <SelectInput 
@@ -3221,7 +2164,16 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                     </Row>
                                     <Row>
                                         <div style={{width: 'inherit'}}>
-                                            <SearchInput subtitle={"(1 = not active, 10 = very active)"} searchOptions={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]} value={lifestyleInformation?.activeScale} required error={!!error?.activeScale} name='lifestyleInformation.activeScale' label={t('question.activeScale')} onSearch={handleSearchChange} />
+                                            <SearchInput 
+                                                subtitle={"(1 = not active, 10 = very active)"} 
+                                                searchOptions={["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]} 
+                                                value={lifestyleInformation?.activeScale} 
+                                                required 
+                                                error={!!error?.activeScale} 
+                                                name='lifestyleInformation.activeScale' 
+                                                label={t('question.activeScale')} 
+                                                onSearch={handleSearchChange} 
+                                            />
                                             <AlertBox error={error?.activeScale} name={t('label.activeScale')} />
                                         </div>
                                     </Row>
@@ -3344,7 +2296,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             {/* {
                                 pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
                             } */}
-                            <button className="save" onClick={submitObesityPredictionData}>Generate Prediction Report</button>
+                            <button className="save" onClick={(e) => submitObesityPredictionData(e)}>Generate Prediction Report</button>
                         </div>
                     </div>
                     </PagePane>
@@ -3361,20 +2313,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                         </div>
                         <div className="content" style={{flexDirection:'row'}}>                   
                             <div className="divider--fifty">
-                               
-                                {/* <h3>{`${t('label.diagnosis')} & ${t('label.comments')}`}</h3> */}
                                 {
                                     clinicComments !=[] && clinicComments.map((comment: any, index: any)=> {
+                                      
                                         return <>
                                                 <Row key={index}>
                                                     <div style={{width: 'inherit'}}>
-                                                        <h3>{comment?.created? new Date(comment?.created).toLocaleDateString([], 
-                                                                {year: 'numeric',
-                                                                month: 'long',
-                                                                day: 'numeric'}
-                                                            ): ''}
-                                                        </h3>
-                                                        <TextInput disabled key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `       Date: ${comment?.created}`: '')} onChange={handleCommentChange} />      
+                                                        <TextInput disabled key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `  Date: ${new Date(comment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
                                                         <AlertBox error={error[`comment[${index}]`]?.diagnosis} name={t('label.diagnosis')} />
                                                     </div>
                                                 
@@ -3389,7 +2334,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                     </div>
                                                 </Row>
                                                 <Row>
-                                                    {/* <button className="delete" id={index} onClick={(index) => {removeComment(index)}}>Remove Comment</button> */}
                                                     <button id={index} className="save" onClick={(e) => {editComment(e)}}><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" /></button>
                                                 </Row>
                                         </>
@@ -3428,8 +2372,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 </PagePane>
                 }
             </Page>
-            
-            
         </div>
     )
 }

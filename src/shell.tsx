@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from 'Components/navbar';
 import { fetchBackground } from 'Services/background.services';
@@ -8,7 +9,7 @@ interface ShellProps {
 }
 
 const Shell: React.FC<ShellProps> = ({routes}) => {
-
+    
     const [ navbar, setNavbar ] = useState({ 'side-bar': {}, 'side-bar-blurred': {}});
     
     useEffect(()=> {

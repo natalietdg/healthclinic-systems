@@ -2,6 +2,7 @@ import { omitBy, isNil, isUndefined, isEmpty } from 'lodash';
 
 const PatientResponse = (data:any) => {
     return omitBy({
+        
         id: data.patientID || undefined,
         name: data.fullName,
         gender: data.gender || undefined,

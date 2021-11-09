@@ -8,6 +8,7 @@ import { styles } from 'Components/shared/animation';
 import { decode } from 'Helpers/';
 import { Toaster } from 'Components/shared';
 import './report-page.scss';
+import report from 'Components/report';
 
 const ReportPage = ({}) => {
     const [patientData, setPatientData] = useState<any>({});
@@ -38,7 +39,7 @@ const ReportPage = ({}) => {
             else {
                 setToasterProps({
                     type: 'errors',
-                    message: 'Unable to fetch patient'
+                    message: "Unable to fetch patient's report."
                 })
             }
         }

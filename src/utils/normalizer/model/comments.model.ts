@@ -3,7 +3,7 @@ import { isNil, isUndefined, omitBy } from 'lodash';
 
 const CommentsModel = (data: any ) => {
     
-    console.log('data', data);
+    // console.log('data', data);
     return omitBy({
         id: data.pk > -1? data.pk : undefined,
         diagnosis: data.title,

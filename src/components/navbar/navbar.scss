@@ -81,7 +81,7 @@
             }
         }
 
-        &:hover {
+        &:hover, &:focus{
             display: block;
         }
     }
@@ -117,7 +117,7 @@
         padding: 0px;
     }
 
-    &:hover {
+    &:hover, &:focus{
         // -webkit-animation: slide 0.5s forwards;
         // animation: slide 0.5s forwards;
         padding: 0px;
@@ -135,7 +135,7 @@
                 // color: #b8b9be;
                 color: white;
 
-                &:hover {
+                &:hover, &:focus{
                     color: white;
                 }
             }
@@ -185,7 +185,7 @@
                 width: 30px;
                 height: 30px;
             }
-            &:hover {
+            &:hover, &:focus{
                 // background: $token-color-primary-light;
                 border-bottom: 3px solid $token-color-primary-dark;
 
@@ -218,7 +218,7 @@
             color: black;
             display: block;
 
-            &:hover {
+            &:hover, &:focus{
                 color: white;
             }
         }

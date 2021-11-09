@@ -5,6 +5,7 @@ const ValidationException = (error: any) => {
     console.log('error', error);
     var { path, message, type } = error;
     console.log('message', message);
+    console.log('type', type);
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';
@@ -12,9 +13,9 @@ const ValidationException = (error: any) => {
     var last:any = '';
    
     console.log('path', path);
-
+    if(path==undefined) path = message.split(' ')[0];
     if(message.includes('required')) {
-        return omitBy({ path, refPath, value: message}, isNil);
+        return omitBy({ path, refPath, value: 'error.required'}, isNil);
     }else [first, ...last] = message.split(' ');
 
     console.log('last', last);
@@ -26,15 +27,15 @@ const ValidationException = (error: any) => {
         errorMessage = subPath != '' ? subPath[0].toUpperCase() + subPath.substring(1):
         errorMessage +=  " " + last.join(' ') + '.';
     } 
- 
+    else if (type?.includes('matches') || type?.includes('email')) {
+        errorMessage = 'error.pattern';
+    }
     // console.log('path', path);
       
     // if (type?.includes('empty') || type?.includes('required')) {
     //     errorMessage = 'error.required';
     // }
-    // else if (type?.includes('matches') || type?.includes('email')) {
-    //     errorMessage = 'error.pattern';
-    // }
+    
     // else if (type?.includes('min')) {
         
     // }

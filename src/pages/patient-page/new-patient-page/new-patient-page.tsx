@@ -10,7 +10,7 @@ import { styles } from 'Components/shared/animation';
 import { decode } from 'Helpers/';
 import { Toaster } from 'Components/shared';
 import { fetchBackground } from 'Services/background.services';
-import { savePatientInformation, fetchPatientInformation, generateObesityPrediction, createComments, editComments, fetchComments, createPatient, uploadImage } from 'Services/patient.services';
+import { savePatientInformation, fetchPatientInformation, setPatientandFeedbackMLRequest, generateObesityPrediction, createComments, editComments, fetchComments, createPatient, uploadImage } from 'Services/patient.services';
 import './new-patient-page.scss';
 import { useParams } from 'react-router-dom';
 // import { toaster } from 'Components/shared';
@@ -41,10 +41,8 @@ const NewPatientPage = () => {
     console.log('params', params);
     const { id, page }:any = useParams();
     var pageNumber: any = page? decode(page): 0;
-    
-    // console.log('id', id);
-    // console.log('decode(id)', decode(id));
-    const patientID = id? decode(id): null;
+
+    const patientID:any = id!=undefined? parseInt(decode(id) || "-1"): -1;
     console.log('patientID', patientID);
     
     const getBackground = async() => {
@@ -56,9 +54,12 @@ const NewPatientPage = () => {
         console.log('localStorage', localStorage);
       
         getBackground();
-        if (patientID != null) {
+        if (patientID != -1) {
             fetchPatient(patientID);
             fetchClinicComments(patientID);
+        }
+        else {
+            localStorage.setItem('fullName', 'Obesity Prediction Report');
         }
 
         if (pageNumber != null) {
@@ -76,22 +77,26 @@ const NewPatientPage = () => {
 
     const fetchPatient= async(patientID: any)=> {
         console.log('patient ID', patientID);
-        const response = await fetchPatientInformation(patientID);
-        console.log('response', response);
-        const huh = localStorage.getItem('huh');
-        console.log('huh', huh);
-
-        const fullName = localStorage.getItem('fullName');
-        if(fullName == null) {
-            localStorage.setItem("fullName", response.fullName);
+        if(patientID !== -1) {
+            const response = await fetchPatientInformation(patientID);
+            console.log('response', response);
+            const huh = localStorage.getItem('huh');
+            console.log('huh', huh);
+    
+            const fullName = localStorage.getItem('fullName');
+            if(fullName == null) {
+                localStorage.setItem("fullName", response.fullName);
+            }
+            
+            console.log('localStorage', localStorage);
+    
+            if (response.error){
+                setToaster({type: 'errors', message: "Failed to fetch patient's information"});
+            }
+            else setPatient(response);
         }
         
-        console.log('localStorage', localStorage);
-
-        if (response.error){
-            setToaster({type: 'errors', message: "Failed to fetch patient's information"});
-        }
-        else setPatient(response);
+       
     }
 
     const fetchClinicComments = async(patientID: any) => {
@@ -111,6 +116,8 @@ const NewPatientPage = () => {
         console.log('predictoin');
         const response = await generateObesityPrediction(data);
         console.log('response', response);
+
+        return response;
     }
 
     const submit = async(patientInformation: any, type: any) => {
@@ -150,7 +157,7 @@ const NewPatientPage = () => {
                 toasterMessage = 'Comment edited successfully';
             }
         }
-        else if (type=='create' || type=='save') {
+        else if (type=='create' || type=='add another') {
             response = await createPatient(patientInformation);
             console.log('response', response);
 
@@ -160,25 +167,25 @@ const NewPatientPage = () => {
             else {
                 toasterMessage = 'Patient created successfully';
 
-                let todayPatients:any = localStorage.getItem('todayPatients') || null;
-                console.log('todayPatients', todayPatients);
-                // if(todayPatients != null) localStorage.removeItem('todayPatients');
-                let now = new Date();
-                var tempPatient = {
-                    createdDate: now,
-                    patientID: response.patientID
-                }
-                if(todayPatients == null) {
-                    todayPatients = [tempPatient]
-                }
-                else {
-                    todayPatients = JSON.parse(todayPatients);
-                    console.log('todayPatients', todayPatients);
-                    todayPatients.push(tempPatient);
-                }
+                // let todayPatients:any = localStorage.getItem('todayPatients') || null;
+                // console.log('todayPatients', todayPatients);
+                // // if(todayPatients != null) localStorage.removeItem('todayPatients');
+                // let now = new Date();
+                // var tempPatient = {
+                //     createdDate: now,
+                //     patientID: response.patientID
+                // }
+                // if(todayPatients == null) {
+                //     todayPatients = [tempPatient]
+                // }
+                // else {
+                //     todayPatients = JSON.parse(todayPatients);
+                //     console.log('todayPatients', todayPatients);
+                //     todayPatients.push(tempPatient);
+                // }
 
-                localStorage.setItem('todayPatients', JSON.stringify(todayPatients));
-                console.log('localStorage', localStorage);
+                // localStorage.setItem('todayPatients', JSON.stringify(todayPatients));
+                // console.log('localStorage', localStorage);
                 
             }
            
@@ -188,6 +195,15 @@ const NewPatientPage = () => {
             console.log('prediction', type);
             response = await generatePrediction(patientInformation);
             console.log('resopnse', response);
+
+            if (!response?.error) {
+                let data: any = {
+                    reportID: response.request_id,
+                    patientID: patientInformation.patientID
+                }
+                console.log('data', data);
+                response = await setPatientandFeedbackMLRequest(data);
+            }
         }
         else {
             response = await savePatientInformation(patientInformation);
@@ -210,30 +226,16 @@ const NewPatientPage = () => {
             message: toasterMessage
         });
 
-        // if(response.error) {
-        //     toasterType = 'errors';
-        //     setToaster({
-        //         type: 'errors',
-        //         message: response.error
-        //     });
-        //     setActionStatus({...actionStatus, patientInfo: 'error'})
-        // }
-        // else {
-        //     toasterType = 'success';
-        //     setToaster({
-        //         type: 'success',
-        //         message: 'Success'
-        //     });
-
-        //     setActionStatus({...actionStatus, patientInfo: 'success'})
-        // }
         console.log('response', response);
         if(!response.error) {
-            if(type=='save') {
-                history.push(`/patients/${todaysDate}`);
+            if(type=='add another'){
+                history.push('/new-patient');
+            }
+            else if (type=='prediction') {
+                history.push(`/patient/view/${encode(patientInformation.reportID)}`)
             }
             else {
-                history.push('/new-patient');
+                history.push(`/patients/`);
             }
         }
         
@@ -246,12 +248,12 @@ const NewPatientPage = () => {
             {/* <div style={{borderBottom: '2px solid #CCCCCC', display: 'flex', justifyContent: 'center', width: '100%', height: '15%', alignContent: 'center', alignItems: 'center'}}>   
                 <h2>New Patient</h2>
             </div> */}
-           
-            <div className="new-patient-page">
-                <Patient.PatientInformation page={pageNumber} onSubmit={submit} comments = {patientComments} data={patient}/>
+                <div className="new-patient-page">
+                    <Patient.PatientInformation page={pageNumber} onSubmit={submit} comments = {patientComments} data={patient}/>
 
-                {/* <Patient.MedicalRecord /> */}       
-            </div>
+                    {/* <Patient.MedicalRecord /> */}       
+                </div>
+            
         </div>
     )
 }

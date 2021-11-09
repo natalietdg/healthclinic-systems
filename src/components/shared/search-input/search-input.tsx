@@ -37,7 +37,7 @@ const SearchInput: React.FC<SearchInputProps> = ({searchOptions, subtitle, label
                 </search> */}
             <input className="search-input--input" type='search' list={name} defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
             
-            <datalist id={name}>
+            <datalist id={name} style={{zIndex: 996}}>
                 {searchOptions.map((data, index)=> {
                     return (                       
                         <option key={data} value={data}>{data}</option>

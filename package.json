@@ -48,6 +48,8 @@
     "react-router": "^5.2.0",
     "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3",
+    "reactjs-crontab": "^4.5.0",
+    "recharts": "^2.1.6",
     "recoil": "^0.4.1",
     "redux": "^4.1.2",
     "sass": "^1.38.2",
@@ -89,7 +91,29 @@
   },
   "devDependencies": {
     "@types/react-router": "^5.1.16",
+    "chai-enzyme": "^1.0.0-beta.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "enzyme-to-json": "^3.6.2",
+    "jest": "^27.3.1",
+    "react-test-renderer": "^17.0.2",
     "style-dictionary": "^3.0.2",
     "webpack-cli": "^4.8.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "!src/index.js"
+    ],
+    "coverageReporters": [
+      "text"
+    ]
   }
 }

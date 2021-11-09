@@ -33,7 +33,7 @@ h3 {
         //     background-color: $token-color-white;
         //     box-shadow:inset 2px 2px 5px #b8b9be,inset -3px -3px 7px #fff;
         // }
-        &:hover, &:active {
+        &:hover, &:active, &:focus {
             color: $token-button-primary-text-color-hover;
             box-shadow: 3px 5px 9px 0px rgba(0, 0, 0, 0.25);
             border: 0px solid white;

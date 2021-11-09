@@ -23,6 +23,7 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({navbar}) => {
+    const MINUTE_MS = 60000;
     const [logoutState, setLogoutState] = useRecoilState<LoginAtomType>(loginAtom);
     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
     const [ todaysDate, setTodaysDate ] = useState<any>('');
@@ -38,27 +39,69 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     // const query = useQuery();
     // const ref = query.get('ref');
     var name = '';
-  
+
+    useEffect(() => {
+        
+        const interval = setInterval(() => {
+            refresh();
+        }, 300000); //5 minutes
+        return () => clearInterval(interval);
+      }, []);
+
+
+
     const refresh = async() => {
-     
-        const response:any = await refreshAccessToken();
-        if (response.error) {
-            // setToaster({
-            //     type: 'errors',
-            //     message: 'Could not refresh token'
-            // })
-            alert('Please login again.');
-            history.push('/');
+        const now = Math.trunc(new Date().getTime() /1000);
+        console.log('now', now);
+        const accessTokenExpiry = localStorage.getItem('accessTokenExpiry') || -1;
+        console.log('accessTokenExpiry', accessTokenExpiry);
+        if(now > accessTokenExpiry) {
+            // alert('You are not logged in! Redirecting you to the home page...');
+            setToaster({
+                type: 'errors',
+                message: 'You are not logged in! Redirecting you to the home page...'
+            })
+            setTimeout(function() {
+                history.push('/');
+            }, 3000);
+            
         }
+        else {
+            const response:any = await refreshAccessToken();
+            if (response.error) {
+                // setToaster({
+                //     type: 'errors',
+                //     message: 'Could not refresh token'
+                // })
+                // alert('You are not logged in! Redirecting you to the home page...');
+                setToaster({
+                    type: 'errors',
+                    message: 'You are not logged in! Redirecting you to the home page...'
+                });
+                setTimeout(function() {
+                    history.push('/');
+                }, 3000);
+            }
         return response;
+        }
+        
 
     }
 
     useEffect(()=> {
         if(logoutState.state!='success') {
             const response: any = refresh();
-
-            if(response.error) history.push('/');
+            
+            if(response.error) {
+                // alert('You are not logged in! Redirecting you to the home page...');
+                setToaster({
+                    type: 'errors',
+                    message: 'You are not logged in! Redirecting you to the home page...'
+                })
+                setTimeout(function() {
+                    history.push('/');
+                }, 3000);
+            }
         }
     },[])
 
@@ -119,7 +162,14 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
             setLogoutState({state: 'error'});
         }
         else {
-            history.push('/');
+            // alert('Log out successful! Redirecting you to the home page...');
+            setToaster({
+                type: 'success',
+                message: 'Log out successful! Redirecting you to the home page...'
+            });
+            setTimeout(function() {
+                history.push('/');
+            }, 3000);
             // toaster('success', 'Logout success');
             setLogoutState({state: 'idle'});
         }
@@ -154,7 +204,8 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
                                </div>
                                 
                             </li>
-                            : link.name=='Patients for Today'? <li key={index}><Link key={index} to={`/patients/${dates.todaysDate}`}><span className="span">{link.name}</span></Link></li>
+                            // : link.name=='Patients for Today'? <li key={index}><Link key={index} to={`/patients/${dates.todaysDate}`}><span className="span">{link.name}</span></Link></li>
+                            : link.name =='Generate Obesity Prediction Report'? <li key={index}><Link key={index} to={`/patient/edit/${encode(-1)}/${encode(1)}`}><span className="span">{link.name}</span></Link></li>
                             : link.img!='' ? <li key={index} style={{padding: "7px"}}><Link key={index} to={link.to}><span className="span"><img style={{boxShadow: '3px 5px 9px 0px rgb(0 0 0 / 25%)', borderRadius: '50%', padding: '5px'}} src={link.img} /></span></Link></li>
                             :<li key={index}><Link key={index} to={link.to}><span className="span">{link.name}</span></Link></li>
                         })

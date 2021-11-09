@@ -1,24 +1,27 @@
-import React, { useState } from 'react';
-import TextInput from 'Components/shared/text-input';
+import React, { useEffect, useState } from 'react';
+import { Modal, Toaster } from 'Components/shared';
+import { TextInput, AlertBox } from 'Components/shared';
 import { useHistory } from 'react-router-dom';
 import './fetch-report.scss';
 import {encode} from 'Helpers/';
-const FetchReport: React.FC = ({}) => {
+import { styles } from 'Components/shared/animation';
+import { IgnorePlugin } from 'webpack';
+
+interface FetchReportProps {
+    onFetch: (data:any) => void;
+    error: any;
+    
+}
+
+const FetchReport: React.FC<FetchReportProps> = ({onFetch, error}) => {
+    
     const [ reportNumber, setReportNumber ] = useState('');
-    let history = useHistory();
-    const [ error, setError ] = useState<any>({});
 
     function handleChange(name: string, value: string) {
-        console.log('')
-        console.log('value', value);
         setReportNumber(value);
     }
     
-    const fetchReport = () => {
-        // const reportID = encode(123);
-        console.log('pushh');
-        history.push('/report/'+encode(reportNumber));
-    }
+    
     
     return(
         <div className="report-container">
@@ -29,8 +32,10 @@ const FetchReport: React.FC = ({}) => {
             <div className="block">
                 <h3 className="heading">Are you a <label style={{color: '#8f60df'}}>patient</label>?</h3>
                 <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={error?.reportNo} onChange={handleChange} />
-                <button className="button" onClick={fetchReport}>View Report</button>
+                <AlertBox name="reportNo" error={error?.reportNumber}/>
+                <button className="button" onClick={()=> {onFetch(reportNumber)}}>View Report</button>
             </div>
+            
         </div>
     )
 }

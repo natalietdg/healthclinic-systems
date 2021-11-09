@@ -6,6 +6,8 @@ import { fadeIn } from 'react-animations';
 import './table.scss';
 
 interface TableProps {
+    visibility?: string;
+    filter?: string;
     columns: {
         colName: string;
     }[];
@@ -13,7 +15,7 @@ interface TableProps {
     filteredData: any;
 }
 
-const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
+const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='', filter=''}) => {
 
 
     const DisplayWaiting = () => {
@@ -39,7 +41,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
 
     return (
         <table style={{width: width? width: '80%'}}>
-            {
+             { (visibility =='Today' || (visibility == 'Database' && filter != '')) &&
                 filteredData.length > 0 ? <tbody>
                 <tr onMouseEnter={(e: any) => { e.target.parentElement.style.boxShadow = "3px 3px 6px white"}}>
                     {
@@ -50,7 +52,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
                         })
                     }
                 </tr>
-                {
+                { (visibility =='Today' || (visibility == 'Database' && filter != '')) &&
                     filteredData.map((rowValues: any, index: any)=> {
                         return (
                             <tr key={index}>
@@ -66,9 +68,13 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData}) => {
                         
                     })
                 }
+                {
+                    visibility=='Database' && filter == '' &&
+                    <tr><td>Please search for a patient in the search box.</td></tr>
+                }
             </tbody>
-            : 
-                <DisplayWaiting />
+            : visibility=='Database' && filter == ''? <tr><td>Please search for a patient in the search box.</td></tr>
+            :   <DisplayWaiting />
             }
             
         </table>
