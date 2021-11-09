@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { styles } from 'Components/shared/animation';
+import LoadingPage from 'Pages/loading-page';
 import { useTranslation } from 'react-i18next';
 import Radium from 'radium';
 import { encode } from 'Helpers/';
@@ -1241,7 +1242,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     return (
-        <div className="patient-info" style={{display: 'none'}}>
+        <div className="patient-info">
+            { personalInformation?.fullName && personalInformation?
+            <Radium.StyleRoot style={{width: 'inherit', height: 'inherit', position: 'absolute', top: '0'}}>
+            <div className="div" style={{...styles.fadeIn}}>
              <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                     <Row>
                     
@@ -2372,6 +2376,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 </PagePane>
                 }
             </Page>
+            </div>
+            </Radium.StyleRoot>
+            : <LoadingPage />}
         </div>
     )
 }

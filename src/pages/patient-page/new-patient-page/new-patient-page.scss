@@ -2,6 +2,7 @@
     width: 100%;
     height: auto;
     // height: 100%;
+    min-height: 100%;
     // margin-top: 20px;
     background-position: center;
     background-size: cover;
@@ -29,14 +30,23 @@
     }
 
     .new-patient-page {
+        // display: flex;
+        // // padding: 20px 0px;
+        // width: 100%;
+        // height: auto;
+        // min-height: 100%;
+        // justify-content: center;
+        // flex-direction: row;
+        // align-items: center;
+        // // backdrop-filter: blur(30px);
         display: flex;
-        // padding: 20px 0px;
         width: 100%;
         height: auto;
+        min-height: 100%;
         justify-content: center;
         flex-direction: row;
-        align-items: center;
-        // backdrop-filter: blur(30px);
+        align-items: flex-start;
+        backdrop-filter: blur(30px);
 
     }
 }

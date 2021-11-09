@@ -9,17 +9,26 @@
     align-content: center;
     // margin: 50px 0px;
 
+    .div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+
     .back {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         position: relative;
         right: 33%;
         margin-top: 40px;
         padding: 10px;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-start;
+        align-items: flex-start;
         align-content: center;
-        // margin-left: 46px;
+        width: auto;
 
         &:hover, &:focus{
             text-decoration: underline 2px solid $token-button-primary-background-color-base;
