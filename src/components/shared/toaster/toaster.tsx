@@ -21,6 +21,11 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
     const [ toasterStyle, setToasterStyle ] = useState<any>(styles.fadeInRight);
     const [toasterProps, setToasterProps ] = useState<any>({type: '', message:''});
     const { t } = useTranslation();  
+    
+    useEffect(() => {
+        setToasterProps({type: '', message:''});
+        setToasterStyle({});
+    },[])
 
     const showToaster = () => {
         const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement);

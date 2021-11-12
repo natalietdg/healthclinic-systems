@@ -17,6 +17,7 @@ import PagePane from 'Components/shared/page/page-pane'
 import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
 import { PersonalInformationFormValidation } from './personal-information.validation';
 import { ObesityPredictionValidation } from './obesity-prediction.validation';
+import { CommentsValidation } from './comments.validation';
 
 interface PatientInformationProps {
     onSubmit: (data: any, type: string) => void;
@@ -423,6 +424,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             gender: t(`label.${personalInformation.gender.toLowerCase()}`),
             race: t(`label.${personalInformation.race.toLowerCase()}`)
         }
+
         try {
             const value = await ObesityPredictionValidation.validateSync(omitBy({
                 ...fullData,
@@ -1084,7 +1086,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const createEditComment = (e: any) => {
-  
+        e.preventDefault();
         const index = modalComment.arrayIndex;
         // console.log('clinicComment', clinicComments[index])
      
@@ -1133,8 +1135,44 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             image: image,
         }, isUndefined);
         
-        let action = tempComment?.id > -1? 'edit comment': 'create comment';
-        onSubmit(tempComment, action);
+        let validateComment = {
+            diagnosis: tempComment?.diagnosis,
+            comment: tempComment?.comment,
+        }
+        try {
+            const value = CommentsValidation.validateSync(omitBy({
+                ...validateComment,
+            }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
+                strict: true,
+                abortEarly: false,
+                stripUnknown: false
+            });
+            
+            let action = tempComment?.id > -1? 'edit comment': 'create comment';
+            console.log('value', value);
+            onSubmit(tempComment, action);
+        }
+        catch(err: any) {
+            console.log('err', err);
+            if(err.inner) {
+                console.log('err.inner', err.inner);
+                var errorArray = err.inner.map((error: any) => {
+                    let { path, value}: any = errorHandler.validation(error);
+     
+                     return {
+                         [path] : t(`${value}`, {field: t(`label.${path}`)})
+                     };
+                 });
+     
+                 errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                     errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                     return errorObj;
+                 })
+                 console.log('errorArray', errorArray);
+                 setError(errorArray);
+            }
+        }
+        
     }
 
     const editComment = (e: any) => {
@@ -1216,15 +1254,15 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     <Col>
                         <Row>
                             <div style={{width: 'inherit'}}>
-                                <TextInput subtitle={modalComment?.updated != ''? `Last updated: ${new Date(modalComment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`:''} key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.modalComment?.diagnosis} name="modalComment.diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${new Date(modalComment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
-                                <AlertBox error={error?.modalComment?.diagnosis} name={t('label.diagnosis')} />
+                                <TextInput subtitle={modalComment?.updated? `Last updated: ${new Date(modalComment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`:''} key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.diagnosis} name="diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${new Date(modalComment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
+                                <AlertBox error={error?.diagnosis} name={t('label.diagnosis')} />
                             </div>
                         </Row>
 
                         <Row>
                             <div style={{width: 'inherit'}}>
-                                <TextArea  key={modalComment?.id} value={modalComment?.comment} required error={!!error?.modalComment?.comment} name="modalComment.comment" label={t('label.comment')} onChange={handleCommentChange} />
-                                <AlertBox error={error?.modalComment?.comment} name={t('label.comment')} />
+                                <TextArea  key={modalComment?.id} value={modalComment?.comment} required error={!!error?.comment} name="modalComment.comment" label={t('label.comment')} onChange={handleCommentChange} />
+                                <AlertBox error={error?.comment} name={t('label.comment')} />
                             </div>
                         </Row>
                     </Col>
@@ -1234,14 +1272,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 
                 </Row>
                 <Row> 
-                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" /> 'Edit Comment'</>}</button>
+                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
                 </Row>
 
             </Modal>
         <div className="patient-info">
-            {/* <Toaster toasterID="patientinformation.toaster" style={{...styles.fadeInRight}} props={toaster}/> */}
-            { ((personalInformation?.patientID==-1) || (personalInformation?.fullName)) && personalInformation?
-            <Radium.StyleRoot style={{width: 'inherit', height: 'inherit', position: 'absolute', top: '0'}}>
+       
                  
             <div className="div" style={{...styles.fadeIn}}>
             
@@ -2284,7 +2320,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
-                            <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}>New Comment</button>
+                            <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
                            
                             
                         </div>
@@ -2350,8 +2386,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 }
             </Page>
             </div>
-            </Radium.StyleRoot>
-            : <LoadingPage />}
         </div>
         </>
     )

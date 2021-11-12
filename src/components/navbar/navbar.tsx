@@ -36,6 +36,31 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     // const ref = query.get('ref');
     var name = '';
 
+    var idleInterval = setInterval(idleTimer, 900000); //900000
+
+    function idleTimer() {
+        // console.log('too long!');
+        alert('You have been idle for too long. Automtically logging you out now...');
+        logOut();
+        clearInterval(idleInterval);
+        history.push('/');
+    }
+
+    window.addEventListener('keydown', function() {
+        clearInterval(idleInterval);
+        idleInterval = setInterval(idleTimer, 900000);
+    });
+
+    window.addEventListener('mousemove', function() {
+        clearInterval(idleInterval);
+        idleInterval = setInterval(idleTimer, 900000);
+    });
+
+    window.addEventListener('scroll', function() {
+        clearInterval(idleInterval);
+        idleInterval = setInterval(idleTimer, 900000);
+    });
+
     useEffect(() => {
         
         const interval = setInterval(() => {
@@ -43,8 +68,6 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
         }, 240000); //4 minutes
         return () => clearInterval(interval);
       }, []);
-
-
 
     const refresh = async() => {
         const now = Math.trunc(new Date().getTime() /1000);
@@ -188,9 +211,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     return (       
         <div className="navbar-bg"> {/*style={{backgroundImage: `url(${navbar['side-bar']?.imageUrl})`}}*/}
             <div className="blurred" > {/*style={{backgroundImage: `url(${navbar['side-bar-blurred']?.imageUrl})`}}*/}
-           
             <Toaster toasterID="navbar-toaster" style={{...styles.fadeInRight}} props={toaster}/>
-         
             
             {/* <span><img style={{top: 0, width: '25px', height: '25px', paddingTop: '20px'}} src="/assets/images/menu.png"/></span> */}
                 <ul className="link-list">

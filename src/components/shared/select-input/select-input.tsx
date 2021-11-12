@@ -35,7 +35,7 @@ const SelectInput: React.FC<SelectInputProps> = ({defaultValue, subtitle, select
                         </option>
                     })
                 }
-                <option value="" disabled selected>Please select an option.</option>
+                <option value="" disabled>Please select an option.</option>
             </select>
         </div>
     )

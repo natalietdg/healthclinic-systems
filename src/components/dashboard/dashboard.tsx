@@ -77,7 +77,7 @@ const Dashboard:React.FC<DashboardProps> = () => {
     }
 
     useEffect(()=> {
-        fetchPatients();
+        // fetchPatients();
         getBackground();
         const username = localStorage.getItem('user');
         setUser(username);
@@ -93,7 +93,7 @@ const Dashboard:React.FC<DashboardProps> = () => {
     
     return (
       <div>
-          { miniPatientList.length > 0 ? 
+          { user!='Natalie' ? 
            <Radium.StyleRoot>
             <div className="dashboard-bg" style={{backgroundImage: `url(${bg['vertical-bg']?.imageUrl})`, ...styles.fadeIn}}>
                     <Toaster toasterID="dashboard-toaster" style={{...styles.fadeInRight}} props={toaster}/>
@@ -120,21 +120,14 @@ const Dashboard:React.FC<DashboardProps> = () => {
                                 </div>
                             </div> */}
                             <div className="page-container--full">
-                                {
-                                    miniPatientList.length > 0 &&
-                                    // <Radium.StyleRoot>
-                                        <div className='sub-container'>  {/*style={{...styles.fadeIn}}*/}
-                                            <h3> Quick Access </h3>
-                                            <Container flexDirection="row">
-                                                <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/new-patient.png" />Add New Patient</button>
-                                                <button onClick={()=> {history.push('/patients')}}><img src="/assets/images/users.png" />Patient Database</button>
-                                                {/* <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/machine-learning.png" />Generate Report</button> */}
-                                            </Container>
-                                        </div>
-                                    // </Radium.StyleRoot>
-                                    
-                                }
-                                
+                                <div className='sub-container'>  {/*style={{...styles.fadeIn}}*/}
+                                    <h3> Quick Access </h3>
+                                    <Container flexDirection="row">
+                                        <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/new-patient.png" />Add New Patient</button>
+                                        <button onClick={()=> {history.push('/patients')}}><img src="/assets/images/users.png" />Patient Database</button>
+                                        {/* <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/machine-learning.png" />Generate Report</button> */}
+                                    </Container>
+                                </div>
                             </div>
                         </div>
                         

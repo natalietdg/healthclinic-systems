@@ -53,6 +53,8 @@ const ViewPatientPage = () => {
                 type: 'success',
                 message: 'Add feedback was successful.'
             });
+
+            location.reload();
         }
     }
 

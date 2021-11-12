@@ -13,5 +13,5 @@ export {
     Profile,
     Patient,
     PatientDatabse,
-    Report
+    Report,
 }

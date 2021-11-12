@@ -112,15 +112,9 @@ const NewPatientPage = () => {
                 }, 5000)
                 
             }
-            else if (redirect=='prediction') {
+            else if (redirect=='prediction' || redirect=='create comment' || redirect == 'edit comment' || redirect=='save') {
                 setTimeout(function () {
                     history.push(`/patient/view/${encode(patient?.reportID)}`)
-                }, 5000)
-            }
-            else if (redirect=='save'){
-                
-                setTimeout(function () {
-                    history.push(`/patient/view/${encode(patient?.reportID)}`);
                 }, 5000)
             }
             else {
@@ -205,10 +199,15 @@ const NewPatientPage = () => {
                     patientID: patientInformation.patientID
                 }
                 response = await setPatientandFeedbackMLRequest(data);
+                if(response.error) {
+                    toasterMessage = 'Create prediction report failed';
+                }
+                else {
+                    toasterMessage = 'Prediction report created successfully';
+                }
             }
         }
         else {
-            console.log('patientInformation', patientInformation);
             response = await savePatientInformation(patientInformation);
             setPatient(response);
             if(response.error) {
