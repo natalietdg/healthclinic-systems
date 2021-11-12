@@ -14,11 +14,16 @@ interface FetchReportProps {
 }
 
 const FetchReport: React.FC<FetchReportProps> = ({onFetch, error}) => {
-    
+    const [ reportError, setReportError ] = useState<any>({});
     const [ reportNumber, setReportNumber ] = useState('');
+
+    useEffect(() => {
+        setReportError(error);
+    },[error])
 
     function handleChange(name: string, value: string) {
         setReportNumber(value);
+        setReportError({});
     }
     
     
@@ -31,8 +36,8 @@ const FetchReport: React.FC<FetchReportProps> = ({onFetch, error}) => {
             </div>
             <div className="block">
                 <h3 className="heading">Are you a <label style={{color: '#8f60df'}}>patient</label>?</h3>
-                <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={error?.reportNo} onChange={handleChange} />
-                <AlertBox name="reportNo" error={error?.reportNumber}/>
+                <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={!!reportError?.reportNo} onChange={handleChange} />
+                <AlertBox name="reportNo" error={reportError?.reportNumber}/>
                 <button className="button" onClick={()=> {onFetch(reportNumber)}}>View Report</button>
             </div>
             
