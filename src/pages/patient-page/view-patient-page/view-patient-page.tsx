@@ -95,6 +95,7 @@ const ViewPatientPage = () => {
     const fetchPatientReport = async(reportID: string) => {
         const response = await fetchReport(reportID);
         setPatientInformation(response);
+        localStorage.setItem('fullName', response.fullName);
     }
 
     const showObesityReport = (e: any) => {
@@ -181,10 +182,10 @@ const ViewPatientPage = () => {
                                             <h3 className="span--title">Gender</h3>
                                             <h4 className='span--text'>{patientInformation.gender && t(`label.${patientInformation?.gender.toLowerCase()}`)}</h4>
                                         </span>
-                                        <span className="span">
+                                        {/* <span className="span">
                                             <h3 className="span--title">Reason for Consultation</h3>
                                             <h4 className='span--text'>{patientInformation.reasonForConsultation}</h4>
-                                        </span>
+                                        </span> */}
                                         
                                     </div>
                                     
