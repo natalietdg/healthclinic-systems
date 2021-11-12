@@ -29,19 +29,57 @@ export const uploadImage = async(data: any)=> {
 }
 
 export const savePatientInformation = async(data:any) => {
+    console.log('data', data);
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
+
+    var normalizedData = normalizer.response.patient(data);
+    
+    var dataWithoutProfilePic = new FormData();
+
+    
+    if(normalizedData.image instanceof Blob) {
+        let tempData = normalizedData;
+        normalizedData = _.omit(normalizedData, ['image']);
+        console.log('dataWithoutProfilePic', dataWithoutProfilePic);
+        console.log('normalizedData', normalizedData);
+
+        dataWithoutProfilePic.append('image', tempData.image);
+    }
+    else {
+        normalizedData = _.omit(normalizedData, ['image']);
+    }
+ 
+    // if(normalizedData.image instanceof Blob) {
+    //     var tempImage = new FormData();
+    //     tempImage.append('image', normalizedData.image);
+    //     normalizedData.image = tempImage;
+    // }
+
     try {
-        const response = await axios({
+        var response = await axios({
             method: 'PUT',
             url: `http://${url}:${port}/patients/${data.patientID}/`,
             responseType: 'json',
-            data: normalizer.response.patient(data),
+            data: normalizedData,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
         })
+        console.log('response', response);
+        if (dataWithoutProfilePic) {
+            response = await axios({
+                method: 'PUT',
+                url: `http://${url}:${port}/patients/${data.patientID}/`,
+                data: dataWithoutProfilePic,
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`        
+                },
+            });
+            
+            console.log('response', response);
+        }
 
         return normalizer.model.patient(response.data);
     }
@@ -239,13 +277,13 @@ export const fetchPatientInformation = async(patientID: any) => {
            
         });
 
-        let tempImage = response.data.image;
-        let patientProfilePic = tempImage != null ? await fetchImage(tempImage): null;
+        // let tempImage = response.data.image;
+        // let patientProfilePic = tempImage != null ? await fetchImage(tempImage): null;
         var patientData = normalizer.model.patient(response.data);
         // var comments = await fetchComments(patientID);
         // console.log('comments', comments);
         // if(comments) patientData.comments = comments;
-        if(patientProfilePic) patientData.profilePicBlob = patientProfilePic;
+        // if(patientProfilePic) patientData.profilePicBlob = patientProfilePic;
         // const patientsData = response.data.map(async (patient: any)=> {
         //     patient.image = await fetchPatientProfilePic(patient.image[0])
         // })

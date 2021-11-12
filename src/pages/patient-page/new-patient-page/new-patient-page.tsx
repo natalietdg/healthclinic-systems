@@ -33,8 +33,9 @@ const NewPatientPage = () => {
     },[]);
 
     const [ bg, setBg ] = useState<any>({});
-    const [patient, setPatient] = useState({});
+    const [patient, setPatient] = useState<any>({});
     const [patientComments, setPatientComments] = useState([]);
+    const [redirect, setRedirect ] = useState<any>('');
     const [ actionStatus, setActionStatus ] = useRecoilState<authActionStatusType>(AuthActionStatusAtom);
     const params = useParams();
     const { id, page }:any = useParams();
@@ -101,6 +102,36 @@ const NewPatientPage = () => {
         return response;
     }
 
+    useEffect(() => {
+        if(redirect!='') {
+            if(redirect=='add another'){
+                setPatient({});
+               
+                setTimeout(function () {
+                    history.push('/new-patient');
+                }, 5000)
+                
+            }
+            else if (redirect=='prediction') {
+                setTimeout(function () {
+                    history.push(`/patient/view/${encode(patient?.reportID)}`)
+                }, 5000)
+            }
+            else if (redirect=='save'){
+                
+                setTimeout(function () {
+                    history.push(`/patient/view/${encode(patient?.reportID)}`);
+                }, 5000)
+            }
+            else {
+                setTimeout(function () {
+                    history.push(`/patients`);
+                }, 5000)
+            }
+        }
+    },[redirect]);
+    
+
     const submit = async(patientInformation: any, type: any) => {
 
         // if(patientInformation.profilePicBlob && patientInformation.profilePicBlob != {}) {
@@ -110,6 +141,7 @@ const NewPatientPage = () => {
         var toasterType = '';
         var toasterMessage = '';
         var response:any = '';
+
         if(type=='create comment') {
             // let patientID = patientInformation.patientID;
             // let tempComment =  _.omit(patientInformation, ['patientID']);
@@ -176,8 +208,9 @@ const NewPatientPage = () => {
             }
         }
         else {
+            console.log('patientInformation', patientInformation);
             response = await savePatientInformation(patientInformation);
-        
+            setPatient(response);
             if(response.error) {
                 toasterMessage = 'Update patient failed';
             }
@@ -196,16 +229,7 @@ const NewPatientPage = () => {
         });
 
         if(!response.error) {
-            if(type=='add another'){
-                setPatient({});
-                history.push('/new-patient');
-            }
-            else if (type=='prediction') {
-                history.push(`/patient/view/${encode(patientInformation.reportID)}`)
-            }
-            else {
-                history.push(`/patients/`);
-            }
+            setRedirect(type);
         }
         
     }

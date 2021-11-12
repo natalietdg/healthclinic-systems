@@ -24,11 +24,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             (async function () {
                 
                 if (blob instanceof Blob) {
+                    console.log('blob???', blob);
                     const response = await base64Url(blob);
                     setImgUrl(response);
                 }
                 else {
-                    if(blob?.image != undefined ) {  
+                    if (typeof(blob)=='string') {
+                        setImgUrl(blob);
+                    }
+                    else if(blob?.image) {  
                         // console.log(blob.image.full_size);
                         setImgUrl(blob.image.full_size);
                     }
@@ -47,6 +51,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         })(blob);
                     }
                     else {
+                        console.log('blob', blob);
                         setImgArray(blob);
                     }
                    

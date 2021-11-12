@@ -299,41 +299,53 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
     }
 
-    const saveAndContinue = async(event: React.MouseEvent<HTMLButtonElement>) => {
+    const save = async(event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         try{
            
-            const value = await PersonalInformationFormValidation.validateSync(omitBy({
+            var value = await PersonalInformationFormValidation.validateSync(omitBy({
                 ...personalInformation,
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,
                 abortEarly: false,
                 stripUnknown: false
             });
+
+            if (personalInformation.profilePicBlob instanceof Blob) {
+                console.log('blob', personalInformation.profilePicBlob);
+                value.profilePicBlob = personalInformation.profilePicBlob;
+                console.log('value', value);
+            }
+            else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
+                throw 'Not a file';
+                setError({profilePicBlob: 'Profile Pic is not a file'});
+            }
             // console.log(moment(personalInformation.dateOfBirth));
-       
-    
             onSubmit(value, 'save');
 
         }
         catch(err: any) {
             var tempErrors:any = {};
-            console.log('inner', err.inner);
-            var errorArray = err.inner.map((error: any) => {
-                let { path, value}: any = errorHandler.validation(error);
- 
-                 return {
-                     [path] : t(`${value}`, {field: t(`label.${path}`)})
-                 };
-             });
- 
-             errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
-                 errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
-                 return errorObj;
-             })
-             // console.log('errorArray', errorArray);
-             setError(errorArray);
+            console.log('inner', err);
+
+            if(err.inner) {
+                var errorArray = err.inner.map((error: any) => {
+                    let { path, value}: any = errorHandler.validation(error);
+     
+                     return {
+                         [path] : t(`${value}`, {field: t(`label.${path}`)})
+                     };
+                 });
+     
+                 errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                     errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                     return errorObj;
+                 })
+                 // console.log('errorArray', errorArray);
+                 setError(errorArray);
+            }
+            
             // err?.inner.map((error: any, index: number)=> {
             //     let { path, value }:any = errorHandler.validation(error);
 
@@ -1377,6 +1389,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                 <Row>
                                     <div style={{width: 'inherit'}}>
                                         <ImageUpload onChangeImg={handleImageChange} name="personalInformation.profilePicBlob" blob={personalInformation?.profilePicBlob}/>
+                                        <AlertBox error={error?.profilePicBlob} name={t('label.profilePicBlob')} />
                                     </div>
                                 </Row>
                             </div>
@@ -1394,7 +1407,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                 } */}
                                 {
                                     personalInformation.patientID!== -1 ?
-                                    <button className="save" onClick={saveAndContinue}>{'Save and Continue'}</button>
+                                    <button className="save" onClick={save}>{'Save'}</button>
                                     :<Row>
                                         <button className="save" onClick={(event)=>createPatient(event, 'create')}>{'Add Patient'}</button>
                                         <button className="save" onClick={(event)=>createPatient(event, 'add another')}>{'Add Patient and Add Another'}</button>
@@ -2328,7 +2341,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                 {/* {
                                     pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
                                 } */}
-                                <button className="save" onClick={saveAndContinue}>Save and Continue</button>
+                                {/* <button className="save" onClick={save}>Save and Continue</button> */}
                             </div>
                         </div>
                     </Row>
