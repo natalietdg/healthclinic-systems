@@ -1577,7 +1577,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                             name="dietaryIntake.dairyFrequency"
                                             label={t('question.dairyFrequency')}
                                             required
-                                            subtitle="Cheese, Homogenized milk, Yogurt - high fat variety, Ice cream"
+                                            subtitle="cheese, homogenized milk, yogurt - high fat variety, ice cream"
                                             value={dietaryIntake?.dairyFrequency}
                                             error={!!error?.dairyFrequency}
                                             selectOptions={dairyFrequencyValues}
@@ -1589,7 +1589,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                 <Row>
                                     <div style={{width: 'inherit'}}>
                                         <SelectInput 
-                                            subtitle="Fried Rice, Pisang goreng, Fried Chicken"
+                                            subtitle="fried rice, pisang goreng, fried chicken"
                                             name="dietaryIntake.friedFoodFrequency"
                                             label={t('question.friedFoodFrequency')}
                                             required
@@ -1673,7 +1673,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                             name="dietaryIntake.milkTeaCoffeeLowfat"
                                             label={t('question.milkTeaCoffeeLowfat')}
                                             required
-                                            subtitle="Milk alone or with tea, coffee; Low fat sour cream, Yogurt, Margarine"
+                                            subtitle="milk alone or with tea, coffee; low fat sour cream, yogurt, margarine"
                                             value={dietaryIntake?.milkTeaCoffeeLowfat}
                                             error={!!error?.milkTeaCoffeeLowfat}
                                             selectOptions={milkTeaCoffeeLowfatValues}
@@ -1702,7 +1702,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <SelectInput 
                                             name="dietaryIntake.snacksFrequency"
                                             label={t('question.snacksFrequency')}
-                                            subtitle="potato chips, Nachos, Any type of fried snack, cheese products, Chocolate bars."
+                                            subtitle="potato chips, nachos, Any type of fried snack, cheese products, chocolate bars."
                                             required
                                             value={dietaryIntake?.snacksFrequency}
                                             error={!!error?.snacksFrequency}
@@ -1718,7 +1718,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                             name="dietaryIntake.sodaCandyFrequency"
                                             label={t('question.sodaCandyFrequency')}
                                             required
-                                            subtitle="Regular soft drinks, Candies and Other sweet Stuff"
+                                            subtitle="regular soft drinks, candies and other sweet stuff"
                                             value={dietaryIntake?.sodaCandyFrequency}
                                             error={!!error?.sodaCandyFrequency}
                                             selectOptions={sodaCandyFrequencyValues}
@@ -1857,7 +1857,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                 multiple = {false}
                                                 defaultValue={dietaryIntake.lessFiveOrangeYellowFruitVegeFrequencyIntake}
                                                 required 
-                                                subtitle={"(1 whole carrot, 8 large apricots halves, Half cup of musk melon, 1 baked sweet potato, 1 whole pear, 8 large rambutans, 8 large mangos teens, 2 jambu merah)"}
+                                                subtitle={"(1 whole carrot, 8 large apricots halves, half cup of musk melon, 1 baked sweet potato, 1 whole pear, 8 large rambutans, 8 large mangos teens, 2 jambu merah)"}
                                                 error={error?.lessFiveOrangeYellowFruitVegeFrequencyIntake} 
                                                 name='dietaryIntake.lessFiveOrangeYellowFruitVegeFrequencyIntake' 
                                                 label={t('question.lessFiveOrangeYellowFruitVegeFrequencyIntake')} 
@@ -1934,7 +1934,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                 }
                                             ]} 
                                                 multiple = {false}
-                                                subtitle={"Luncheon meats, processed meats (Example: ayamas), sausages or any other processed meat"}
+                                                subtitle={"Luncheon meats, processed meats (example: ayamas), sausages or any other processed meat"}
                                                 defaultValue={dietaryIntake.nitrateSaltMeatFrequencyIntake}
                                                 required 
                                                 error={error?.nitrateSaltMeatFrequencyIntake} 
@@ -2038,7 +2038,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                     value: 'No'
                                                 }
                                             ]} 
-                                                subtitle={"Nasi Lemak, Mee Goreng Mamak, Roti Canai, Ayam Percik"}
+                                                subtitle={"nasi lemak, mee goreng mamak, roti canai, ayam percik"}
                                                 multiple = {false}
                                                 defaultValue={dietaryIntake.lessThanThreeTimesNLMGMRCAYWeeklyIntake}
                                                 required 
