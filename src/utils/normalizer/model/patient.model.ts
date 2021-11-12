@@ -2,7 +2,6 @@ import { isNil, isUndefined, omitBy } from 'lodash';
 
 const PatientModel = (data:any) => {
     // console.log('data', data);
-    console.log('data', data);
     const id = data.id? data.id:(data.url.split('s')[1]).split('/')[1];
     // console.log('data.ic', data.ic);
     // console.log('data, array', typeof(data.comments));
@@ -38,7 +37,6 @@ const PatientModel = (data:any) => {
         obesityPredictionReports: data.mlrequests? (data.mlrequests.filter((mlrequest: any)=> {
             return mlrequest.response!='error';
         })).map((mlrequest: any) => {
-            console.log('mlrequest', mlrequest);
             return omitBy({
                 id: mlrequest.id,
                 patientID: mlrequest.patient,

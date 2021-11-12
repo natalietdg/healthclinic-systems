@@ -2,8 +2,6 @@ import { omitBy, isNil, isUndefined, isEmpty } from 'lodash';
 import { isEmptyBindingElement } from 'typescript';
 
 const ObesityPredictionResponse = (data: any) => {
-    console.log('data', data);
-    console.log('data.activeScale', data.activeScale);
     return omitBy({
             gender : data.gender || undefined,
             race : data.race || undefined,

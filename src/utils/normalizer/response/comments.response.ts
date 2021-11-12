@@ -2,7 +2,6 @@
 import { isNil, isUndefined, omitBy, isEmpty } from 'lodash';
 
 const CommentsResponse = (data: any ) => {
-    console.log('data', data);
     return omitBy({
         pk: data.id > -1? data.id : undefined,
         title: data.diagnosis,

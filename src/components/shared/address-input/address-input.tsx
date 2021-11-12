@@ -24,16 +24,13 @@ const AddressInput: React.FC<AddressInputProps> = ({error, addressInput, onChang
     const [ postCodes, setPostCodes ] = useState<any>([]);
 
     useEffect(()=> {
-        console.log('addresss error', error);
         if (error) {
             const keys = Object.keys(error);
             const path = keys[0];
             if (document.querySelector(`input[name=${path}]`)) {
-                console.log('path', path);
                 (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
             }
             else if (document.querySelector(`div[name=${path}]`)) {
-                console.log('path2', path);
                 (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
             }
         }

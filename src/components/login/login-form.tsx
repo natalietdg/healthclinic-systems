@@ -21,14 +21,17 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
     const [ loginInput, setLoginInput ] = useState(initialLoginInput);
     const [ error, setError ] = useState<any>({});
 
+    useEffect(() => {
+        if(loginError?.message!='') {
+            // console.log('loginError.error', loginError?.message);
+            setError({login: loginError?.message});
+        }
+    }, [loginError])
+
     const handleChange = (name: string, value: any) => {
         setLoginInput({...loginInput, [name]: value});
         setError({});
     }
-
-    useEffect(()=> {
-        if(loginError != {}) setError({ login: loginError});
-    },[loginError])
 
     const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -44,30 +47,23 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
             onConfirm(value);
 
         }
-        catch(err) {
+        catch(err: any) {
             var { path, message, type }:any = err;
-        console.log('path', path);
-            let value = '';
-            if (message.includes('Passwords') && message.includes('match')) {
-                setError({...error, [path]: message });
-            }
-            else {
+           
+            var errorArray = err.inner.map((error: any) => {
+               let { path, value}: any = errorHandler.validation(error);
 
-                let {path, value} = errorHandler.validation(err) || {};
-                console.log('path', path);
-                if (path.indexOf('.')!==-1) {
-                    const str = path.split('.');
-                    path = str[0];
-                }
+                return {
+                    [path] : t(`${value}`, {field: t(`label.${path}`)})
+                };
+            });
 
-                setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-            }
-
-            
-            if (path.indexOf('.')!==-1) {
-                const str = path.split('.');
-                path = str[0];
-            }
+            errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                return errorObj;
+            })
+            // console.log('errorArray', errorArray);
+            setError(errorArray);
 
             if (document.querySelector(`input[name=${path}]`)) {
                 (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
@@ -77,6 +73,10 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
             }
         }
     }
+
+    // useEffect(() => {
+    //     console.log('error', error);
+    // },[error])
 
     return (
         <div>

@@ -6,9 +6,7 @@ import LoadingPage from 'Pages/loading-page';
 import { useTranslation } from 'react-i18next';
 import Radium from 'radium';
 import { encode } from 'Helpers/';
-import { ToasterAtomType, toasterAtom } from 'Recoil/toaster.atom';
-import { PatientInformationType, CommentType, commentAtom} from 'Recoil/patient.atom';
-import { uploadImage } from 'Services/patient.services';
+import { CommentType, commentAtom} from 'Recoil/patient.atom';
 import './patient-information.scss';
 import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValuesFunction, sodaCandyFrequencyValuesFunction, occupationValuesFunction, processedFoodIntakeValuesFunction, fruitsIntakeValuesFunction, grainBeansIntakeValuesFunction, vegetableIntakeValuesFunction, snacksFrequencyValuesFunction, dessertFrequencyValuesFunction, milkTeaCoffeeLowfatValuesFunction, eggFrequencyValuesFunction, friedFoodFrequencyValuesFunction, dairyFrequencyValuesFunction, meatFrequencyValuesFunction, healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, nicotineAmtValuesFunction, heightFunction, weightFunction, yearFunction, lastHundredYearsFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
 import { Container, Page, Row, Col, ImageUpload, Modal, Toaster } from 'Components/shared';
@@ -17,10 +15,8 @@ import _, { omitBy, isEmpty, isUndefined, isEqual } from 'lodash';
 import moment from 'moment';
 import PagePane from 'Components/shared/page/page-pane'
 import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
-import { PatientInformationFormValidation } from './patient-information.validation';
 import { PersonalInformationFormValidation } from './personal-information.validation';
 import { ObesityPredictionValidation } from './obesity-prediction.validation';
-import patientInformation from '.';
 
 interface PatientInformationProps {
     onSubmit: (data: any, type: string) => void;
@@ -272,45 +268,29 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     },[data]);
 
     useEffect(()=> {
-        console.log('page', page);
+       
         if (page != null && page != -1) setPageVisibility(parseInt(page));
     },[page]);
 
     useEffect(()=> {
-        console.log('comments', comments);
+       
         setClinicComments(comments);
     },[comments]);
 
     useEffect(()=> {
         if(healthAndFamilyHistory.weight> 0 && healthAndFamilyHistory.height > 0) {
             const BMI = Math.trunc(healthAndFamilyHistory.weight/(healthAndFamilyHistory.height * healthAndFamilyHistory.height));
-            console.log('BMI', BMI);
-            console.log('typeof(BMI)', typeof(BMI));
+         
             const status = BMIStatus(BMI);
-            console.log('status', status);
             setHealthAndFamilyHistory({...healthAndFamilyHistory, BMI: BMI})
             setWeightStatus(status);
         }
-    },[healthAndFamilyHistory.weight || healthAndFamilyHistory.height])
-
-
-    useEffect(()=> {
-        console.log('healthAndFamilyHistory', healthAndFamilyHistory);
-    },[healthAndFamilyHistory])
-
-    useEffect(()=> {
-        console.log('lifestyleInformation', lifestyleInformation);
-    },[lifestyleInformation])
-
-    useEffect(()=> {
-        console.log('dietaryIntake', dietaryIntake);
-    },[dietaryIntake])
-
+    },[healthAndFamilyHistory.weight || healthAndFamilyHistory.height]);
 
     const nextPage = () => {
        
         if (pageVisibility < maxSize - 1) {
-            console.log('pageVisibility', pageVisibility);
+         
             setPageVisibility(pageVisibility + 1);
         }
     }
@@ -328,14 +308,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 stripUnknown: false
             });
             // console.log(moment(personalInformation.dateOfBirth));
-            console.log('value', value);
+       
     
             onSubmit(value, 'save');
 
         }
         catch(err: any) {
-            console.log('err', err);
-            console.log('err.inner', err?.inner);
             var tempErrors:any = {};
 
             err?.inner.map((error: any, index: number)=> {
@@ -343,7 +321,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
                 if(value.includes('required')) {
                     const [ first, ...last] = value.split(' ');
-                    console.log(last);
                    
                     value =  t(`${value}`, { field: t(`label.${path}`)} );
                 }
@@ -375,9 +352,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 }
                 
                 tempErrors[path]= value;
-                console.log('tempErrors', tempErrors);
             })
-            console.log('tempErrors', tempErrors);
+          
             setError(tempErrors);
             var subPath = '';
 
@@ -399,7 +375,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         // });
         // console.log(tempFamilyHistory);
         // tempHealthAndFamilyHistory.familyHistory = tempFamilyHistory;
-        console.log(tempHealthAndFamilyHistory);  
         const fullData = {
             patientID: personalInformation.patientID,
             reportID: personalInformation.reportID,
@@ -426,22 +401,15 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 abortEarly: false,
                 stripUnknown: false
             });
-            console.log('value', value);
-            console.log('fullData', fullData);
             onSubmit(value, "prediction");
         }
         catch(err: any) {
-            console.log('err', err);
-            console.log('err.inner', err?.inner);
             var tempErrors:any = {};
 
             err?.inner.map((error: any, index: number)=> {
-                console.log('error', error);
                 let { path, message, type } = error;
-                console.log('value', message);
                 
                 var [ first, ...last] = message.split(' ');
-                console.log(last);
               
                 if (path.indexOf('.')!==-1) {
                     const str = path.split('.');
@@ -501,9 +469,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 //     ...tempErrors[path],
                 //     [subPath]: message
                 // };
-                console.log('tempErrors', tempErrors);
             })
-            console.log('tempErrors', tempErrors);
             setError(tempErrors);
             var subPath = '';
 
@@ -552,7 +518,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 abortEarly: false,
                 stripUnknown: false
             });
-            console.log('value', value);
             // console.log(moment(personalInformation.dateOfBirth));
 
     
@@ -560,8 +525,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
         }
         catch(err: any) {
-            console.log('err', err);
-            console.log('err.inner', err?.inner);
             var tempErrors:any = {};
 
             err?.inner.map((error: any, index: number)=> {
@@ -569,7 +532,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
                 if(value.includes('required')) {
                     const [ first, ...last] = value.split(' ');
-                    console.log(last);
                     value = t(`label.${path}`) + " " + last.join(' ') + '.';
                 }
 
@@ -600,9 +562,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 }
                 
                 tempErrors[path]= value;
-                console.log('tempErrors', tempErrors);
-            })
-            console.log('tempErrors', tempErrors);
+            });
             setError(tempErrors);
             var subPath = '';
 
@@ -623,8 +583,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const handleTextChange = (name: string, value: any) => {
-        console.log('name', name);
-        console.log('value', value);
         setToaster({ type:'success', message: value});
         // let tempProps: any = {
         //     type: 'success', message: value
@@ -704,7 +662,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         setError(tempError);
         if(name.indexOf('.')!==-1) {
             let subName = (name.split('.')[1]).toString();
-            console.log('subName', subName);
             // let index = parseInt((name.split('[')[1]).split(']')[0]);
             // console.log('index', index);
             // subName = subName.split('[')[0];
@@ -769,7 +726,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const handleSelectRadio = (name: string, value: any) => {
-        console.log('name', name);
         value = (value=='true' || value=='false')? (value==='true'): value;
         let tempError = error;
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
@@ -827,9 +783,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
 
         setError(tempError);
-        console.log('name', name);
-        console.log('subName', subName);
-        console.log("value", value);
 
         // if(healthAndFamilyHistory.healthHistory.noCondition==true) {
         //     setHealthAndFamilyHistory({
@@ -884,8 +837,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
 
         if (name.includes('healthAndFamilyHistory')) {
-            console.log('tempSubName', tempSubName);
-            console.log('subName', subName);
             if (tempSubName != ''){
                 if(subName=='noCondition' && value == true) {
                     setHealthAndFamilyHistory({
@@ -975,13 +926,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
 
         setError(tempError);
-        console.log('name', name);
-        console.log('value', value);
         if(name.indexOf('.')!==-1) {
             const str = name;
             name = str.split('.')[0];
             let subName = str.split('.')[1];
-            console.log('subName', subName);
             if (name.includes('personalInformation')) {
                 setPersonalInformation({...personalInformation, [name]: {
                     ...personalInformation[name],
@@ -1154,7 +1102,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 return !isUndefined(img) && img != null && typeof(img)!='string'
             }) : modalComment?.image ? modalComment?.image : undefined 
         }
-        console.log('imagesss', image);
         let tempComment = omitBy({
             id: modalComment?.id > -1 ? modalComment.id : undefined,
             patientID: personalInformation.patientID,
@@ -1204,19 +1151,17 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             id: clinicComments[index].id,
             diagnosis: clinicComments[index].diagnosis,
             comment: clinicComments[index].comment,
+            updated: clinicComments[index].updated,
             image: clinicComments[index].image,
             created: clinicComments[index].created,
             arrayIndex: index,
         }
      
-        setModalComment({
-            ...modalComment, ...tempComment
-        });
+        setModalComment(tempComment);
         toggleCommentModalVisibility(true, index);
     }
 
     const removeComment = (e: any) => {
-        console.log(e);
         let index = parseInt(e.target.id);
         let tempComments = [...clinicComments];
         tempComments.splice(index, 1);
@@ -1242,38 +1187,41 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     return (
+        <>
+            <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
+                <Row>
+                
+                    <Col>
+                        <Row>
+                            <div style={{width: 'inherit'}}>
+                                <TextInput subtitle={modalComment?.updated != ''? `Last updated: ${new Date(modalComment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`:''} key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.modalComment?.diagnosis} name="modalComment.diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${new Date(modalComment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
+                                <AlertBox error={error?.modalComment?.diagnosis} name={t('label.diagnosis')} />
+                            </div>
+                        </Row>
+
+                        <Row>
+                            <div style={{width: 'inherit'}}>
+                                <TextArea  key={modalComment?.id} value={modalComment?.comment} required error={!!error?.modalComment?.comment} name="modalComment.comment" label={t('label.comment')} onChange={handleCommentChange} />
+                                <AlertBox error={error?.modalComment?.comment} name={t('label.comment')} />
+                            </div>
+                        </Row>
+                    </Col>
+                    <Col>
+                        <ImageUpload comment={true} onChangeImg={handleImageChange} name="modalComment.image" blob={modalComment?.image}/>
+                    </Col>
+                
+                </Row>
+                <Row> 
+                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" /> 'Edit Comment'</>}</button>
+                </Row>
+
+            </Modal>
         <div className="patient-info">
-            { personalInformation?.fullName && personalInformation?
+            { ((personalInformation?.patientID==-1) || (personalInformation?.fullName)) && personalInformation?
             <Radium.StyleRoot style={{width: 'inherit', height: 'inherit', position: 'absolute', top: '0'}}>
+                 
             <div className="div" style={{...styles.fadeIn}}>
-             <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
-                    <Row>
-                    
-                        <Col>
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <TextInput  key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.modalComment?.diagnosis} name="modalComment.diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${modalComment?.created}`: '')} onChange={handleCommentChange} />      
-                                    <AlertBox error={error?.modalComment?.diagnosis} name={t('label.diagnosis')} />
-                                </div>
-                            </Row>
-
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <TextArea  key={modalComment?.id} value={modalComment?.comment} required error={!!error?.modalComment?.comment} name="modalComment.comment" label={t('label.comment')} onChange={handleCommentChange} />
-                                    <AlertBox error={error?.modalComment?.comment} name={t('label.comment')} />
-                                </div>
-                            </Row>
-                        </Col>
-                        <Col>
-                            <ImageUpload comment={true} onChangeImg={handleImageChange} name="modalComment.image" blob={modalComment?.image}/>
-                        </Col>
-                    
-                    </Row>
-                    <Row> 
-                        <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" /> 'Edit Comment'</>}</button>
-                    </Row>
-
-                </Modal>
+            
                 { personalInformation.patientID !==-1 && 
                     <div className="back"><button className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.reportID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
                 }
@@ -1407,12 +1355,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                     </Col>
                                 </Row>
                                 
-                                <Row>
+                                {/* <Row>
                                     <div style={{width: 'inherit'}}>
                                         <TextArea value={personalInformation.reasonForConsultation} required error={error?.reasonForConsultation} name='personalInformation.reasonForConsultation' label={t('label.reasonForConsultation')} onChange={handleTextChange} />
                                         <AlertBox error={error?.reasonForConsultation} name={t('label.reasonForConsultation')} />
                                     </div>
-                                </Row>
+                                </Row> */}
                             </div>
                             <div className="divider--fifty">
                                 <Row>
@@ -1450,7 +1398,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 <PagePane index={1}>
                     <div className="division">
                         <div className="header">    
-                            <h2>Health History</h2>
+                            <h2>Weight & BMI</h2>
                         </div>
                         <div className="content">                        
                             <div className="divider--fifty">
@@ -2309,11 +2257,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 personalInformation.patientID !== -1 &&
                 <PagePane index={4}>
                     <div className="division">
+                            
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
                             <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}>New Comment</button>
                            
-
+                            
                         </div>
                         <div className="content" style={{flexDirection:'row'}}>                   
                             <div className="divider--fifty">
@@ -2323,7 +2272,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         return <>
                                                 <Row key={index}>
                                                     <div style={{width: 'inherit'}}>
-                                                        <TextInput disabled key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `  Date: ${new Date(comment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
+                                                        <TextInput subtitle={comment?.updated != ''? `Last updated: ${new Date(comment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: ''} disabled key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `  Date: ${new Date(comment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
                                                         <AlertBox error={error[`comment[${index}]`]?.diagnosis} name={t('label.diagnosis')} />
                                                     </div>
                                                 
@@ -2338,7 +2287,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                     </div>
                                                 </Row>
                                                 <Row>
-                                                    <button id={index} className="save" onClick={(e) => {editComment(e)}}><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" /></button>
+                                                    <button id={index} className="save" onClick={(e) => {editComment(e)}}><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</button>
                                                 </Row>
                                         </>
                                     })
@@ -2380,6 +2329,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             </Radium.StyleRoot>
             : <LoadingPage />}
         </div>
+        </>
     )
 }
 

@@ -31,8 +31,6 @@ const Profile: React.FC<ProfileProps> = () => {
     }
 
     const handleImageChange = (name: string, blob: Blob) => {
-        console.log('name', name);
-        console.log('blob', blob);
         setProfileInformation({
             ...profileInformation, [name]: blob
         })

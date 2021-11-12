@@ -24,7 +24,6 @@ const DisplayReport: React.FC<DisplayReportProps> = ({patientData, edit=false}) 
     (new Date().getMonth())-(new Date(patientData?.dateOfBirth)).getMonth());
 
     useEffect(()=> {
-        console.log('patientData', patientData);
         setPatient(patientData);
     },[patientData])
 

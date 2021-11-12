@@ -8,7 +8,6 @@ interface PageProps {
 const Page: React.FC<PageProps> = ({children, visibility, numOfChildren}) => {
 
     useEffect(()=> {
-        console.log('children', children);
         numOfChildren(children?.length);
     },[]);
 

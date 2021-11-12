@@ -20,8 +20,6 @@ export const uploadImage = async(data: any)=> {
             },
             responseType: 'json'
         });
-
-        console.log('response', response);
         return response.data;
 
     }
@@ -34,9 +32,6 @@ export const savePatientInformation = async(data:any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
-    
-    console.log('data', data);
-    console.log(normalizer.response.patient(data));
     try {
         const response = await axios({
             method: 'PUT',
@@ -48,12 +43,10 @@ export const savePatientInformation = async(data:any) => {
             },
         })
 
-        console.log('create patient', response);
         return normalizer.model.patient(response.data);
     }
     catch(err:any) {
         const { error }:any = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -62,9 +55,7 @@ export const createPatient = async(data:any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
-    
-    console.log('data', data);
-    console.log(normalizer.response.patient(data));
+
     try {
         const response = await axios({
             method: 'POST',
@@ -74,14 +65,12 @@ export const createPatient = async(data:any) => {
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
-        })
+        });
 
-        console.log('create patient', response);
         return normalizer.model.patient(response.data);
     }
     catch(err:any) {
         const { error }:any = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -99,7 +88,6 @@ export const updatePatientInformation = async(data: any) => {
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -121,7 +109,6 @@ export const fetchImage = async(url: any) => {
         return response.data;
     }
     catch(err:any) {
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -151,7 +138,6 @@ export const fetchComments = async(patientID: any) => {
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -160,7 +146,6 @@ export const createComments = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const patientID = data.patientID;
-    console.log('data', data);
     const accessToken = localStorage.getItem('accessToken');
     // const uploadImageResponse = await Promise.all(data.image.map(async (image: any)=> {
     //     const response:any = await uploadImage(image);
@@ -169,7 +154,6 @@ export const createComments = async(data: any) => {
     // }));
 
     data = normalizer.response.comment(data);
-    console.log('data', data);
     var formData = new FormData();
     formData.append('title', data.title);
     formData.append('comment', data.comment);
@@ -182,7 +166,6 @@ export const createComments = async(data: any) => {
     }
    
     // data.image = images;
-    console.log('formData', formData.getAll('image]'));
     
 
     try {
@@ -196,12 +179,10 @@ export const createComments = async(data: any) => {
             responseType: 'json',
             data: formData
         });
-        console.log('response', response);
         return response.data;
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -210,13 +191,9 @@ export const editComments = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
-    console.log('data', data);
-
   
     data = normalizer.response.comment(data);
-    console.log('data', data);
     let commentID = data.pk;
-    console.log('commentID', commentID);
     var formData = new FormData();
     formData.append('pk', data.pk);
     formData.append('title', data.title);
@@ -239,11 +216,9 @@ export const editComments = async(data: any) => {
                 'Authorization': `Bearer ${accessToken}`        
             },
         });
-        console.log('response', response);
         return response.data;
     }
     catch(err:any) {
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -253,8 +228,6 @@ export const fetchPatientInformation = async(patientID: any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
-    console.log('accessToken', accessToken);
-    console.log('patientID', patientID);
     try{
         const response = await axios({
             method: 'GET',
@@ -266,10 +239,8 @@ export const fetchPatientInformation = async(patientID: any) => {
            
         });
 
-        console.log('response.data', response.data);
         let tempImage = response.data.image;
         let patientProfilePic = tempImage != null ? await fetchImage(tempImage): null;
-        console.log('ptientprofilepic', patientProfilePic);
         var patientData = normalizer.model.patient(response.data);
         // var comments = await fetchComments(patientID);
         // console.log('comments', comments);
@@ -278,12 +249,10 @@ export const fetchPatientInformation = async(patientID: any) => {
         // const patientsData = response.data.map(async (patient: any)=> {
         //     patient.image = await fetchPatientProfilePic(patient.image[0])
         // })
-        console.log('patientData', patientData);
         return patientData;
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
     
@@ -303,7 +272,6 @@ export const fetchPatientProfilePic = async(url: string) => {
                 'Authorization': `Bearer ${accessToken}`        
             },
         })
-        console.log('response.data', response.data);
         return response.data;
     }
     catch(err:any) {
@@ -341,7 +309,6 @@ export const fetchPatientList = async() => {
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -362,10 +329,8 @@ export const fetchReport = async(reportID: string) => {
             // },
         });
 
-        console.log('response', response);
         var patientReport = normalizer.model.patient(response.data[0]);
 
-            console.log('patientReport', patientReport);
             patientReport.obesityPredictionReports = await Promise.all(patientReport.obesityPredictionReports.map(async(report: any)=> {
                 var response:any = '';
                 var inputData: any = {}; 
@@ -432,7 +397,6 @@ export const fetchReport = async(reportID: string) => {
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -442,11 +406,8 @@ export const generateObesityPrediction = async(data: any) => {
         const url = process.env.PUBLIC_PATH;
         const port = process.env.PORT;
         const accessToken = localStorage.getItem('accessToken');
-        console.log('accessToken', accessToken);
-        console.log(normalizer.response.obesityPrediction(data));
 
         const normalizedData = normalizer.response.obesityPrediction(data);
-        console.log('normalizedData', normalizedData);
 
         const response:any = await axios({
             method: 'POST',
@@ -500,14 +461,12 @@ export const generateObesityPrediction = async(data: any) => {
                 'Content-Type': 'application/json'     
             },
         });
-        console.log('response', response);
         // console.log('response', response.data);
 
         return response?.data;
     }
     catch(err:any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -520,7 +479,6 @@ export const setPatientandFeedbackMLRequest = async(data: any) => {
         patient: data.patientID? data.patientID: undefined,
         feedback: data.feedback? data.feedback : undefined
     }, (value) => isUndefined(value));
-    console.log('tempData', tempData);
     try {
         const response = await axios({
             method: 'PUT',
@@ -536,7 +494,6 @@ export const setPatientandFeedbackMLRequest = async(data: any) => {
     }
     catch(err: any) {
         const { error }:any = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -557,16 +514,11 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
             }
         })
         .then((response) => { 
-            console.log('patient', patient);
             return response.data.filter((MLReport: any, index: any)=> {
-           
-                if(MLReport.patient==patientID){
-                    console.log('true', MLReport);
-                }
+        
                 return MLReport.patient==patientID && MLReport.response != 'error'
                 })
             }).then( (MLReports)=> {
-                console.log('MLReports', MLReports);
                 const parsedReports = MLReports.map((report: any) => {
                     let input_data = JSON.parse(report.input_data);
                     let full_response = JSON.parse(report.full_response.replace(/'/g, "\""));
@@ -574,7 +526,6 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
                     probability = probability.map((prob: any) => {
                         return prob.replace(/                /, "");
                     })
-                    console.log('probability', probability);
                     full_response.probability = probability;
                     const tempParsedReport = normalizer.model.mlReport({
                         ...report,
@@ -591,7 +542,6 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
     }
     catch (err: any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }
@@ -615,7 +565,6 @@ export const fetchObesityPredictionReport = async(reportID: any) => {
     }
     catch (err: any) {
         const { error } = err?.response?.data || {};
-        console.log('err', err);
         return { error: { message: err?.message } };
     }
 }

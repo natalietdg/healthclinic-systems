@@ -72,7 +72,7 @@ const Dashboard:React.FC<DashboardProps> = () => {
 
     const getBackground = async() => {
         const response = await fetchBackground();
-        console.log('response', response);
+        // console.log('response', response);
         setBg(response);
     }
 
@@ -83,7 +83,7 @@ const Dashboard:React.FC<DashboardProps> = () => {
         setUser(username);
         const csrfToken = localStorage.getItem('csrfToken');
 
-        console.log('csrfToken', csrfToken);
+        // console.log('csrfToken', csrfToken);
     },[])
 
     const animationSlideIn = () => {

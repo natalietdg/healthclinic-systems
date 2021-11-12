@@ -15,11 +15,8 @@ const ReportPage = ({}) => {
     const [toasterProps, setToasterProps ] = useState<any>({type: '', message: ''});
     const [ bg, setBg ] = useState<any>({});
     const url = useParams();
-    console.log('url', url);
     const { id }:any = useParams();
-    console.log('id', id);
     const reportID = id? decode(id): undefined;
-    console.log('reportID', reportID);
     
     const getBackground = async() => {
         const response = await fetchBackground();
@@ -28,10 +25,8 @@ const ReportPage = ({}) => {
 
     const fetchPatientReport = async(reportID: string | undefined) => {
 
-        if (reportID != null) {
+        if (reportID != null && reportID!='') {
             const response = await fetchReport(reportID);
-
-            console.log('response', response);
 
             if(!response.error) {
                 setPatientData(response);

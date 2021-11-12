@@ -25,21 +25,36 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
     const { t } = useTranslation();  
 
     useEffect(()=> {
-        setToasterProps(props);
+        setToasterProps(props);    
     },[props]);
+
+    useEffect(() => {
+        const toaster = (document.getElementById(`${toasterID}`) as HTMLElement)
+        if (toaster) {
+            toaster.style.display = 'block'; 
+        }
+    },[])
+
+    // useEffect(() => {
+    //     console.log('toasterProps', toasterProps);
+    //     if(toasterProps.type=='success' || toasterProps.type=='') {
+    //         const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement)
+    //         if (toaster) toaster.style.setProperty('--displayAttribute', 'block');
+    //     }
+    // },[toasterProps])
 
     useEffect(()=> {
         setToasterStyle(style);
     },[style]);
 
 
-    useEffect(()=> {
-        if(fadeOut == true) {
-            setTimeout(function () {                                         
-                hideToaster();
-            }, 1500);
-        }
-    },[fadeOut]);
+    // useEffect(()=> {
+    //     if(fadeOut == true) {
+    //         setTimeout(function () {                                         
+    //             hideToaster();
+    //         }, 1500);
+    //     }
+    // },[fadeOut]);
 
     (async()=> {
         new Promise(async function (resolve, reject) {
@@ -49,15 +64,22 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
                 resolve('done');
             }, 10000);
         })
-        // .then( (success) => {
-        //     setTimeout(function () {                                         
-        //         (document.getElementById(`${toasterID}`) as HTMLElement).style.display = 'none'; 
-        //     }, 3000);
-        // });
+        .then( (success) => {
+            setTimeout(function () { 
+                const toaster = (document.getElementById(`${toasterID}`) as HTMLElement)
+                if (toaster) {
+                    toaster.style.display = 'none'; 
+                    setToasterProps({type: '', message: ''});
+                }
+            }, 1500);
+        });
+
+       
     })();
     
     const hideToaster = () => {
-        (document.getElementById(`${toasterID}`) as HTMLElement).style.display = 'none'; 
+        const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement)
+        if (toaster) toaster.style.display = 'none'; 
     }
   
 

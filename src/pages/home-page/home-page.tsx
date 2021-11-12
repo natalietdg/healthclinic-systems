@@ -62,7 +62,6 @@ const HomePage: React.FC<HomePageProp> = () => {
         if (!isEmpty(data))  {
             try{
                 const response:any = await login(data);
-                console.log('response', response);
                 if(!response.error) {
                     setToasterProps({
                         type: 'success',
@@ -74,7 +73,7 @@ const HomePage: React.FC<HomePageProp> = () => {
                 }
                 else {
                     setLoginState({state: 'error'});
-                    setError(response.error.message);
+                    setError(response.error);
                     setToasterProps({
                         type: 'errors',
                         message: 'Login Failed. Please key in the correct username and password.'
@@ -95,22 +94,29 @@ const HomePage: React.FC<HomePageProp> = () => {
     const fetchUserReport = async() => {
         // const reportID = encode(123);
         setTermsAndConditionsModal(false);
-        
-        const response = await fetchReport(reportNumber);
 
-        if(response.error) {
-            setError({reportNumber: 'Invalid report number.'})
-            setToasterProps({
-                type: 'errors',
-                message: "Please double check the report number or request for assistance from our friendly staff."
-            })
+        if(reportNumber !='') {
+            const response = await fetchReport(reportNumber);
+
+            if(response.error) {
+                setError({reportNumber: 'Invalid report number.'});
+                setToasterProps({
+                    type: 'errors',
+                    message: "Please double check the report number or request for assistance from our friendly staff."
+                });
+            }
+            else {
+                setToasterProps({
+                    type: 'success',
+                    message: "Redirecting you to your report."
+                });
+            }
         }
         else {
-            setToasterProps({
-                type: 'success',
-                message: "Redirecting you to your report."
-            });
+            setError({reportNumber: 'Cannot be empty.'});
         }
+        
+        
         
     }
 

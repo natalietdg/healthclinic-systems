@@ -16,7 +16,6 @@ import { Link } from 'react-router-dom';
 import {useQuery} from 'src/hooks';
 import { Links } from 'src/links';
 import './navbar.scss';
-import { isFSA } from '@reduxjs/toolkit/dist/createAction';
 
 interface NavbarProps {
     navbar: any;
@@ -52,9 +51,9 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
 
     const refresh = async() => {
         const now = Math.trunc(new Date().getTime() /1000);
-        console.log('now', now);
+        // console.log('now', now);
         const accessTokenExpiry = localStorage.getItem('accessTokenExpiry') || -1;
-        console.log('accessTokenExpiry', accessTokenExpiry);
+        // console.log('accessTokenExpiry', accessTokenExpiry);
         if(now > accessTokenExpiry) {
             // alert('You are not logged in! Redirecting you to the home page...');
             setToaster({
@@ -144,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
 
         // console.log('values', values);
         const response = localStorage.getItem("fullName");
-        console.log('response storage', response);
+        // console.log('response storage', response);
         if (response != null || response != undefined) name = response;
     }
     // else {
@@ -160,6 +159,13 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
         if(response?.error) {
             // toaster('errors', 'Logout error');
             setLogoutState({state: 'error'});
+            setToaster({
+                type: 'success',
+                message: 'Log out successful! Redirecting you to the home page...'
+            });
+            setTimeout(function() {
+                history.push('/');
+            }, 3000);
         }
         else {
             // alert('Log out successful! Redirecting you to the home page...');

@@ -394,6 +394,7 @@ export type CommentType = {
     diagnosis: string;
     comment: string;
     image: object;
+    updated: string;
     user: object;
 }
 
@@ -405,7 +406,8 @@ export const commentAtom = atom<CommentType[]>({
         comment: '',
         image: [],
         user: {},
-        created: ''
+        created: '',
+        updated: '',
     }]
 })
 

@@ -1,7 +1,7 @@
 .text-input {
     font-family: $token-font-family-text;
     width: auto;
-    height: 80px;
+    min-height: 80px;
     padding: 0px 10px;
     display: flex;
     flex-direction: column;

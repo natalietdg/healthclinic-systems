@@ -30,7 +30,6 @@ const NewPatientPage = () => {
 
     useEffect(()=> {
         setTodaysDate(dates.todaysDate);
-        console.log('dates', dates);
     },[]);
 
     const [ bg, setBg ] = useState<any>({});
@@ -38,12 +37,10 @@ const NewPatientPage = () => {
     const [patientComments, setPatientComments] = useState([]);
     const [ actionStatus, setActionStatus ] = useRecoilState<authActionStatusType>(AuthActionStatusAtom);
     const params = useParams();
-    console.log('params', params);
     const { id, page }:any = useParams();
     var pageNumber: any = page? decode(page): 0;
 
     const patientID:any = id!=undefined? parseInt(decode(id) || "-1"): -1;
-    console.log('patientID', patientID);
     
     const getBackground = async() => {
         const response = await fetchBackground();
@@ -51,16 +48,15 @@ const NewPatientPage = () => {
     }
 
     useEffect(()=> {
-        console.log('localStorage', localStorage);
       
         getBackground();
         if (patientID != -1) {
             fetchPatient(patientID);
             fetchClinicComments(patientID);
         }
-        else {
-            localStorage.setItem('fullName', 'Obesity Prediction Report');
-        }
+        // else {
+        //     localStorage.setItem('fullName', 'Obesity Prediction Report');
+        // }
 
         if (pageNumber != null) {
             pageNumber = parseInt(pageNumber);
@@ -70,25 +66,14 @@ const NewPatientPage = () => {
 
     const upload = async(blob: any) => { 
         const response = await uploadImage(blob);
-
-        console.log('response', response);
         return response;
     }
 
     const fetchPatient= async(patientID: any)=> {
-        console.log('patient ID', patientID);
         if(patientID !== -1) {
             const response = await fetchPatientInformation(patientID);
-            console.log('response', response);
-            const huh = localStorage.getItem('huh');
-            console.log('huh', huh);
-    
-            const fullName = localStorage.getItem('fullName');
-            if(fullName == null) {
-                localStorage.setItem("fullName", response.fullName);
-            }
-            
-            console.log('localStorage', localStorage);
+            localStorage.setItem("fullName", response.fullName);
+
     
             if (response.error){
                 setToaster({type: 'errors', message: "Failed to fetch patient's information"});
@@ -101,7 +86,6 @@ const NewPatientPage = () => {
 
     const fetchClinicComments = async(patientID: any) => {
         const tempResponse = await fetchComments(patientID);
-        console.log('respnose', tempResponse);
         if (!tempResponse.error){
             setPatientComments(tempResponse);
         }
@@ -109,25 +93,20 @@ const NewPatientPage = () => {
 
     const newPatient = async(data: any) => {
         const response = await createPatient(data);
-        console.log('response',response);
     }
 
     const generatePrediction = async(data:any) => {
-        console.log('predictoin');
         const response = await generateObesityPrediction(data);
-        console.log('response', response);
 
         return response;
     }
 
     const submit = async(patientInformation: any, type: any) => {
-        console.log('patientInformation', patientInformation);
 
         // if(patientInformation.profilePicBlob && patientInformation.profilePicBlob != {}) {
         //     const imageResponse = await upload(patientInformation.profilePicBlob);
         //     patientInformation.image = imageResponse.image.full_size
         // }
-        console.log('type', type);
         var toasterType = '';
         var toasterMessage = '';
         var response:any = '';
@@ -135,8 +114,6 @@ const NewPatientPage = () => {
             // let patientID = patientInformation.patientID;
             // let tempComment =  _.omit(patientInformation, ['patientID']);
             response = await createComments(patientInformation);
-          
-            console.log('response', response);
 
             if(response.error) {
                 toasterMessage = 'Create comment failed';
@@ -147,9 +124,6 @@ const NewPatientPage = () => {
         }
         else if(type=='edit comment') {
             response = await editComments(patientInformation);
-           
-            console.log('response', response);
-
             if(response.error) {
                 toasterMessage = 'Edit comment failed';
             }
@@ -159,7 +133,6 @@ const NewPatientPage = () => {
         }
         else if (type=='create' || type=='add another') {
             response = await createPatient(patientInformation);
-            console.log('response', response);
 
             if(response.error) {
                 toasterMessage = 'Create patient failed';
@@ -192,22 +165,18 @@ const NewPatientPage = () => {
             
         }
         else if (type=="prediction") {
-            console.log('prediction', type);
             response = await generatePrediction(patientInformation);
-            console.log('resopnse', response);
 
             if (!response?.error) {
                 let data: any = {
                     reportID: response.request_id,
                     patientID: patientInformation.patientID
                 }
-                console.log('data', data);
                 response = await setPatientandFeedbackMLRequest(data);
             }
         }
         else {
             response = await savePatientInformation(patientInformation);
-            console.log('response', response);
         
             if(response.error) {
                 toasterMessage = 'Update patient failed';
@@ -226,7 +195,6 @@ const NewPatientPage = () => {
             message: toasterMessage
         });
 
-        console.log('response', response);
         if(!response.error) {
             if(type=='add another'){
                 history.push('/new-patient');

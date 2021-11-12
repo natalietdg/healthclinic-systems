@@ -13,9 +13,6 @@ const Container: React.FC<ContainerProps> = ({ onClose, flexDirection, children,
     useEffect(()=> {
         var containerArray:any =  containerArray = [...document.querySelectorAll('.container')];
        
-        console.log(containerArray);
-
-       
         if (containerArray.length > 0) {
             containerArray.map((container: any)=> {
                 (container as HTMLElement)?.style.setProperty('--flexDirection', flexDirection);

@@ -288,7 +288,6 @@ export const BMIStatus = (BMIWeight: any) => {
     if(BMIWeight> 100) {
         category = 'severely-obese';
     }
-    console.log('category', category);
     return category;
 }
 

@@ -15,7 +15,6 @@ const PatientDatabase = () => {
 
     const fetchPatients = async() => {
         const response = await fetchPatientList();
-        console.log('response', response);
 
         if(response.length == 0 || response.error ) {
             setPatientList(tempPatientData);
@@ -33,7 +32,6 @@ const PatientDatabase = () => {
 
     const submit = async(patientInformation) => {
         const response = await savePatientInformation(patientInformation);
-        console.log('response', response);
     }
 
     // const tableData = 

@@ -41,8 +41,8 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
 
     return (
         <table style={{width: width? width: '80%'}}>
-             { (visibility =='Today' || (visibility == 'Database' && filter != '')) &&
-                filteredData.length > 0 ? <tbody>
+             {/* { (visibility =='Today' || (visibility == 'Database' && filter != '')) &&
+                filteredData.length > 0 ?*/} <tbody> 
                 <tr onMouseEnter={(e: any) => { e.target.parentElement.style.boxShadow = "3px 3px 6px white"}}>
                     {
                         columns.map((column: any, index: number)=> {
@@ -52,8 +52,8 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                         })
                     }
                 </tr>
-                { (visibility =='Today' || (visibility == 'Database' && filter != '')) &&
-                    filteredData.map((rowValues: any, index: any)=> {
+                {/* { (visibility =='Today' || (visibility == 'Database' && filter != '')) && */}
+                {filteredData.map((rowValues: any, index: any)=> {
                         return (
                             <tr key={index}>
                                 {columns.map((column: any, index: any) => {
@@ -67,15 +67,15 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                         )
                         
                     })
-                }
-                {
+                 }
+                {/*{
                     visibility=='Database' && filter == '' &&
                     <tr><td>Please search for a patient in the search box.</td></tr>
-                }
+                } */}
             </tbody>
-            : visibility=='Database' && filter == ''? <tr><td>Please search for a patient in the search box.</td></tr>
-            :   <DisplayWaiting />
-            }
+            {/* : visibility=='Database' && filter == ''? <tr><td>Please search for a patient in the search box.</td></tr>
+            :   <DisplayWaiting /> */}
+           
             
         </table>
     )

@@ -9,13 +9,6 @@ const ApiException = (error: any ) => {
     var subpath = '';
     const [ first, ...last ] = message.split('');
 
-    console.log('first', first);
-    console.log('last', last);
-
-    if(message) {
-        console.log('message', message);
-    }
-
     if(message.includes('401')) {
         return omitBy({ path, refPath, value: "Incorrect credentials"}, isNil);
     }

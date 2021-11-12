@@ -22,7 +22,7 @@ const MLPredictionReport:React.FC<MLPredictionReportProps> = ({data, patient=tru
     const [ error, setError ] = useState<any>({});
 
     const accessToken = localStorage.getItem('accessToken') || undefined
-    console.log('accessToken', accessToken);
+  
     useEffect(() => {
         setObesityPredictionReport(data);
         setWeightStatus(BMIStatus(data?.inputData?.healthAndFamilyHistory?.BMI));
@@ -38,13 +38,6 @@ const MLPredictionReport:React.FC<MLPredictionReportProps> = ({data, patient=tru
             setPredictionValues(predictionData);
         }
 
-        console.log('patient', patient);
-        console.log('data', data);
-        if(data.feedback=='') console.log('true');
-        else console.log('false');
-
-        if(patient==false) console.log(true);
-        else console.log(false);
     },[data]);
 
     const handleTextChange = (name: any, value: any) => {

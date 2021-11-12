@@ -61,10 +61,8 @@ export const refreshAccessToken = async() => {
             },
             responseType: 'json'
         });
-        console.log('response', response);
 
         const validatedAccessToken = validateToken(response.data.access);
-        console.log('validatedAccessToken', validatedAccessToken);
         if(validatedAccessToken.error) {
             return validatedAccessToken;
         }

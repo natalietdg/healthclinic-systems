@@ -20,8 +20,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
     const [imgArray, setImgArray ] = useState([]);
 
     useEffect(()=> {
-        console.log('name', name);
-        console.log('blob', blob);
         if (multiple == false) {
             (async function () {
                 
@@ -43,15 +41,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                                     else url = tempBlob;
                                     return url;
                                 }));
-                
-                                console.log('urlArray', urlArray);
                                 setImgArray(urlArray);
                             }
                             
                         })(blob);
                     }
                     else {
-                        console.log('urlArray', blob);
                         setImgArray(blob);
                     }
                    
@@ -60,11 +55,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             })();
         }
         else {
-            console.log('blob?');
             if (!isEmpty(blob) && blob != {} && blob != undefined) {
-                console.log('blob!');
                 if((blob[0] instanceof Blob)) {
-                    console.log('blob!!!!?');
 
                     (async function(blob=[]) {
                         if(blob != []) {
@@ -72,8 +64,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                                 let url =  await base64Url(tempBlob);
                                 return url;
                             }));
-            
-                            console.log('urlArray', urlArray);
                             setImgArray(urlArray);
                         }
                         
@@ -119,7 +109,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
     },[blob])
 
     const handleChange = async(e: any) => {
-        console.log(e?.target.files);
         if(e.target.files.length < 2) {
             // console.log('e.target.files', e.target.files);
             const file = e.target.files[0];
@@ -133,9 +122,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
     
     }
 
-    const dropImage = (event: any) => {
-        console.log('event', event);
-    }
+    // const dropImage = (event: any) => {
+    //     console.log('event', event);
+    // }
 
     const removePic = (e: any) => {
          const index = parseInt(e.target.name);
@@ -163,7 +152,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                 } */}
                 {
                    (comment == true || multiple==true) && 
-                    <div className="box"  onDrop={(event)=> {dropImage(event)}} onDragOver={(event)=> {dropImage(event)}}>
+                    <div className="box">
                         {imgArray?.length> 0 ? 
                         imgArray.map((tempUrl, index) => {
                             // console.log('tempUrl', tempUrl);

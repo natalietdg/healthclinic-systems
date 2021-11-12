@@ -33,8 +33,6 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultVa
         values.map((value:any)=> {
            
             if((value.value)==defaultValue) {
-                console.log('value', value);
-                console.log('defaultValue', defaultValue);
                 (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = true;
             }
             else {
@@ -56,17 +54,10 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultVa
         // if(defaultValue==event.target.value) {
         //     event.target.value = '';
         // }
-        console.log('event', event);
-        console.log('event.target.checked', event.target.checked)
-        console.log('event.target.value', event.target.value);
         if (onSelect) onSelect(name,  event.target.value);
 
         if(multiple==false) {
             values.map((value:any)=> {
-                console.log(typeof(value.value));
-                console.log('name', name);
-                console.log('value', value);
-                console.log('event.target.name', event.target.name);
                 if((name+"."+value.name)!==event.target?.name) {
                     (document.querySelector(`input[name='${name}.${value.name}']`) as HTMLInputElement).checked = false;
                 }

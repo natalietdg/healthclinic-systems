@@ -81,8 +81,11 @@
         height: auto;
         position: absolute;
         width: 140px;
-        bottom: 84px;
-        right: 45%;
+        // bottom: 84px;
+        // bottom: 10%;
+        bottom: 24%;
+        right: var(--rightArray);
+        // right: 45%;
         // display: none;
     }
     .current {
