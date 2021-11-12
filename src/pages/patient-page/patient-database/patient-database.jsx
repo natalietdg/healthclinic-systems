@@ -15,7 +15,6 @@ const PatientDatabase = () => {
 
     const fetchPatients = async() => {
         const response = await fetchPatientList();
-
         if(response.length == 0 || response.error ) {
             setPatientList(tempPatientData);
             // setError({error: 'Unable to fetch patients'})

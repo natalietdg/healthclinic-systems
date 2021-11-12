@@ -44,6 +44,7 @@ const DisplayReport: React.FC<DisplayReportProps> = ({patientData, edit=false}) 
                             <Patient.MLPredictionReport key={obesityPredictionReport?.id} data={obesityPredictionReport} patient={true}/>
                         </Modal>
                         <h1 className="name">{patient?.fullName}</h1>
+                        <h3>Report Number: {patient.reportID}</h3>
                         <h2 className="title">Personal Information</h2>
                         <span className="span">
                             <h3 className="span--title">Age</h3>

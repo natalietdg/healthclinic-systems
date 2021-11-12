@@ -67,6 +67,9 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         //     colName: 'Obesity and Disease Prediction Report',
         // },
         {
+            colName: 'Report Number',
+        },
+        {
             colName: 'Medical Report',
         },
         {
@@ -326,6 +329,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
                         "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
                         "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
+                        "Report Number": filteredData.reportID || filteredData['Report'],
                         "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                     <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
                                         <img src="/assets/images/view.png"/><br />
@@ -357,8 +361,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                             if (_.isEqual(tempDate, todaysDate))  return true;
                         })
                     }
-                    
-                    
 
                     patientData = {
                         "ID": filteredData.patientID || filteredData['ID'],
@@ -369,13 +371,14 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
                         "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
                         "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
-                        "Consultation Status": hasDiagnosis==true?<div className="done">Completed</div> : <div className="not-done">Pending</div>,
-                        "Obesity and Diseases Prediction": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                                        <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
-                                                            <img src="/assets/images/view.png"/><br />
-                                                            View Report
-                                                        </a><br></br>
-                                                    </Button>,
+                        // "Consultation Status": hasDiagnosis==true?<div className="done">Completed</div> : <div className="not-done">Pending</div>,
+                        // "Obesity and Diseases Prediction": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                        //                                 <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
+                        //                                     <img src="/assets/images/view.png"/><br />
+                        //                                     View Report
+                        //                                 </a><br></br>
+                        //                             </Button>,
+                        "Report Number": filteredData.reportID || filteredData['Report'],
                         "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                     <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
                                         <img src="/assets/images/view.png"/><br />

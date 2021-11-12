@@ -131,7 +131,7 @@ const ViewPatientPage = () => {
             </Modal>
              <Toaster toasterID="viewPatient-toaster" style={{...styles.fadeInRight}} props={toasterProps}/>
              {
-                   patientInformation?.obesityPredictionReports?.length > 0 ?
+                   patientInformation?.obesityPredictionReports ?
                    <div className="view-patient-page">
                
                    <Radium.StyleRoot style={{width: '88%',  display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
@@ -141,6 +141,7 @@ const ViewPatientPage = () => {
                         <div style={{width: '100%'}}>
                              {/* <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}> */}
                                 <h1>{patientInformation.fullName}</h1>
+                                <h3>Report Number: {reportID}</h3>
                                 {/* <button onClick={() => history.push(`/report/${encode(patientInformation.reportID)}/`)} className="button"> 
                                     <a href={`/report/${encode(patientInformation.reportID)}/`}><img className="img" src="/assets/images/view.png"/>View Report (Patient's View)</a>
                                     <br></br>
@@ -195,116 +196,116 @@ const ViewPatientPage = () => {
                             </Row>
                         </div>
                     }
+                    {
+                    patientInformation && 
+                    <div style={{width: '100%'}}>
+                        <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                            <h2 className="title">Obesity and Comorbidities Prediction</h2>
+                            <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`)}  className="button"> 
+                                <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`}><img className="img" src="/assets/images/add-grey.png"/>Add Obesity and Comorbidities Prediction Report</a>
+                                <br></br>
+                            </button>
+                        </div>
+                        <div className="content-container" style={{width: '97%'}}>
+                        
                         {
-                        patientInformation && 
-                        <div style={{width: '100%'}}>
-                            <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                <h2 className="title">Obesity and Comorbidities Prediction</h2>
-                                <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`)}  className="button"> 
-                                    <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`}><img className="img" src="/assets/images/add-grey.png"/>Add Obesity and Comorbidities Prediction Report</a>
-                                    <br></br>
-                                </button>
-                            </div>
-                            <div className="content-container" style={{width: '97%'}}>
-                           
-                            {
-                                patientInformation?.obesityPredictionReports?.length > 0 &&
-                                patientInformation.obesityPredictionReports.map((predictionReport: any, index:number) => {
-                                    return (
-                                        <Row>
-                                            <div style={{width: 'inherit'}}>
-                                                <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                                    <h3 className="span--title">{new Date(predictionReport.created).toLocaleDateString([], {
+                            patientInformation?.obesityPredictionReports?.length > 0 &&
+                            patientInformation.obesityPredictionReports.map((predictionReport: any, index:number) => {
+                                return (
+                                    <Row>
+                                        <div style={{width: 'inherit'}}>
+                                            <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                                                <h3 className="span--title">{new Date(predictionReport.created).toLocaleDateString([], {
+                                                    year: 'numeric',
+                                                    month: 'long',
+                                                    day: 'numeric'
+                                                })}</h3>
+                                                <button id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="button"> 
+                                                    <p id={index.toString()} onClick={(e: any) => {showObesityReport(e)}}><img id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
+                                                </button>
+                                            </div>
+                                            <h4 className="sub-title">Prediction</h4>
+                                            {/* {
+                                                predictionReport?.fullResponse?.probability  && Object.keys(predictionReport?.fullResponse?.probability).map((name: any) => {
+                                                
+                                                return (
+                                                    <span className="span">
+                                                        <h3 className="span--title">{t(`label.${name.toLowerCase()}`)}</h3>
+                                                        <h3 className='span--text'>{predictionReport?.fullResponse?.probability[name]}%</h3>
+                                                    </span>)
+                                                })
+                                            } */}
+                                            <div style={{padding: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                                <Table 
+                                                    columns={[
+                                                        {colName: 'Hypertension'}, 
+                                                        {colName:'Diabetes'}, 
+                                                        {colName:'High Cholesterol'}, 
+                                                        {colName: 'Heart Disease'}
+                                                    ]}
+                                                    filteredData={[
+                                                        {
+                                                            'Hypertension': predictionReport?.fullResponse?.probability['Hypertension']?.toString() + '%',
+                                                            'Diabetes': predictionReport?.fullResponse?.probability['Diabetes']?.toString() + '%',
+                                                            'High Cholesterol': predictionReport?.fullResponse?.probability['High-cholesterol']?.toString() + '%',
+                                                            'Heart Disease': predictionReport?.fullResponse?.probability['Heart-disease']?.toString() + '%',
+                                                        },
+                                                    ]}
+                                                    visibility='Today'
+                                                
+                                                />
+                                            </div>
+                                            {
+                                                predictionReport?.feedback == ''? 
+                                                <div>
+                                                    <h4 className="sub-title">Feedback</h4>
+                                                    <button id={index.toString()} className="button" onClick={(e: any) => {showObesityReport(e)}}><img className="img" src="/assets/images/add-grey.png"/>Write Feedback</button> 
+                                                </div>
+                                                :
+                                                <span className="span">
+                                                    <h4 className="sub-title">Feedback</h4>
+                                                    <h4 className='span--text'>{predictionReport.feedback}</h4>
+                                                </span>
+                                            }
+                                            
+                                        </div>
+                                        
+                                    </Row>
+                                )
+                            })
+                        }
+                        </div>
+                            
+                        <Row>
+                            <div style={{width: 'inherit'}}>
+                                <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
+                                    <h2 className="title">Diagnosis & Comments</h2>
+                                    <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`)} className="button"> 
+                                        <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Diagnosis & Comments</a>
+                                        <br></br>
+                                    </button>
+                                </div>
+                                <div className="content-container" style={{width: '90%'}}>
+                                {
+                                    patientInformation?.comments && patientInformation?.comments.map((comment: any, index: any) => {
+                                        return (
+                                            <Row key={index} style={{justifyContent:'flex-start', alignItems: 'flex-start'}}>
+
+                                                <span className="span">
+                                                    <h3 className="span--title">{new Date(comment?.created).toLocaleDateString([], {
                                                         year: 'numeric',
                                                         month: 'long',
                                                         day: 'numeric'
-                                                    })}</h3>
-                                                    <button id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="button"> 
-                                                        <p id={index.toString()} onClick={(e: any) => {showObesityReport(e)}}><img id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
-                                                    </button>
-                                                </div>
-                                                <h4 className="sub-title">Prediction</h4>
-                                                {/* {
-                                                    predictionReport?.fullResponse?.probability  && Object.keys(predictionReport?.fullResponse?.probability).map((name: any) => {
-                                                  
-                                                    return (
-                                                        <span className="span">
-                                                            <h3 className="span--title">{t(`label.${name.toLowerCase()}`)}</h3>
-                                                            <h3 className='span--text'>{predictionReport?.fullResponse?.probability[name]}%</h3>
-                                                        </span>)
-                                                    })
-                                                } */}
-                                                <div style={{padding: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                                    <Table 
-                                                        columns={[
-                                                            {colName: 'Hypertension'}, 
-                                                            {colName:'Diabetes'}, 
-                                                            {colName:'High Cholesterol'}, 
-                                                            {colName: 'Heart Disease'}
-                                                        ]}
-                                                        filteredData={[
-                                                            {
-                                                                'Hypertension': predictionReport?.fullResponse?.probability['Hypertension']?.toString() + '%',
-                                                                'Diabetes': predictionReport?.fullResponse?.probability['Diabetes']?.toString() + '%',
-                                                                'High Cholesterol': predictionReport?.fullResponse?.probability['High-cholesterol']?.toString() + '%',
-                                                                'Heart Disease': predictionReport?.fullResponse?.probability['Heart-disease']?.toString() + '%',
-                                                            },
-                                                        ]}
-                                                        visibility='Today'
-                                                    
-                                                    />
-                                                </div>
-                                                {
-                                                    predictionReport?.feedback == ''? 
-                                                    <div>
-                                                        <h4 className="sub-title">Feedback</h4>
-                                                        <button id={index.toString()} className="button" onClick={(e: any) => {showObesityReport(e)}}><img className="img" src="/assets/images/add-grey.png"/>Write Feedback</button> 
-                                                    </div>
-                                                    :
-                                                    <span className="span">
-                                                        <h4 className="sub-title">Feedback</h4>
-                                                        <h4 className='span--text'>{predictionReport.feedback}</h4>
-                                                    </span>
-                                                }
-                                                
-                                            </div>
-                                            
-                                        </Row>
-                                    )
-                                })
-                            }
-                            </div>
-                            
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                        <h2 className="title">Diagnosis & Comments</h2>
-                                        <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`)} className="button"> 
-                                            <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Diagnosis & Comments</a>
-                                            <br></br>
-                                        </button>
-                                    </div>
-                                    <div className="content-container" style={{width: '90%'}}>
-                                    {
-                                        patientInformation?.comments && patientInformation?.comments.map((comment: any, index: any) => {
-                                            return (
-                                                <Row key={index} style={{justifyContent:'flex-start', alignItems: 'flex-start'}}>
-
-                                                    <span className="span">
-                                                        <h3 className="span--title">{new Date(comment?.created).toLocaleDateString([], {
-                                                            year: 'numeric',
-                                                            month: 'long',
-                                                            day: 'numeric'
-                                                        })} - {comment?.diagnosis}</h3>
-                                                        <h4 className='span--text'>{comment?.comment}</h4>
-                                                    </span>
-                                                </Row>
-                                            )
-                                        })
-                                    }
-                                    </div>
+                                                    })} - {comment?.diagnosis}</h3>
+                                                    <h4 className='span--text'>{comment?.comment}</h4>
+                                                </span>
+                                            </Row>
+                                        )
+                                    })
+                                }
                                 </div>
-                            </Row>
+                            </div>
+                        </Row>
                             {/* <Row>
                                 <div style={{width: 'inherit'}}>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -343,32 +344,6 @@ const ViewPatientPage = () => {
                             </Row> */}
                         </div>
                     }
-                    {/* {
-                        patientComments.length > 0 && 
-                        <div style={{width: '80%'}}>
-                            <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                <h2>Diagnosis & Comments</h2>
-                                <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`)} className="button"> 
-                                    <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Diagnosis & Comments</a>
-                                    <br></br>
-                                </button>
-                            </div>
-                            {
-                                patientComments.map((comment: any, index: number)=> {
-                                    return <Row key={index}>
-                                    <div style={{width: 'inherit'}}>
-                                        <h2 className="subtitle">{new Date(comment?.created).toLocaleDateString([], {
-                                            year: 'numeric',
-                                            month: 'long',
-                                            day: 'numeric'
-                                        })} - {comment?.diagnosis}</h2>
-                                        <p>{comment?.comment}</p>
-                                    </div>
-                                </Row>
-                                })
-                            }
-                        </div>
-                    } */}
                 </Container>
                 </Radium.StyleRoot> 
                 

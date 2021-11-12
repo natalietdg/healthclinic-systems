@@ -261,6 +261,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
          
             setPersonalInformation(patientData);
         }
+
+        if(isEmpty(data)) {
+            setPersonalInformation(defaultPersonalInformation);
+        }
         setTimeout( function() {
             (document.querySelector('.patient-info') as HTMLElement).style.display = 'flex';
         }, 3000);
@@ -1041,9 +1045,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             // setClinicComments(tempArray);
         }
         else {
+            if(name.indexOf('.')!==-1) {
+                let subName = name.split('.')[1];
                 setPersonalInformation({
-                ...personalInformation, [name]: blob
-            })
+                    ...personalInformation, [subName]: blob
+                })
+            }
+                
         }
     }
 
@@ -1219,6 +1227,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
             </Modal>
         <div className="patient-info">
+            {/* <Toaster toasterID="patientinformation.toaster" style={{...styles.fadeInRight}} props={toaster}/> */}
             { ((personalInformation?.patientID==-1) || (personalInformation?.fullName)) && personalInformation?
             <Radium.StyleRoot style={{width: 'inherit', height: 'inherit', position: 'absolute', top: '0'}}>
                  

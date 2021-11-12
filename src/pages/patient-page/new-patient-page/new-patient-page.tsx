@@ -197,6 +197,7 @@ const NewPatientPage = () => {
 
         if(!response.error) {
             if(type=='add another'){
+                setPatient({});
                 history.push('/new-patient');
             }
             else if (type=='prediction') {
@@ -212,6 +213,7 @@ const NewPatientPage = () => {
 
     return(
         <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}> {/* style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}} */}  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/} 
+            <Toaster props={toaster} toasterID="patient-toaster" style={{...styles.fadeInRight}}/>
             {/*backgroundImage: `url(${bg['vertical-bg-3']?.imageUrl})`,  backgroundPositionY: '1128px', backgroundSize: 'cover',  */}
             {/* <div style={{borderBottom: '2px solid #CCCCCC', display: 'flex', justifyContent: 'center', width: '100%', height: '15%', alignContent: 'center', alignItems: 'center'}}>   
                 <h2>New Patient</h2>
