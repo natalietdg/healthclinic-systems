@@ -3,7 +3,8 @@ import { isNil, omitBy } from 'lodash';
 const ValidationException = (error: any) => {
     if (isNil(error)) return false;
 
-    var { path, message, type } = error;
+    var { path, message, type, params } = error;
+    console.log('params', params);
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';
@@ -21,8 +22,16 @@ const ValidationException = (error: any) => {
         errorMessage = subPath != '' ? subPath[0].toUpperCase() + subPath.substring(1):
         errorMessage +=  " " + last.join(' ') + '.';
     } 
-    else if (type?.includes('matches') || type?.includes('email')) {
+    else if (type?.includes('email')) {
+        errorMessage = 'error.email';
+    }
+    else if (type?.includes('matches')){
         errorMessage = 'error.pattern';
+    }
+
+    if (type=='min' || type=='max') {
+        errorMessage = `error.${type}`;
+        return omitBy({ path, refPath, value: errorMessage, message, type: type, [type]: params[type] }, isNil);
     }
     // console.log('path', path);
       

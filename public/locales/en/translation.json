@@ -153,6 +153,9 @@
 
     "error.pattern": "{{field}} should match the required pattern.",
     "error.required": "{{field}} is required.",
+    "error.min": "{{field}} should have at least {{min}} characters",
+    "error.max": "{{field}} cannot be more than {{max}} characters",
+    "error.email": "{{field}} should have the pattern '[placeholder]@mail.com'",
 
     "question.familyHistory": "Does a family member have one or more of the following conditions?",
     "question.healthHistory": "Do you have  one or more of the following conditions?",

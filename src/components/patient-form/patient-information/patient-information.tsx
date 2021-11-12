@@ -315,46 +315,60 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
         catch(err: any) {
             var tempErrors:any = {};
+            console.log('inner', err.inner);
+            var errorArray = err.inner.map((error: any) => {
+                let { path, value}: any = errorHandler.validation(error);
+ 
+                 return {
+                     [path] : t(`${value}`, {field: t(`label.${path}`)})
+                 };
+             });
+ 
+             errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                 errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                 return errorObj;
+             })
+             // console.log('errorArray', errorArray);
+             setError(errorArray);
+            // err?.inner.map((error: any, index: number)=> {
+            //     let { path, value }:any = errorHandler.validation(error);
 
-            err?.inner.map((error: any, index: number)=> {
-                let { path, value }:any = errorHandler.validation(error);
-
-                if(value.includes('required')) {
-                    const [ first, ...last] = value.split(' ');
+            //     if(value.includes('required')) {
+            //         const [ first, ...last] = value.split(' ');
                    
-                    value =  t(`${value}`, { field: t(`label.${path}`)} );
-                }
+            //         value =  t(`${value}`, { field: t(`label.${path}`)} );
+            //     }
 
-                if (path.indexOf('.')!==-1) {
-                    const str = path.split('.');
-                    path = str[0];
-                    subPath = str[1];
-                    // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
-                }
-                // else {
-                //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-                // }
+            //     if (path.indexOf('.')!==-1) {
+            //         const str = path.split('.');
+            //         path = str[0];
+            //         subPath = str[1];
+            //         // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
+            //     }
+            //     // else {
+            //     //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
+            //     // }
                
-                pages.map((page, index)=> {
+            //     pages.map((page, index)=> {
                    
-                    if(page.fields.includes(path) || page.fields.includes(subPath)) {
-                        // console.log('page', page);
-                        setPageVisibility(page.index);
-                    }
-                })
+            //         if(page.fields.includes(path) || page.fields.includes(subPath)) {
+            //             // console.log('page', page);
+            //             setPageVisibility(page.index);
+            //         }
+            //     })
     
-                if (document.querySelector(`input[name=${path}]`)) {
-                    (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
+            //     if (document.querySelector(`input[name=${path}]`)) {
+            //         (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
     
-                }
-                else if (document.querySelector(`div[name=${path}]`)) {
-                    (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
-                }
+            //     }
+            //     else if (document.querySelector(`div[name=${path}]`)) {
+            //         (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
+            //     }
                 
-                tempErrors[path]= value;
-            })
+            //     tempErrors[path]= value;
+            // })
           
-            setError(tempErrors);
+            // setError(tempErrors);
             var subPath = '';
 
             
@@ -526,44 +540,31 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
         catch(err: any) {
             var tempErrors:any = {};
+            console.log('err', err.inner);
+            var errorArray = err.inner.map((error: any) => {
+                let tempErr: any = errorHandler.validation(error);
+                console.log('tempErr', tempErr);
+                let { path, value, type } = tempErr;
 
-            err?.inner.map((error: any, index: number)=> {
-                let { path, value }:any = errorHandler.validation(error);
-
-                if(value.includes('required')) {
-                    const [ first, ...last] = value.split(' ');
-                    value = t(`label.${path}`) + " " + last.join(' ') + '.';
+                if(type && tempErr[type]) {
+                    console.log('type', type);
+                    console.log('tempErr[type]', tempErr[type]);
+                    return {
+                        [path] : t(`${value}`, {field: t(`label.${path}`), [type]: tempErr[type]})
+                    };
                 }
-
-                if (path.indexOf('.')!==-1) {
-                    const str = path.split('.');
-                    path = str[0];
-                    subPath = str[1];
-                    // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
-                }
-                // else {
-                //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-                // }
-               
-                pages.map((page, index)=> {
-                   
-                    if(page.fields.includes(path) || page.fields.includes(subPath)) {
-                        // console.log('page', page);
-                        setPageVisibility(page.index);
-                    }
-                })
-    
-                if (document.querySelector(`input[name=${path}]`)) {
-                    (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
-    
-                }
-                else if (document.querySelector(`div[name=${path}]`)) {
-                    (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
-                }
-                
-                tempErrors[path]= value;
-            });
-            setError(tempErrors);
+                else
+                 return {
+                     [path] : t(`${value}`, {field: t(`label.${path}`)})
+                 };
+             });
+ 
+             errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                 errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                 return errorObj;
+             })
+             // console.log('errorArray', errorArray);
+             setError(errorArray);
             var subPath = '';
 
             
@@ -725,6 +726,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         // setPersonalInformation({...personalInformation, [name]: value });
     }
 
+    useEffect(() => {
+        console.log('personalInformation', personalInformation);
+    },[personalInformation])
+
     const handleSelectRadio = (name: string, value: any) => {
         value = (value=='true' || value=='false')? (value==='true'): value;
         let tempError = error;
@@ -737,10 +742,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         
             name = name.split('.')[0];
             if (name.includes('personalInformation')) {
-                setPersonalInformation({...personalInformation, [name]: {
-                    ...personalInformation[name],
-                    [subName]: value
-                }});
+                setPersonalInformation({...personalInformation, [subName]: value});
             }
 
             if(name.includes('healthAndFamilyHistory')) {
