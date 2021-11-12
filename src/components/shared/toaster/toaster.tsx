@@ -20,62 +20,37 @@ interface ToasterProps {
 const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
     const [ toasterStyle, setToasterStyle ] = useState<any>(styles.fadeInRight);
     const [toasterProps, setToasterProps ] = useState<any>({type: '', message:''});
-    const [ fadeOut, setFadeOut ] = useState<any>(false);
-
     const { t } = useTranslation();  
 
+    const showToaster = () => {
+        const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement);
+        if (toaster) {
+            toaster.style.display='block';
+            setToasterStyle(styles.fadeInRight);
+            new Promise(async function (resolve, reject) {
+                setTimeout( async function () {                                         
+                   setToasterStyle(styles.fadeOutRight);
+                   resolve('done');
+               }, 10000);
+           })
+           .then( (success) => {
+               setTimeout(function () { 
+                    toaster.style.display = 'none'; 
+               }, 1500);
+           });
+        }
+    }
+
     useEffect(()=> {
-        setToasterProps(props);    
+        setToasterProps(props);  
     },[props]);
 
-    useEffect(() => {
-        const toaster = (document.getElementById(`${toasterID}`) as HTMLElement)
-        if (toaster) {
-            toaster.style.display = 'block'; 
-        }
-    },[])
-
-    // useEffect(() => {
-    //     console.log('toasterProps', toasterProps);
-    //     if(toasterProps.type=='success' || toasterProps.type=='') {
-    //         const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement)
-    //         if (toaster) toaster.style.setProperty('--displayAttribute', 'block');
-    //     }
-    // },[toasterProps])
-
     useEffect(()=> {
-        setToasterStyle(style);
-    },[style]);
-
-
-    // useEffect(()=> {
-    //     if(fadeOut == true) {
-    //         setTimeout(function () {                                         
-    //             hideToaster();
-    //         }, 1500);
-    //     }
-    // },[fadeOut]);
-
-    (async()=> {
-        new Promise(async function (resolve, reject) {
-             setTimeout( async function () {                                         
-                setToasterStyle(styles.fadeOutRight);
-                setFadeOut(true);
-                resolve('done');
-            }, 10000);
-        })
-        .then( (success) => {
-            setTimeout(function () { 
-                const toaster = (document.getElementById(`${toasterID}`) as HTMLElement)
-                if (toaster) {
-                    toaster.style.display = 'none'; 
-                    setToasterProps({type: '', message: ''});
-                }
-            }, 1500);
-        });
-
        
-    })();
+        if(toasterProps.type!='') {
+            showToaster();
+        }
+    },[toasterProps]);
     
     const hideToaster = () => {
         const toaster =  (document.getElementById(`${toasterID}`) as HTMLElement)

@@ -10,7 +10,6 @@ import { IgnorePlugin } from 'webpack';
 interface FetchReportProps {
     onFetch: (data:any) => void;
     error: any;
-    
 }
 
 const FetchReport: React.FC<FetchReportProps> = ({onFetch, error}) => {

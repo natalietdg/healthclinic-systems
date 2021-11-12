@@ -163,7 +163,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
     const showHiddenLastPartButtons = () => {
         let firstPartArray = (document.getElementById('hiddenFirstPartArray') as HTMLElement);
         if(firstPartArray!= null) firstPartArray.style.display = 'none';
-        console.log('pageVisibility', pageVisibility);
+       
         (document.getElementById('hiddenLastPartArray') as HTMLElement).style.display = 'block';
         
         // if(!(document.getElementById('hiddenFirstPartArray') as HTMLElement) && (document.getElementById('hiddenLastPartArray') as HTMLElement)) {
@@ -180,9 +180,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
 
             // (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '45%');
             // (document.getElementById('hiddenLastPartArray') as HTMLElement).style.right = '37%';
-            console.log((document.getElementById('hiddenFirstPartArray') as HTMLElement));
-            console.log('tru4');
-            console.log((document.getElementById('hiddenLastPartArray') as HTMLElement));
+        
         // }
         // else if((document.getElementById('hiddenLastPartArray') as HTMLElement)) {
         //     (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '42%');
@@ -209,7 +207,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         var child2 = (document.getElementById('hiddenLastPartArray') as HTMLElement);
         if (child && parent && parent.contains(child)) parent.removeChild(child);
         if (child2 && parent && parent.contains(child2)) parent.removeChild(child2);
-        console.log('meow');
+       
         // if(child == null) {
             let tempDiv:any = document.createElement('div');
             tempDiv.id = 'hiddenFirstPartArray'
@@ -354,7 +352,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                                 month: 'long',
                                 day: 'numeric'
                             });
-                            console.log('comment.created',tempDate);
+                         
                             if(_.isEqual(tempDate, todaysDate)) console.log('haha true');
                             if (_.isEqual(tempDate, todaysDate))  return true;
                         })
@@ -530,7 +528,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
 
     useEffect(()=> {
         updatePaginationAndFilter();
-        console.log('localStorage', localStorage);
+      
         if(localStorage.getItem('fullName') != null) localStorage.removeItem('fullName');
     },[patients]);
 

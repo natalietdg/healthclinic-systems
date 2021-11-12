@@ -115,9 +115,6 @@ const HomePage: React.FC<HomePageProp> = () => {
         else {
             setError({reportNumber: 'Cannot be empty.'});
         }
-        
-        
-        
     }
 
     const openTermsAndConditionsModal = (reportNumber: string) => {
