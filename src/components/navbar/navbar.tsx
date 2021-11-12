@@ -22,11 +22,8 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({navbar}) => {
-    const MINUTE_MS = 60000;
     const [logoutState, setLogoutState] = useRecoilState<LoginAtomType>(loginAtom);
     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
-    const [ todaysDate, setTodaysDate ] = useState<any>('');
-    const [ expiryDate, setExpiryDate ] = useState<any>('');
     const [ toaster, setToaster ] = useState<any>({
         message: '',
         type: ''
@@ -43,7 +40,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
         
         const interval = setInterval(() => {
             refresh();
-        }, 300000); //5 minutes
+        }, 240000); //4 minutes
         return () => clearInterval(interval);
       }, []);
 
