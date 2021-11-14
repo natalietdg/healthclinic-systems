@@ -22,6 +22,8 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
     const [error, setError] = useState<any>({});
     const [ hiddenFirstPartButtons, setHiddenFirstPartButtons ] = useState<any>([]);
     const [ hiddenLastPartButtons, setHiddenLastPartButtons ] = useState<any>([]);
+    const [ firstPartButtons, setFirstPartButtons ] = useState<any>(<></>);
+    const [ lastPartButtons, setLastPartButtons ] = useState<any>(<></>);
     const { t } = useTranslation();
     const [maxSize, setMaxSize] = useState(0);
     const { date }:any = useParams();
@@ -468,13 +470,13 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                             }
                             hiddenFirstPartIndexes.push(pagePaginationArray[x].index);
                         }
-                        else if (((pagePaginationArray.length-1) - x) < 2) {
+                        else if (((pagePaginationArray.length-1) - x) < 2 || ((x < pageVisibility && (pageVisibility - x) < 2) || (x > pageVisibility && (x - pageVisibility) <2) || x == pageVisibility)) {
                             pagination.push(pagePaginationArray[x]);
                         }
-                        else if((x < pageVisibility && (pageVisibility - x) < 2) || (x > pageVisibility && (x - pageVisibility) <2) || x == pageVisibility) {
+                        // else if((x < pageVisibility && (pageVisibility - x) < 2) || (x > pageVisibility && (x - pageVisibility) <2) || x == pageVisibility) {
                         
-                            pagination.push(pagePaginationArray[x]);
-                        }
+                        //     pagination.push(pagePaginationArray[x]);
+                        // }
                         else {
                             if(hiddenLastPartIndexes.length == 0) {
                                 hiddenLastPartOfArray.index = x+1;
@@ -484,12 +486,12 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         }
                     }
                     else {
-                        if (x < 3) {
+                        if (x < 3 || (((pagePaginationArray.length-1) - x) < 3)) {
                             pagination.push(pagePaginationArray[x]);
                         } 
-                        else if(((pagePaginationArray.length-1) - x) < 3) {
-                            pagination.push(pagePaginationArray[x]);
-                        }
+                        // else if(((pagePaginationArray.length-1) - x) < 3) {
+                        //     pagination.push(pagePaginationArray[x]);
+                        // }
                         else {
                             if(hiddenFirstPartIndexes.length == 0 && hiddenLastPartIndexes.length == 0) {
                                 pagination.push(hiddenLastPartOfArray);
