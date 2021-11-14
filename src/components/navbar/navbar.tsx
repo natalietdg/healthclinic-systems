@@ -36,13 +36,18 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     // const ref = query.get('ref');
     var name = '';
 
-    var idleInterval = setInterval(idleTimer, 900000); //900000
+    var idleInterval: any = ''; //900000
+
+    function startTimer() {
+        idleInterval = setInterval(idleTimer, 900000)
+    }
 
     function idleTimer() {
         // console.log('too long!');
         alert('You have been idle for too long. Automtically logging you out now...');
-        logOut();
         clearInterval(idleInterval);
+        idleInterval = 0;
+        logOut();
         history.push('/');
     }
 
@@ -62,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     });
 
     useEffect(() => {
-        
+        startTimer();
         const interval = setInterval(() => {
             refresh();
         }, 240000); //4 minutes

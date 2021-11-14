@@ -50,18 +50,18 @@ const Profile: React.FC<ProfileProps> = () => {
                             <AlertBox error={error?.username} name={t('label.username')} />
                         </div>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <div style={{width: 'inherit'}}>
                             <TextInput type="password" onChange = {handleTextChange} value={profileInformation?.password} required error={!!error?.password} name="password" label={t('label.password')} />
                             <AlertBox error={error?.password} name={t('label.password')} />
                         </div>
-                    </Row>
-                    <Row>
+                    </Row> */}
+                    {/* <Row>
                         <div style={{width: 'inherit'}}>
                             <TextInput type="password" required error={!!error.confirmPassword} label={t('label.confirmPassword')} name='confirmPassword' value={profileInformation.confirmPassword} onChange={handleTextChange}/>
                             <AlertBox error={error?.confirmPassword} name={t('label.confirmPassword')} />
                         </div>
-                    </Row>                
+                    </Row>                 */}
                 </div>
                 <div className="divider--fifty">
                     <Row>
