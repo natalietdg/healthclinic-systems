@@ -13,7 +13,7 @@ import { Container, Page, Row, Col, ImageUpload, Modal, Toaster } from 'Componen
 import errorHandler from 'Utils/error-handler';
 import _, { omitBy, isEmpty, isUndefined, isEqual } from 'lodash';
 import PagePane from 'Components/shared/page/page-pane'
-import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
+import { TextInput, AlertBox, RadioInput, SelectInput, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
 import { PersonalInformationFormValidation } from './personal-information.validation';
 import { ObesityPredictionValidation } from './obesity-prediction.validation';
 import { CommentsValidation } from './comments.validation';
