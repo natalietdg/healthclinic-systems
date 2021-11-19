@@ -12,7 +12,6 @@ import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValue
 import { Container, Page, Row, Col, ImageUpload, Modal, Toaster } from 'Components/shared';
 import errorHandler from 'Utils/error-handler';
 import _, { omitBy, isEmpty, isUndefined, isEqual } from 'lodash';
-import moment from 'moment';
 import PagePane from 'Components/shared/page/page-pane'
 import { TextInput, AlertBox, RadioInput, SelectInput, ProgressBar, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
 import { PersonalInformationFormValidation } from './personal-information.validation';
@@ -54,8 +53,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         ic: '',
         gender: "",
         race: '',
-        dateOfBirth: '',
-        reasonForConsultation: ""        
+        dateOfBirth: ''   
     };
 
     const defaultHealthAndFamilyHistory = {
@@ -197,7 +195,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 "ic",
                 "race",
                 "gender",
-                "reasonForConsultation",
                 "profilePicBlob",
                 "phoneNumber"
             ]
@@ -314,13 +311,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             });
 
             if (personalInformation.profilePicBlob instanceof Blob) {
-                console.log('blob', personalInformation.profilePicBlob);
+                // console.log('blob', personalInformation.profilePicBlob);
                 value.profilePicBlob = personalInformation.profilePicBlob;
-                console.log('value', value);
+                // console.log('value', value);
             }
             else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
-                throw 'Not a file';
                 setError({profilePicBlob: 'Profile Pic is not a file'});
+                throw 'Not a file';
             }
             // console.log(moment(personalInformation.dateOfBirth));
             onSubmit(value, 'save');
@@ -328,7 +325,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
         catch(err: any) {
             var tempErrors:any = {};
-            console.log('inner', err);
+            // console.log('inner', err);
 
             if(err.inner) {
                 var errorArray = err.inner.map((error: any) => {
@@ -532,6 +529,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
         
         try{
+
+            // console.log(moment(personalInformation.dateOfBirth));
+  
+
            let patientData = {
                fullName: personalInformation.fullName,
                ic: personalInformation.ic,
@@ -539,34 +540,40 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                email: personalInformation.email,
                race: personalInformation.race,
                gender: personalInformation.gender,
-               dateOfBirth: personalInformation.dateOfBirth,
-               reasonForConsultation: personalInformation.reasonForConsultation
+               dateOfBirth: personalInformation.dateOfBirth
            }
            
-            const value = await PersonalInformationFormValidation.validateSync(omitBy({
+            var value = await PersonalInformationFormValidation.validateSync(omitBy({
                 ...patientData,
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,
                 abortEarly: false,
                 stripUnknown: false
             });
-            // console.log(moment(personalInformation.dateOfBirth));
+            
+            if (personalInformation.profilePicBlob instanceof Blob) {
+                // console.log('blob', personalInformation.profilePicBlob);
+                value.profilePicBlob = personalInformation.profilePicBlob;
+                // console.log('value', value);
+            }
+            else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
+                setError({profilePicBlob: 'Profile Pic is not a file'});
+                throw 'Not a file';
+            }
 
-    
            onSubmit(value, action);
-
         }
         catch(err: any) {
             var tempErrors:any = {};
-            console.log('err', err.inner);
+            // console.log('err', err.inner);
             var errorArray = err.inner.map((error: any) => {
                 let tempErr: any = errorHandler.validation(error);
-                console.log('tempErr', tempErr);
+                // console.log('tempErr', tempErr);
                 let { path, value, type } = tempErr;
 
                 if(type && tempErr[type]) {
-                    console.log('type', type);
-                    console.log('tempErr[type]', tempErr[type]);
+                    // console.log('type', type);
+                    // console.log('tempErr[type]', tempErr[type]);
                     return {
                         [path] : t(`${value}`, {field: t(`label.${path}`), [type]: tempErr[type]})
                     };
@@ -744,9 +751,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         // setPersonalInformation({...personalInformation, [name]: value });
     }
 
-    useEffect(() => {
-        console.log('personalInformation', personalInformation);
-    },[personalInformation])
+    // useEffect(() => {
+    //     console.log('personalInformation', personalInformation);
+    // },[personalInformation])
 
     const handleSelectRadio = (name: string, value: any) => {
         value = (value=='true' || value=='false')? (value==='true'): value;
@@ -1149,13 +1156,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             });
             
             let action = tempComment?.id > -1? 'edit comment': 'create comment';
-            console.log('value', value);
+            // console.log('value', value);
             onSubmit(tempComment, action);
         }
         catch(err: any) {
-            console.log('err', err);
+            // console.log('err', err);
             if(err.inner) {
-                console.log('err.inner', err.inner);
+                // console.log('err.inner', err.inner);
                 var errorArray = err.inner.map((error: any) => {
                     let { path, value}: any = errorHandler.validation(error);
      
@@ -1168,7 +1175,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                      errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
                      return errorObj;
                  })
-                 console.log('errorArray', errorArray);
+                //  console.log('errorArray', errorArray);
                  setError(errorArray);
             }
         }

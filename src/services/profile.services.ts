@@ -1,20 +1,72 @@
 import axios from 'axios';
+import _, { omit } from 'lodash';
 import normalizer from 'Utils/normalizer';
 
-export const fetchProfile = (()=> {
-    try {
-        return {}
-    }
-    catch(err) {
-        return { error: err.message }
-    }
-})
+export const fetchProfile = async(userID: number) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+    const accessToken = localStorage.getItem('accessToken');
 
-export const updateProfile = (()=> {
     try {
-        return {}
+        const response = await axios({
+            method: 'GET',
+            url: `http://${url}:${port}/users/${userID}`,
+            headers: {
+                'Authorization': `Bearer ${accessToken}`        
+            },
+        });
+        console.log('response', response.data);
+        return normalizer.response.profile(response.data);
     }
-    catch(err) {
+    catch(err: any) {
         return { error: err.message }
     }
-})
+}
+export const updateProfile = async(data: any) => {
+    const url = process.env.PUBLIC_PATH;
+    const port = process.env.PORT;
+    const accessToken = localStorage.getItem('accessToken');
+
+    var normalizedData = normalizer.model.profile(data);
+    var dataWithoutProfilePic:any = null;
+    console.log('normalizedData', normalizedData);
+    if(normalizedData.image instanceof Blob) {
+        let tempData = normalizedData;
+        normalizedData = _.omit(normalizedData, ['image']);
+        // console.log('dataWithoutProfilePic', dataWithoutProfilePic);
+        // console.log('normalizedData', normalizedData);
+        dataWithoutProfilePic =  new FormData();
+        dataWithoutProfilePic.append('username', tempData.username);
+        dataWithoutProfilePic.append('image', tempData.image);
+    }
+    else {
+        normalizedData = _.omit(normalizedData, ['image']);
+    }
+
+    try {
+        var response = await axios({
+            method: 'PUT',
+            url: `http://${url}:${port}/users/${data.userID}/`,
+            headers: {
+                'Authorization': `Bearer ${accessToken}`        
+            },
+            data: normalizedData
+        });
+
+        if(dataWithoutProfilePic) {
+            response = await axios({
+                method: 'PUT',
+                url: `http://${url}:${port}/users/${data.userID}/`,
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`        
+                },
+                data: dataWithoutProfilePic
+            });
+        }
+        console.log('response', response.data);
+        return normalizer.response.profile(response.data);
+    }
+    catch(err: any) {
+        return { error: err.message }
+    }
+}

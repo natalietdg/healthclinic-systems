@@ -125,7 +125,6 @@ const Dashboard:React.FC<DashboardProps> = () => {
                                     <Container flexDirection="row">
                                         <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/new-patient.png" />Add New Patient</button>
                                         <button onClick={()=> {history.push('/patients')}}><img src="/assets/images/users.png" />Patient Database</button>
-                                        {/* <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/machine-learning.png" />Generate Report</button> */}
                                     </Container>
                                 </div>
                             </div>

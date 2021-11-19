@@ -8,7 +8,6 @@ import {
     AlcoholConsumer,
     AlcoholType
 } from "./enum";
-import moment from 'moment';
 import { NumberLiteralType } from "typescript";
 
 export type HealthHistory = {
@@ -44,7 +43,7 @@ export type SmokingStatus = {
             min: number;
             max: number;
         };
-        lastSmoker?: moment.Moment;
+        // lastSmoker?: moment.Moment;
         yearsSmoked?: number;
         pastNumberofCigarettesSmoked?: {
             min:number;

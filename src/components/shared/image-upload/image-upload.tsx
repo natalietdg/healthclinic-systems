@@ -3,8 +3,6 @@ import React, { useEffect, useState } from 'react';
 import isEmpty, {isUndefined} from 'lodash';
 import { base64Url } from 'src/helpers/base64Url';
 import './image-upload.scss';
-import { RuntimeGlobals } from 'webpack';
-import { IndexedAccessType } from 'typescript';
 
 interface ImageUploadProps {
     blob: any;
@@ -24,7 +22,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             (async function () {
                 
                 if (blob instanceof Blob) {
-                    console.log('blob???', blob);
+                    // console.log('blob???', blob);
                     const response = await base64Url(blob);
                     setImgUrl(response);
                 }
@@ -51,7 +49,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         })(blob);
                     }
                     else {
-                        console.log('blob', blob);
+                        // console.log('blob', blob);
                         setImgArray(blob);
                     }
                    
@@ -162,12 +160,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         imgArray.map((tempUrl, index) => {
                             // console.log('tempUrl', tempUrl);
                             return <span>
-                                <img src={tempUrl} style={{width: '150px', height: '150px'}}/>
+                                <img className="img-upload" src={tempUrl} style={{width: '150px', height: '150px'}}/>
                                 <button name = {index.toString()} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
                             </span>
                         })
 
-                        : <p style={{display: 'flex', flexDirection:'column'}}><img style={{boxShadow:"none", width: '100px', height: '100px'}} src="/assets/images/photo.png" />No photos</p>}
+                        : <p style={{display: 'flex', flexDirection:'column'}}><img className="img-upload" style={{boxShadow:"none", width: '100px', height: '100px'}} src="/assets/images/photo.png" />No photos</p>}
                         </div>
                 }
             </div>
@@ -176,7 +174,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             {
                 multiple == false && comment == false && disabled ==false && 
                 <span>
-                    <img id="upload-img" src={imgUrl} />
+                    <img className="img-upload" id="upload-img" src={imgUrl} />
+                    <button name = {name} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
                     {/* <button onClick={removePic} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey'}}><img style={{width: '20px', height: '20px'}} src="/assets/images/close-window.png" /></button> */}
                 </span>
             }

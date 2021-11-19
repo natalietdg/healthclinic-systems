@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import moment from 'moment';
 
 export const PatientInformationFormValidation = Yup.object().shape({
     weight: Yup.number().min(20).required(),

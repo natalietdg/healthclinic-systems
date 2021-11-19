@@ -70,12 +70,12 @@ const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
                     <span className="title-row">
                         <span className="title-row--iconTitle">{
                             toasterProps.type=='errors'?
-                            <img style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/error.gif" />
-                            :<img style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/success.gif" />}
+                            <img className="toaster-img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/error.gif" />
+                            :<img className="toaster-img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/success.gif" />}
                             <p>{t(`label.${toasterProps.type}`)}</p>
                         </span>
                     <span className="title-row--button">
-                    <button onClick={hideToaster}><img src="/assets/images/close.png" /></button></span></span>
+                    <button onClick={hideToaster}><img className="toaster-img" src="/assets/images/close.png" /></button></span></span>
                     <span>
                         {toasterProps.message}
                     </span>

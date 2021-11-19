@@ -1,5 +1,4 @@
 import * as Yup from 'yup';
-import moment from 'moment';
 
 export const PersonalInformationFormValidation = Yup.object().shape({
     profilePicBlob: Yup.string().optional(),

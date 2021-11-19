@@ -15,7 +15,6 @@ import SearchInput from "./search-input";
 import DateInput from "./date-input";
 import ImageUpload from "./image-upload";
 import Table from "./table";
-import ProgressBar from "./progress-bar";
 import TextArea from "./text-area";
 import Button from "./button";
 import Toaster from "./toaster/toaster";
@@ -38,7 +37,6 @@ export {
     DateInput,
     ImageUpload,
     Table,
-    ProgressBar,
     TextArea,
     Button,
     Toaster

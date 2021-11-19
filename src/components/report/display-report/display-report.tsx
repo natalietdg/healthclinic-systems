@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import {isEmpty} from 'lodash';
-import moment from 'moment';
 import { Modal } from 'Components/shared';
 import LoadingPage from 'Pages/loading-page/loading-page';
 import { useTranslation } from 'react-i18next';

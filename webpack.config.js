@@ -1,18 +1,22 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+
+const isDevelopment = process.env.NODE_ENV!=='production'
 module.exports = {
-    mode: 'development',
+    mode: isDevelopment? 'development': 'production',
     entry: './src/index.js',
     output: {
-        filename: '[name].bundle.js',
+        filename: isDevelopment? '[name].js': '[name].[hash].js',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
         publicPath: "/",
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: 'Output Management',
           template: './src/index.html'

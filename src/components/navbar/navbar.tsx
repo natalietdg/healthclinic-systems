@@ -18,10 +18,9 @@ import { Links } from 'src/links';
 import './navbar.scss';
 
 interface NavbarProps {
-    navbar: any;
 }
 
-const Navbar: React.FC<NavbarProps> = ({navbar}) => {
+const Navbar: React.FC<NavbarProps> = ({}) => {
     const [logoutState, setLogoutState] = useRecoilState<LoginAtomType>(loginAtom);
     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
     const [ toaster, setToaster ] = useState<any>({
@@ -146,7 +145,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     // if(null) expiryDate = generateTodaysDate().expiryDate;
     var path = location.pathname.split('/')[1];
 
-    if(location.pathname.split('/')[2]) path = "patients-for-today";
+    // if(location.pathname.split('/')[2]) path = "patients-for-today";
 
     // if(futureDate > todaysDate) {
     //     console.log('bigger');
@@ -161,7 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
     //     // if(fullName) localStorage.removeItem('fullName')
     // }
 
-    if(typeof(localStorage) !== 'undefined' && (path == 'patient' || path == "patients-for-today")) {
+    if(typeof(localStorage) !== 'undefined' && (path == 'patient')) {
         // removeItem();
         // console.log('storage', localStorage);
         const values = Object.keys(localStorage);
@@ -214,8 +213,8 @@ const Navbar: React.FC<NavbarProps> = ({navbar}) => {
         (document.querySelector('.dropdown--ul') as HTMLElement).style.display = 'none';
     }
     return (       
-        <div className="navbar-bg"> {/*style={{backgroundImage: `url(${navbar['side-bar']?.imageUrl})`}}*/}
-            <div className="blurred" > {/*style={{backgroundImage: `url(${navbar['side-bar-blurred']?.imageUrl})`}}*/}
+        <div className="navbar-bg">
+            <div className="blurred" >
             <Toaster toasterID="navbar-toaster" style={{...styles.fadeInRight}} props={toaster}/>
             
             {/* <span><img style={{top: 0, width: '25px', height: '25px', paddingTop: '20px'}} src="/assets/images/menu.png"/></span> */}

@@ -14,7 +14,7 @@ const AlertBox: React.FC<AlertBoxProps> = ({error, name}) => {
     },[]);
 
     useEffect(()=> {
-        console.log('error oobj', error);
+        // console.log('error oobj', error);
         
         if(error) {
             // for(const key in error) {

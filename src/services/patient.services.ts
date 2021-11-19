@@ -29,22 +29,22 @@ export const uploadImage = async(data: any)=> {
 }
 
 export const savePatientInformation = async(data:any) => {
-    console.log('data', data);
+    // console.log('data', data);
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
 
     var normalizedData = normalizer.response.patient(data);
     
-    var dataWithoutProfilePic = new FormData();
+    var dataWithoutProfilePic: any = null;
 
     
     if(normalizedData.image instanceof Blob) {
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
-        console.log('dataWithoutProfilePic', dataWithoutProfilePic);
-        console.log('normalizedData', normalizedData);
-
+        // console.log('dataWithoutProfilePic', dataWithoutProfilePic);
+        // console.log('normalizedData', normalizedData);
+        dataWithoutProfilePic =  new FormData();
         dataWithoutProfilePic.append('image', tempData.image);
     }
     else {
@@ -67,7 +67,7 @@ export const savePatientInformation = async(data:any) => {
                 'Authorization': `Bearer ${accessToken}`        
             },
         })
-        console.log('response', response);
+        // console.log('response', response);
         if (dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
@@ -78,7 +78,7 @@ export const savePatientInformation = async(data:any) => {
                 },
             });
             
-            console.log('response', response);
+            // console.log('response', response);
         }
 
         return normalizer.model.patient(response.data);
@@ -93,17 +93,47 @@ export const createPatient = async(data:any) => {
     const url = process.env.PUBLIC_PATH;
     const port = process.env.PORT;
     const accessToken = localStorage.getItem('accessToken');
+    
+    var normalizedData = normalizer.response.patient(data);
+    
+    var dataWithoutProfilePic: any = null;
+
+    if(normalizedData.image instanceof Blob) {
+        let tempData = normalizedData;
+        normalizedData = _.omit(normalizedData, ['image']);
+        // console.log('dataWithoutProfilePic', dataWithoutProfilePic);
+        // console.log('normalizedData', normalizedData);
+        dataWithoutProfilePic =  new FormData();
+        dataWithoutProfilePic.append('image', tempData.image);
+    }
+    else {
+        normalizedData = _.omit(normalizedData, ['image']);
+    }
 
     try {
-        const response = await axios({
+        var response = await axios({
             method: 'POST',
             url: `http://${url}:${port}/patients/`,
             responseType: 'json',
-            data: normalizer.response.patient(data),
+            data: normalizedData,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
         });
+        var responseData = normalizer.model.patient(response.data);
+
+        if (dataWithoutProfilePic) {
+            response = await axios({
+                method: 'PUT',
+                url: `http://${url}:${port}/patients/${responseData.patientID}/`,
+                data: dataWithoutProfilePic,
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`        
+                },
+            });
+            
+            // console.log('response', response);
+        }
 
         return normalizer.model.patient(response.data);
     }
@@ -142,7 +172,7 @@ export const fetchImage = async(url: any) => {
             },
         });
 
-        console.log(response);
+        // console.log(response);
 
         return response.data;
     }

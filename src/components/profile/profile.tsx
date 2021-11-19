@@ -4,13 +4,18 @@ import { useTranslation } from 'react-i18next';
 import './profile.scss';
 
 interface ProfileProps {
-
+    profileData: any;
+    onSubmit: (data: any) => void;
 }
 
-const Profile: React.FC<ProfileProps> = () => {
-    const [ profileInformation, setProfileInformation ] = useState<any>({ username: '', password: '', confirmPassword: '', profilePicBlob: {}});
+const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
+    const [ profileInformation, setProfileInformation ] = useState<any>({ username: '', profilePicBlob: ''});
     const [ error, setError ] = useState<any>({});
     const { t } = useTranslation();
+
+    useEffect(() => {
+        setProfileInformation({...profileData});
+    },[profileData])
 
     const handleTextChange = (name: string, value: any) => {
         // console.log('name', name);
@@ -30,10 +35,23 @@ const Profile: React.FC<ProfileProps> = () => {
         setProfileInformation({...profileInformation, [name]: value });
     }
 
-    const handleImageChange = (name: string, blob: Blob) => {
+    const handleImageChange = (action: string, name: string, blob: Blob) => {
         setProfileInformation({
             ...profileInformation, [name]: blob
-        })
+        });
+
+        let tempData = {
+            ...profileInformation,
+            [name]: blob
+        }
+
+        onSubmit(tempData);
+    }
+
+    const save = (e: any) => {
+        e.preventDefault();
+        
+        onSubmit(profileInformation);
     }
 
     return (
@@ -71,6 +89,7 @@ const Profile: React.FC<ProfileProps> = () => {
                     </Row>
                 </div>
             </div>
+            <Row><button className="save" onClick={save}>Save</button></Row>
             </div>
         </div>
     )

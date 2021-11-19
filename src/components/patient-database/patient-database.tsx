@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import _,{ isEmpty, isEqual } from 'lodash';
+import { styles } from 'Components/shared/animation';
 import { encode, decode } from 'Helpers/';
+import Radium from 'radium';
 import { useParams } from 'react-router';
 import { useTranslation } from 'react-i18next';
 import { Table, Row, TextInput, Page, Button } from 'Components/shared';
 import classNames from 'classnames';
-import PagePane from 'Components/shared/page/page-pane';
 import './patient-database.scss';
 import tempPatientData from 'src/data/patientData.json';
-import { max } from 'moment';
-import page from 'Components/shared/page';
 
 interface PatientDatabseProps {
     patients: any;
@@ -298,17 +297,19 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 patients =tempPatientData ;
                 setError({error: 'Unable to fetch patients'})
             }
+
             const filteredPatientData = patients.filter((patientData: any, index: any) => {
                 let values = Object.values(patientData);
                 
                 let filteredValues:any = values.reduce(function(allFilteredValues: any, value) {
                     // if(typeof(value)=='string') if((value.toLowerCase()==filter) || filter=='') allFilteredValues.push(value);
-                    if(typeof(value)=='string') if((value.toLowerCase()).includes(filter) || filter=='') allFilteredValues.push(value);
+                    if(typeof(value)=='string') if((value.toLowerCase()).includes(filter.toLowerCase()) || filter=='') allFilteredValues.push(value);
                     return allFilteredValues;
-                },[])
+                }, []);
     
                 return Object.values(patientData).some(sameValue => filteredValues.includes(sameValue));
-            })
+            });
+
             var filteredDataArray: any = [];
             var tempArrayForCategorizing: any = [];
             let currLength = 0;
@@ -537,37 +538,42 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
 
 
     const handleSearchChange = (name: string, value: any) => {
-        setFilter(value.toLowerCase());
+        setFilter(value);
     }
 
     return (
-        <div className="patient-database">
-             <Row style={{marginBottom: '20px'}}>
-                <div style={{width: '30%'}}>
-                <TextInput icon={true} placeholder="Search for a patient" value={filter} required={false} error={''} name='search' label="" onChange={handleSearchChange} />
-                </div>
-            </Row>
-           
-            <Table 
-                columns={columns}
-                filteredData={filteredData[pageVisibility]? filteredData[pageVisibility]: []}
-                filter={filter}
-                visibility={visible}
-            />
-            <Row className="pagination">
-                <button onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img src="/assets/images/left.png" /></button>
-                <div>
-                   {
-                       pagePagination != [] &&  
-                       pagePagination.map((prop: any, index: any)=> {
-                            return prop.props;                  
-                       })
-                   }
+        <Radium.StyleRoot>
+            <div className="patient-database" style={{...styles.fadeIn}}>
+                
+                <Row style={{marginBottom: '20px'}}>
+                    <div style={{width: '30%'}}>
+                    <TextInput icon={true} placeholder="Search for a patient" value={filter} required={false} error={''} name='search' label="" onChange={handleSearchChange} />
+                    </div>
+                </Row>
+                <div style={{width: 'inherit', display: 'flex', alignItems:'center', flexDirection:'column'}}> {/* height:'1148px'*/}
+                    <Table 
+                        columns={columns}
+                        filteredData={filteredData[pageVisibility]? filteredData[pageVisibility]: []}
+                        filter={filter}
+                        visibility={visible}
+                    />
                 </div>
                 
-                <button onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img src="/assets/images/right.png" /></button>
-            </Row>
-        </div>
+                <Row className="pagination">
+                    <button onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img src="/assets/images/left.png" /></button>
+                    <div>
+                    {
+                        pagePagination != [] &&  
+                        pagePagination.map((prop: any, index: any)=> {
+                                return prop.props;                  
+                        })
+                    }
+                    </div>
+                    
+                    <button onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img src="/assets/images/right.png" /></button>
+                </Row>
+            </div>
+        </Radium.StyleRoot>
     )
 }
 

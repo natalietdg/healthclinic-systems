@@ -124,7 +124,7 @@ const TodayPatients = () => {
     }
 
     return (
-        <div className="today-page-bg" style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}>
+        <div className="today-page-bg"> {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/}
              
              <div className="patient-database">
                 <PatientDatabse visible={"Today"} patients={patientList} columnProps={columns}/>    

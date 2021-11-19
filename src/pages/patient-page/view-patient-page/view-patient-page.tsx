@@ -96,7 +96,9 @@ const ViewPatientPage = () => {
 
     const fetchPatientReport = async(reportID: string) => {
         const response = await fetchReport(reportID);
+        // console.log('response', response);
         setPatientInformation(response);
+        setImgUrl(response.profilePicBlob);
         localStorage.setItem('fullName', response.fullName);
     }
 
@@ -150,7 +152,7 @@ const ViewPatientPage = () => {
                                     <br></br>
                                 </button>
                             </div> */}
-                            <Row>
+                            <Row style={{alignItems: 'flex-start'}}>
                                 <div style={{width: 'inherit'}}>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                                         <h2 className="title">Personal Information</h2>

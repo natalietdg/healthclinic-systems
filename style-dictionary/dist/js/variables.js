@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Thu, 04 Nov 2021 04:35:48 GMT
+ * Generated on Fri, 19 Nov 2021 07:18:45 GMT
  */
 
 export const ButtonPrimaryTextColorBase = "#ffffff";

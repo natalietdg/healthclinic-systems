@@ -4,7 +4,7 @@ const ValidationException = (error: any) => {
     if (isNil(error)) return false;
 
     var { path, message, type, params } = error;
-    console.log('params', params);
+    // console.log('params', params);
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';

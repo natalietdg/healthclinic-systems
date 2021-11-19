@@ -1,7 +1,5 @@
 import axios from 'axios';
 import errorHandler from 'Utils/error-handler';
-import jwt_decode from 'jwt-decode';
-import CryptoJS from 'crypto-js';
 import { base64Url, decodeBase64Url, validateToken } from 'Helpers/';
 
 export const login = async(data: any) => {
@@ -16,6 +14,8 @@ export const login = async(data: any) => {
             data: data
         });
        
+        console.log('response', response);
+
         const refreshToken = response.data.refresh;
         const accessToken = response.data.access;
   
@@ -34,7 +34,10 @@ export const login = async(data: any) => {
             localStorage.setItem('accessTokenExpiry', validatedAccessToken.payload.exp);
             localStorage.setItem('refreshTokenExpiry', validatedRefreshToken.payload.exp);
 
-            if(refreshToken && accessToken) localStorage.setItem('user', data.username);
+            if(refreshToken && accessToken) {
+                localStorage.setItem('user', data.username);
+                localStorage.setItem('userID', validatedAccessToken.payload.user_id);
+            }
             // console.log('localStorage', localStorage);
     
             return "success";
@@ -67,6 +70,7 @@ export const refreshAccessToken = async() => {
             return validatedAccessToken;
         }
         else {
+            localStorage.setItem('userID', validatedAccessToken.payload.user_id);
             localStorage.setItem('accessToken', response.data.access);
             localStorage.setItem('accessTokenExpiry', validatedAccessToken.payload.exp);
 
@@ -98,6 +102,7 @@ export const logout = async() => {
 
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('accessToken');
+        localStorage.removeItem('accessTokenExpiry');
         localStorage.removeItem('user');
 
         return "success";
