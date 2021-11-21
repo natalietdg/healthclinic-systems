@@ -27,7 +27,6 @@ const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, na
 
     const handleChecked = (event: any) => {
         if (onCheck) onCheck(name, event.target?.name, event.target?.checked);
-        // document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
     }
 
     return(

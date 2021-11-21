@@ -21,7 +21,7 @@ const TextArea: React.FC<TextAreaProps> = ({name, label, disabled = false, value
     return(
         <div className="text-area">
             <h4 className={classNames("text-area--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
-            <textarea disabled={disabled} className={classNames("text-area--input", {'error-input': !!error })} name={name} placeholder={placeholder?placeholder:''} rows={4} cols={50} maxLength={1000} onChange={(event) => handleTextChange(event)} value={value}/>
+            <textarea disabled={disabled} className={classNames("text-area--input", {'error-input': !!error })} name={name} placeholder={placeholder?placeholder:''} rows={4} cols={50} maxLength={1000} onChange={(event:any) => handleTextChange(event)} value={value}/>
         </div>
     )
 }

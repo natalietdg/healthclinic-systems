@@ -38,6 +38,6 @@
     "dist"
   ],
   "include": [
-    "src/**/*",
+    "src/**/*", "jest.config.js",
   ]
 }

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
+import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Navbar from 'Components/navbar';
 

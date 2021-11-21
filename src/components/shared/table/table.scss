@@ -1,6 +1,5 @@
 table {
     background-color: white;
-    // box-shadow: 3px 5px 9px 0px #b8b9be;
     box-shadow: 7px 12px 17px -8px #aab4e7cf, -3px -3px 6px #f1f1f1;
     border-radius: 20px;
     padding: 20px;
@@ -36,10 +35,6 @@ table {
     tr{
         width: auto;
         height: 100%;
-        
-        // &:hover {   
-        //     background: $token-color-primary-light !important;
-        // }
 
         &:hover {
             box-shadow: 3px 5px 5px #aab4e7, -3px -3px 6px #f1f1f1;
@@ -50,15 +45,12 @@ table {
     td {
         text-align: center;
         max-width: 300px;
-        /* overflow: auto; */
         border-top: 1px solid #b8b9be38;
         overflow-wrap: break-word;
         padding: 20px;
         font-weight: 500;
         color: $token-color-primary-dark;
         height: 100%;
-        // overflow: auto;
-        // padding: 0px 10px;
     }
 
     th {
@@ -68,9 +60,6 @@ table {
         padding: 20px;
         overflow-wrap: break-word;
         width: auto;
-        // padding: 0px 10px;
-        // overflow: auto;
-
         box-shadow: 3px 5px 9px 0px white !important;
     }
 }

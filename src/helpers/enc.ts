@@ -3,8 +3,7 @@ import CryptoJS from 'crypto-js';
 export const encode = (message: any) => {
     if (!message) return;
     message = CryptoJS.enc.Utf8.parse(message);
-    // console.log('message', message);
-    // console.log('CryptoJS.enc.Base64.stringify(message)', CryptoJS.enc.Base64.stringify(message));
+  
     return(CryptoJS.enc.Base64.stringify(message)).replace('=', '');
 }
 

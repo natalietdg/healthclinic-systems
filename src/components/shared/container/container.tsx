@@ -31,9 +31,6 @@ const Container: React.FC<ContainerProps> = ({ onClose, flexDirection, children,
     return (
         
         <div className="container" style={style}>
-            {/* {
-                onClose && <button className="close" onClick={closeContainer}><img style={{width: '30px', }} src="/assets/images/close-window.png"/></button>
-            } */}
             {children}
         </div>
        

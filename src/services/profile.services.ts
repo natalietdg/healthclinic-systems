@@ -4,13 +4,13 @@ import normalizer from 'Utils/normalizer';
 
 export const fetchProfile = async(userID: number) => {
     const url = process.env.PUBLIC_PATH;
-    const port = process.env.PORT;
+    
     const accessToken = localStorage.getItem('accessToken');
 
     try {
         const response = await axios({
             method: 'GET',
-            url: `http://${url}:${port}/users/${userID}`,
+            url: `https://${url}/users/${userID}`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -24,7 +24,7 @@ export const fetchProfile = async(userID: number) => {
 }
 export const updateProfile = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-    const port = process.env.PORT;
+    
     const accessToken = localStorage.getItem('accessToken');
 
     var normalizedData = normalizer.model.profile(data);
@@ -33,8 +33,6 @@ export const updateProfile = async(data: any) => {
     if(normalizedData.image instanceof Blob) {
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
-        // console.log('dataWithoutProfilePic', dataWithoutProfilePic);
-        // console.log('normalizedData', normalizedData);
         dataWithoutProfilePic =  new FormData();
         dataWithoutProfilePic.append('username', tempData.username);
         dataWithoutProfilePic.append('image', tempData.image);
@@ -46,7 +44,7 @@ export const updateProfile = async(data: any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `http://${url}:${port}/users/${data.userID}/`,
+            url: `https://${url}/users/${data.userID}/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -56,7 +54,7 @@ export const updateProfile = async(data: any) => {
         if(dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `http://${url}:${port}/users/${data.userID}/`,
+                url: `https://${url}/users/${data.userID}/`,
                 headers: {
                     'Authorization': `Bearer ${accessToken}`        
                 },

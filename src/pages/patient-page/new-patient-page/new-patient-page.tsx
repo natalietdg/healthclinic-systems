@@ -4,8 +4,6 @@ import Patient from 'Components/patient-form';
 import { encode } from 'Helpers/';
 import { useHistory } from 'react-router-dom';
 import { DateType, dateAtom } from 'Recoil/date.atom';
-import { AuthActionStatusAtom, authActionStatusType } from 'Recoil/auth.atom';
-import Radium from 'radium';
 import { styles } from 'Components/shared/animation';
 import { decode } from 'Helpers/';
 import { Toaster } from 'Components/shared';
@@ -13,15 +11,11 @@ import { fetchBackground } from 'Services/background.services';
 import { savePatientInformation, fetchPatientInformation, setPatientandFeedbackMLRequest, generateObesityPrediction, createComments, editComments, fetchComments, createPatient, uploadImage } from 'Services/patient.services';
 import './new-patient-page.scss';
 import { useParams } from 'react-router-dom';
-// import { toaster } from 'Components/shared';
 import { useRecoilState } from 'recoil';
 
 const NewPatientPage = () => {
-    // const dates = generateTodaysDate();
      const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
     const [ todaysDate, setTodaysDate ] = useState<any>('');
-    const [ expiryDate, setExpiryDate ] = useState<any>('');
-    // var todaysDate = encode(dates.todayDate);
     let history = useHistory();
     const [ toaster, setToaster ] = useState<any>({
         message: '',
@@ -36,8 +30,6 @@ const NewPatientPage = () => {
     const [patient, setPatient] = useState<any>({});
     const [patientComments, setPatientComments] = useState([]);
     const [redirect, setRedirect ] = useState<any>('');
-    const [ actionStatus, setActionStatus ] = useRecoilState<authActionStatusType>(AuthActionStatusAtom);
-    const params = useParams();
     const { id, page }:any = useParams();
     var pageNumber: any = page? decode(page): 0;
 
@@ -55,9 +47,6 @@ const NewPatientPage = () => {
             fetchPatient(patientID);
             fetchClinicComments(patientID);
         }
-        // else {
-        //     localStorage.setItem('fullName', 'Obesity Prediction Report');
-        // }
 
         if (pageNumber != null) {
             pageNumber = parseInt(pageNumber);
@@ -128,17 +117,12 @@ const NewPatientPage = () => {
 
     const submit = async(patientInformation: any, type: any) => {
 
-        // if(patientInformation.profilePicBlob && patientInformation.profilePicBlob != {}) {
-        //     const imageResponse = await upload(patientInformation.profilePicBlob);
-        //     patientInformation.image = imageResponse.image.full_size
-        // }
         var toasterType = '';
         var toasterMessage = '';
         var response:any = '';
 
         if(type=='create comment') {
-            // let patientID = patientInformation.patientID;
-            // let tempComment =  _.omit(patientInformation, ['patientID']);
+           
             response = await createComments(patientInformation);
 
             if(response.error) {
@@ -165,28 +149,7 @@ const NewPatientPage = () => {
             }
             else {
                 setPatient(response);
-                toasterMessage = 'Patient created successfully';
-
-                // let todayPatients:any = localStorage.getItem('todayPatients') || null;
-                // console.log('todayPatients', todayPatients);
-                // // if(todayPatients != null) localStorage.removeItem('todayPatients');
-                // let now = new Date();
-                // var tempPatient = {
-                //     createdDate: now,
-                //     patientID: response.patientID
-                // }
-                // if(todayPatients == null) {
-                //     todayPatients = [tempPatient]
-                // }
-                // else {
-                //     todayPatients = JSON.parse(todayPatients);
-                //     console.log('todayPatients', todayPatients);
-                //     todayPatients.push(tempPatient);
-                // }
-
-                // localStorage.setItem('todayPatients', JSON.stringify(todayPatients));
-                // console.log('localStorage', localStorage);
-                
+                toasterMessage = 'Patient created successfully';                
             }
            
             
@@ -236,7 +199,7 @@ const NewPatientPage = () => {
 
 
     return(
-        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}> {/* style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}} */}  {/*style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}*/} 
+        <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}> 
             <Toaster props={toaster} toasterID="patient-toaster" style={{...styles.fadeInRight}}/>
                 <div className="new-patient-page">
                     <Patient.PatientInformation page={pageNumber} onSubmit={submit} comments = {patientComments} data={patient}/>

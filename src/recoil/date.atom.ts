@@ -1,5 +1,4 @@
 import { atom } from 'recoil';
-import { string } from 'yup/lib/locale';
 
 export type DateType = {
     todaysDate: string;

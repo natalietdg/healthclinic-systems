@@ -18,8 +18,6 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
     },[profileData])
 
     const handleTextChange = (name: string, value: any) => {
-        // console.log('name', name);
-        // console.log('value', value);
         setError({});
         if(name.indexOf('.')!==-1) {
             let subName = name.split('.')[1]
@@ -68,18 +66,7 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                             <AlertBox error={error?.username} name={t('label.username')} />
                         </div>
                     </Row>
-                    {/* <Row>
-                        <div style={{width: 'inherit'}}>
-                            <TextInput type="password" onChange = {handleTextChange} value={profileInformation?.password} required error={!!error?.password} name="password" label={t('label.password')} />
-                            <AlertBox error={error?.password} name={t('label.password')} />
-                        </div>
-                    </Row> */}
-                    {/* <Row>
-                        <div style={{width: 'inherit'}}>
-                            <TextInput type="password" required error={!!error.confirmPassword} label={t('label.confirmPassword')} name='confirmPassword' value={profileInformation.confirmPassword} onChange={handleTextChange}/>
-                            <AlertBox error={error?.confirmPassword} name={t('label.confirmPassword')} />
-                        </div>
-                    </Row>                 */}
+                   
                 </div>
                 <div className="divider--fifty">
                     <Row>

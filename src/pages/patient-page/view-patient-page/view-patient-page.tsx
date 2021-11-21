@@ -58,45 +58,8 @@ const ViewPatientPage = () => {
         }
     }
 
-    // const fetchAllPatientObesityPredictionReports = async(patientID: any) => {
-    //     const response = await fetchAllObesityPredictionReport(patientID);
-
-    //     console.log('response', response);
-    // }
-
-    // const fetchPatient= async(patientID: any)=> {
-  
-    //     const response = await fetchPatientInformation(patientID);
-
-    //     const huh = localStorage.getItem('huh');
-
-    //     const fullName = localStorage.getItem('fullName');
-    //     if(fullName == null) {
-    //         localStorage.setItem("fullName", response.fullName);
-    //     }
-
-
-    //     if (response.error){
-    //         setToasterProps({type: 'errors', message: "Failed to fetch patient's information"});
-    //     }
-    //     else setPatientInformation(response);
-    // }
-    
-    // const fetchClinicComments = async(patientID: any) => {
-    //     const tempResponse = await fetchComments(patientID);
-    //     console.log('respnose', tempResponse);
-    //     if (!tempResponse.error){
-    //         setPatientComments(tempResponse);
-    //     }
-    // }
-
-    const pushPage = (reportID: string) => {
-
-    }
-
     const fetchPatientReport = async(reportID: string) => {
         const response = await fetchReport(reportID);
-        // console.log('response', response);
         setPatientInformation(response);
         setImgUrl(response.profilePicBlob);
         localStorage.setItem('fullName', response.fullName);
@@ -113,18 +76,10 @@ const ViewPatientPage = () => {
         setObesityPredictionReportModal(data);
     }
 
-    const closeFeedbackModal = (data: any ) => {
-        (document.querySelector('.navbar-bg') as HTMLElement).style.zIndex='20';
-        setFeedbackModal(data);
-    }
-
     useEffect(()=> {
         getBackground();
         
         if (reportID != null) {
-            // fetchPatient(patientID);
-            // fetchClinicComments(patientID);
-            // fetchAllPatientObesityPredictionReports(patientID);
             fetchPatientReport(reportID);
         }
     },[]);
@@ -144,14 +99,9 @@ const ViewPatientPage = () => {
                     {
                         patientInformation && 
                         <div style={{width: '100%'}}>
-                             {/* <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}> */}
+                          
                                 <h1>{patientInformation.fullName}</h1>
                                 <h3>Report Number: {reportID}</h3>
-                                {/* <button onClick={() => history.push(`/report/${encode(patientInformation.reportID)}/`)} className="button"> 
-                                    <a href={`/report/${encode(patientInformation.reportID)}/`}><img className="img" src="/assets/images/view.png"/>View Report (Patient's View)</a>
-                                    <br></br>
-                                </button>
-                            </div> */}
                             <Row style={{alignItems: 'flex-start'}}>
                                 <div style={{width: 'inherit'}}>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
@@ -186,10 +136,6 @@ const ViewPatientPage = () => {
                                             <h3 className="span--title">Gender</h3>
                                             <h4 className='span--text'>{patientInformation.gender && t(`label.${patientInformation?.gender.toLowerCase()}`)}</h4>
                                         </span>
-                                        {/* <span className="span">
-                                            <h3 className="span--title">Reason for Consultation</h3>
-                                            <h4 className='span--text'>{patientInformation.reasonForConsultation}</h4>
-                                        </span> */}
                                         
                                     </div>
                                     
@@ -230,16 +176,7 @@ const ViewPatientPage = () => {
                                                 </button>
                                             </div>
                                             <h4 className="sub-title">Prediction</h4>
-                                            {/* {
-                                                predictionReport?.fullResponse?.probability  && Object.keys(predictionReport?.fullResponse?.probability).map((name: any) => {
-                                                
-                                                return (
-                                                    <span className="span">
-                                                        <h3 className="span--title">{t(`label.${name.toLowerCase()}`)}</h3>
-                                                        <h3 className='span--text'>{predictionReport?.fullResponse?.probability[name]}%</h3>
-                                                    </span>)
-                                                })
-                                            } */}
+                                           
                                             <div style={{padding: '30px', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                                                 <Table 
                                                     columns={[
@@ -311,42 +248,7 @@ const ViewPatientPage = () => {
                                 </div>
                             </div>
                         </Row>
-                            {/* <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                        <h2 className="title">Dietary Intake Information</h2>
-                                        <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(2)}`)} className="button"> 
-                                            <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(2)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Dietary Intake Information</a>
-                                            <br></br>
-                                        </button>
-                                    </div>
-                                    <h3>IC: {patientInformation.ic}</h3>
-                                    <h3>Phone Number: {patientInformation.phoneNumber}</h3>
-                                    <h3>Email: {patientInformation.email}</h3>
-                                    <h3>Date of Birth: {patientInformation.dateOfBirth}</h3>
-                                    <h3>Race: {patientInformation.race && t(`label.${patientInformation?.race.toLowerCase()}`)}</h3>
-                                    <h3>Gender: {patientInformation.gender && t(`label.${patientInformation?.gender.toLowerCase()}`)}</h3>
-                                    <h3>Reason for Consultation: {patientInformation.reasonForConsultation}</h3>
-                                </div>                                
-                            </Row>
-                            <Row>
-                                <div style={{width: 'inherit'}}>
-                                    <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
-                                        <h2 className="title">Lifestyle Information</h2>
-                                        <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(3)}`)} className="button"> 
-                                            <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(3)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Lifestyle Information</a>
-                                            <br></br>
-                                        </button>
-                                    </div>
-                                    <h3>IC: {patientInformation.ic}</h3>
-                                    <h3>Phone Number: {patientInformation.phoneNumber}</h3>
-                                    <h3>Email: {patientInformation.email}</h3>
-                                    <h3>Date of Birth: {patientInformation.dateOfBirth}</h3>
-                                    <h3>Race: {patientInformation.race && t(`label.${patientInformation?.race.toLowerCase()}`)}</h3>
-                                    <h3>Gender: {patientInformation.gender && t(`label.${patientInformation?.gender.toLowerCase()}`)}</h3>
-                                    <h3>Reason for Consultation: {patientInformation.reasonForConsultation}</h3>
-                                </div>                                
-                            </Row> */}
+                          
                         </div>
                     }
                 </Container>

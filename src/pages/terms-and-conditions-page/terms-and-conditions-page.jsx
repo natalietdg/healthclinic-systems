@@ -5,7 +5,6 @@ const TermsAndConditionsPage = () => {
     const website = process.env.WEBSITE;
     const business = process.env.BUSINESS;
     const email = process.env.EMAIL;
-    const address = process.env.BUSINESS_ADDRESS;
     return (
         <div className="terms-and-conditions-page">
             <h1>Terms and Conditions</h1>
@@ -24,7 +23,7 @@ const TermsAndConditionsPage = () => {
             <p><strong>Country</strong> refers to:  Malaysia</p>
             </li>
             <li>
-            <p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to {business}, {address}.</p>
+            <p><strong>Company</strong> (referred to as either &quot;the Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in this Agreement) refers to {business}.</p>
             </li>
             <li>
             <p><strong>Device</strong> means any device that can access the Service such as a computer, a cellphone or a digital tablet.</p>

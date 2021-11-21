@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import './select-input.scss';
 import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
-import addressInput from '../address-input';
 interface SelectInputProps {
     defaultValue?:any;
     subtitle?: any;

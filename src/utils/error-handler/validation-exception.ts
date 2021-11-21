@@ -4,7 +4,6 @@ const ValidationException = (error: any) => {
     if (isNil(error)) return false;
 
     var { path, message, type, params } = error;
-    // console.log('params', params);
     let errorMessage: string = '';
     let refPath: string | null = null;
     var subPath = '';
@@ -33,24 +32,7 @@ const ValidationException = (error: any) => {
         errorMessage = `error.${type}`;
         return omitBy({ path, refPath, value: errorMessage, message, type: type, [type]: params[type] }, isNil);
     }
-    // console.log('path', path);
-      
-    // if (type?.includes('empty') || type?.includes('required')) {
-    //     errorMessage = 'error.required';
-    // }
     
-    // else if (type?.includes('min')) {
-        
-    // }
-    // else if (type?.includes('max')) {
-    //     // errorMessage = 'error.max';
-    // }
-    // else if (type?.includes('length')) {
-    //     errorMessage = 'error.length';
-    // }
-    // else {
-    //     errorMessage = 'error.validationFailed';
-    // }
     if (path=='phoneNumber') {
         return omitBy({ path, refPath, value: "Phone number should start with '01' and have 8 digits."}, isNil)
     }

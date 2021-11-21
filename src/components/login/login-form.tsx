@@ -4,7 +4,6 @@ import { LoginFormValidation } from './login-form.validation';
 import { TextInput, AlertBox } from 'Shared/index';
 import errorHandler from 'Utils/error-handler';
 import { useTranslation } from 'react-i18next';
-import { isEmpty } from 'lodash';
 
 interface LoginFormProp {
     loginError: any;
@@ -23,7 +22,6 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
 
     useEffect(() => {
         if(loginError?.message!='') {
-            // console.log('loginError.error', loginError?.message);
             setError({login: loginError?.message});
         }
     }, [loginError])
@@ -62,7 +60,6 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
                 errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
                 return errorObj;
             })
-            // console.log('errorArray', errorArray);
             setError(errorArray);
 
             if (document.querySelector(`input[name=${path}]`)) {
@@ -73,10 +70,6 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
             }
         }
     }
-
-    // useEffect(() => {
-    //     console.log('error', error);
-    // },[error])
 
     return (
         <div>

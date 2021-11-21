@@ -6,7 +6,6 @@
     flex-direction: column;
     align-items: center;
     align-content: center;
-    // margin: 50px 0px;
 
     h5 {
         margin: 10px 0px 0px 0px;
@@ -21,20 +20,16 @@
         border-radius: 40px;
         display: flex;
         flex-direction: column;
-        /* padding: 0px 14px; */
         align-items: center;
         text-align: left;
         box-shadow: 10px 9px 38px #aab4e7c4, -3px -3px 6px #f1f1f1;
 
         @media(min-width: $token-media-query-lg) {
             width: 80%;
-            // min-height: 40vw;
-            // max-height: 60vw;
             height: auto;
         }
     }
     .header {
-        // width: 100px;
         padding: 0px 20px;
         display: flex;
         text-align: left;

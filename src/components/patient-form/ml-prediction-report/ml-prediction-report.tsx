@@ -20,8 +20,6 @@ const MLPredictionReport:React.FC<MLPredictionReportProps> = ({data, patient=tru
     const [ weightStatus, setWeightStatus ] = useState<any>('');
     const [ tempFeedback, setTempFeedback ] = useState<any>('');
     const [ error, setError ] = useState<any>({});
-
-    const accessToken = localStorage.getItem('accessToken') || undefined
   
     useEffect(() => {
         setObesityPredictionReport(data);
@@ -43,8 +41,6 @@ const MLPredictionReport:React.FC<MLPredictionReportProps> = ({data, patient=tru
     const handleTextChange = (name: any, value: any) => {
         setTempFeedback(value);
     }
-
-
 
     return(
         <div>

@@ -1,28 +1,19 @@
 .page-pane {
     width: auto;
-    /* min-height: 40vw; */
     max-height: auto;
     height: auto;
     padding: 40px;
-    // background-color: rgba(255, 255, 255, 0.6);
-    // background-color: rgb(234 238 239 / 60%);
-    // background-color: white;
-    // background-color: rgb(255, 255, 255, 0.4);
     background-color: white;
     border-radius: 40px;
     box-shadow: 10px 9px 38px #aab4e7c4, -3px -3px 6px #f1f1f1;
-    // box-shadow: 49px 50px 16px -34px #aab4e7, -3px -3px 6px #ffffff;
     display: flex;
     flex-direction: column;
-    /* padding: 0px 14px; */
     align-items: center;
     text-align: left;
     backdrop-filter: blur(30px);
 
     @media(min-width: $token-media-query-lg) {
         width: 80%;
-        // min-height: 40vw;
-        // max-height: 60vw;
         height: auto;
     }
 

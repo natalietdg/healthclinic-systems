@@ -22,7 +22,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             (async function () {
                 
                 if (blob instanceof Blob) {
-                    // console.log('blob???', blob);
+                 
                     const response = await base64Url(blob);
                     setImgUrl(response);
                 }
@@ -31,7 +31,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         setImgUrl(blob);
                     }
                     else if(blob?.image) {  
-                        // console.log(blob.image.full_size);
                         setImgUrl(blob.image.full_size);
                     }
                     else if(Array.isArray(blob)) {
@@ -49,7 +48,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         })(blob);
                     }
                     else {
-                        // console.log('blob', blob);
                         setImgArray(blob);
                     }
                    
@@ -73,10 +71,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                     })(blob);
                 }
                 else {
-                    // console.log('blob?!', blob);
-                    // console.log(blob instanceof Blob);
-                    // console.log(Array.isArray(blob));
-                    // console.log(blob[0]?.image)
+                 
                     var urlArray =[];
                     if(blob[0]?.image != undefined){
                         urlArray = blob.map((tempBlob: any)=> {
@@ -91,16 +86,11 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                                     return url;
                                 }));
                 
-                                // console.log('urlArray', urlArray);
                                 setImgArray(urlArray);
                             }
                             
                         })(blob);
-                    }
-                   
-                    // console.log('urlArray', urlArray);
-                    // setImgArray(urlArray);
-                    
+                    }                   
                     
                 }
                
@@ -113,7 +103,6 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
 
     const handleChange = async(e: any) => {
         if(e.target.files.length < 2) {
-            // console.log('e.target.files', e.target.files);
             const file = e.target.files[0];
         
             onChangeImg('add', name, file);
@@ -125,40 +114,24 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
     
     }
 
-    // const dropImage = (event: any) => {
-    //     console.log('event', event);
-    // }
-
     const removePic = (e: any) => {
          const index = parseInt(e.target.name);
-        //  console.log('blob', blob);
          let tempBlob = [...blob];
         if(blob.length > 1)  tempBlob.splice(index, 1);
         else tempBlob = [];
-        //  console.log('tempBlob', tempBlob);
          onChangeImg('remove', name, tempBlob);
     }
     
     return(
         <div className="image-upload">
             <div style={{display: 'flex', flexDirection: 'row'}}>
-                {/* {
-                    multiple == true && 
-                    <div className="box"  onDrop={(event)=> {dropImage(event)}} onDragOver={(event)=> {dropImage(event)}}>
-                        <input id="box" hidden accept="image/png, image/jpeg" type="file"  onChange={(e) => handleChange(e)} onDrop={(event)=> {dropImage(event)}} onDragOver={(event)=> {dropImage(event)}} />
-                       
-                    </div>
-                    
-                 
-                    
-                   
-                } */}
+               
                 {
                    (comment == true || multiple==true) && 
                     <div className="box">
                         {imgArray?.length> 0 ? 
                         imgArray.map((tempUrl, index) => {
-                            // console.log('tempUrl', tempUrl);
+                         
                             return <span>
                                 <img className="img-upload" src={tempUrl} style={{width: '150px', height: '150px'}}/>
                                 <button name = {index.toString()} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
@@ -176,7 +149,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                 <span>
                     <img className="img-upload" id="upload-img" src={imgUrl} />
                     <button name = {name} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
-                    {/* <button onClick={removePic} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey'}}><img style={{width: '20px', height: '20px'}} src="/assets/images/close-window.png" /></button> */}
+                  
                 </span>
             }
            

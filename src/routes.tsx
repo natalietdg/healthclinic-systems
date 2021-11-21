@@ -1,12 +1,9 @@
 import React from 'react';
-import { Route, Switch } from 'react-router';
 import HomePage from 'Pages/home-page';
 import ProfilePage from 'Pages/profile-page';
 import ReportPage from 'Pages/report-page';
 import DashboardPage from 'Pages/dashboard-page';
 import Patient from 'Pages/patient-page';
-import TodayPatients from 'Pages/today-page';
-import TermsAndConditionsPage from 'Pages/terms-and-conditions-page';
 
 const publicRoutes = [
     {
@@ -56,16 +53,6 @@ const privateRoutes = [
         withNavbar: true
        
     },
-    // {
-    //     path: '/patients/:date',
-    //     component: <TodayPatients />,
-    //     withNavbar: true
-    // },
-    // {
-    //     path: '/t&c',
-    //     component: <TermsAndConditionsPage />,
-    //     withNavbar: false
-    // }
 ]
 
 export const routes = {

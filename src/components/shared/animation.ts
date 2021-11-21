@@ -6,7 +6,6 @@ export const styles:any = {
     fadeIn: {
         animation: 'x 4s',
         animationName: Radium.keyframes(fadeIn, 'fadeIn'),
-        // animationDelay: '0.8s',
     },
     fadeInRight: {
         animation: 'x 2s',

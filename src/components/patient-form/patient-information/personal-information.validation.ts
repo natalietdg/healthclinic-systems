@@ -9,5 +9,4 @@ export const PersonalInformationFormValidation = Yup.object().shape({
     ic: Yup.string().max(12).required(),
     gender: Yup.mixed().oneOf(['M', 'F']).required(),
     race: Yup.mixed().oneOf(['CH', 'MA', 'IN', 'OT']).required(),
-    // reasonForConsultation: Yup.string().min(3).max(1000).required(),
 })

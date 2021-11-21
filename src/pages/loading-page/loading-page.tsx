@@ -11,7 +11,7 @@ const LoadingPage = () => {
                 <h2>Loading{
                     
                     [1,2,3].map((number)=> {
-                        return <span style={{...styles.fadeIn, animation: 'x 3s', animationIterationCount: 5}}>.</span>
+                        return <span key={number} style={{...styles.fadeIn, animation: 'x 3s', animationIterationCount: 5}}>.</span>
                     })
                     
                 }</h2>

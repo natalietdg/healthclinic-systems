@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 import { Table, Row, TextInput, Page, Button } from 'Components/shared';
 import classNames from 'classnames';
 import './patient-database.scss';
-import tempPatientData from 'src/data/patientData.json';
 
 interface PatientDatabseProps {
     patients: any;
@@ -21,8 +20,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
     const [error, setError] = useState<any>({});
     const [ hiddenFirstPartButtons, setHiddenFirstPartButtons ] = useState<any>([]);
     const [ hiddenLastPartButtons, setHiddenLastPartButtons ] = useState<any>([]);
-    const [ firstPartButtons, setFirstPartButtons ] = useState<any>(<></>);
-    const [ lastPartButtons, setLastPartButtons ] = useState<any>(<></>);
+
     const { t } = useTranslation();
     const [maxSize, setMaxSize] = useState(0);
     const { date }:any = useParams();
@@ -33,7 +31,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
             month: 'long',
             day: 'numeric'
         });
-        // console.log('todaysDate', todaysDate);
     }
     const [ pageVisibility, setPageVisibility ] = useState(0);
 
@@ -50,9 +47,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         {
             colName: 'Gender',
         },
-        // {
-        //     colName: 'Date of Birth'
-        // },
         {
             colName: 'IC',
         },
@@ -62,9 +56,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         {
             colName: 'Phone Number',
         },
-        // {
-        //     colName: 'Obesity and Disease Prediction Report',
-        // },
         {
             colName: 'Report Number',
         },
@@ -82,14 +73,8 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         const parsedPageNumber = parseInt(e.target.innerText)-1;
         setPageVisibility(parsedPageNumber);
     }
-    // const showOptions = (e:any) => {
-    //     const selector =  e.target.parentElement.nextElementSibling;
-    //     if(selector.style.display=='none') selector.style.display = 'flex';
-    //     else selector.style.display = 'none';
-    // }
 
     const setLocalStorage = (key: any) => {
-        // console.log('patients', patients);
         let page = parseInt(key.split(',')[0]);
         key = parseInt(key.split(',')[1]);
         var patientData =  filteredData[page][key];
@@ -129,7 +114,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         let lastPartArray = (document.getElementById('hiddenLastPartArray') as HTMLElement);
         if(lastPartArray!= null)  lastPartArray.style.display = 'none';
         (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.display = 'block';
-        // console.log('pageVisibility', pageVisibility);
         if (pageVisibility >=24) {
             (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '48%');
         }
@@ -145,21 +129,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
             (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '45%');
            
         }
-
-
-        // if((document.getElementById('hiddenFirstPartArray') as HTMLElement) && !(document.getElementById('hiddenLastPartArray') as HTMLElement))  {
-        //     (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '43%');
-        //     // (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.right = '45%';
-        //     console.log((document.getElementById('hiddenFirstPartArray') as HTMLElement));
-        //     console.log('tru2');
-        //     console.log((document.getElementById('hiddenLastPartArray') as HTMLElement));
-        // }
-        // else if((document.getElementById('hiddenFirstPartArray') as HTMLElement))  {
-        //     (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '49%');
-        //     // (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.right = '49%';
-        //     console.log('tru1');
-        //     console.log((document.getElementById('hiddenFirstPartArray') as HTMLElement));
-        // }
     }
 
     const showHiddenLastPartButtons = () => {
@@ -167,9 +136,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         if(firstPartArray!= null) firstPartArray.style.display = 'none';
        
         (document.getElementById('hiddenLastPartArray') as HTMLElement).style.display = 'block';
-        
-        // if(!(document.getElementById('hiddenFirstPartArray') as HTMLElement) && (document.getElementById('hiddenLastPartArray') as HTMLElement)) {
-
             if (pageVisibility >=25 ) {
                 (document.getElementById('hiddenLastPartArray') as HTMLElement).style.setProperty('--rightArray', '46%');
             }
@@ -180,17 +146,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 (document.getElementById('hiddenLastPartArray') as HTMLElement).style.setProperty('--rightArray', '42%');
             }
 
-            // (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '45%');
-            // (document.getElementById('hiddenLastPartArray') as HTMLElement).style.right = '37%';
-        
-        // }
-        // else if((document.getElementById('hiddenLastPartArray') as HTMLElement)) {
-        //     (document.getElementById('hiddenFirstPartArray') as HTMLElement).style.setProperty('--rightArray', '42%');
-        //     // (document.getElementById('hiddenLastPartArray') as HTMLElement).style.right = '42%';
-        //     console.log((document.getElementById('hiddenFirstPartArray') as HTMLElement));
-        //     console.log('tru3');
-        //     console.log((document.getElementById('hiddenLastPartArray') as HTMLElement));
-        // }
     }
 
     useEffect(()=> {
@@ -202,7 +157,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
     },[hiddenFirstPartButtons])
     
     const createHiddenFirstPartButtons = () => {
-        // const child = ((document.getElementById('hiddenFirstPartArray')) as HTMLElement) || null;
         var child =  (document.getElementById('hiddenFirstPartArray') as HTMLElement);
       
         var parent = (document.getElementById('hiddenFirstPart') as HTMLElement);
@@ -210,7 +164,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         if (child && parent && parent.contains(child)) parent.removeChild(child);
         if (child2 && parent && parent.contains(child2)) parent.removeChild(child2);
        
-        // if(child == null) {
             let tempDiv:any = document.createElement('div');
             tempDiv.id = 'hiddenFirstPartArray'
             for (let x =0; x < hiddenFirstPartButtons.length; x++) {
@@ -236,7 +189,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 button.innerText=hiddenFirstPartButtons[x];
                 button.style.padding = '8px';
                 button.setAttribute('key', `${hiddenFirstPartButtons[x]}`);
-                // <button className={classNames({current: (x==pageVisibility)})} key={x+1}>{x+1}</button>;
                 tempDiv.appendChild(button);
             }
             tempDiv.className = 'button-array';
@@ -280,7 +232,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 button.innerText=hiddenLastPartButtons[x];
                 button.setAttribute('key', `${hiddenLastPartButtons[x]}`);
                 button.style.padding = '8px';
-                // <button className={classNames({current: (x==pageVisibility)})} key={x+1}>{x+1}</button>;
                 tempDiv.appendChild(button);
             }
             
@@ -294,7 +245,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
         if(patients) {    
             setError({});
             if(patients.length == 0 || patients.error ) {
-                patients =tempPatientData ;
                 setError({error: 'Unable to fetch patients'})
             }
 
@@ -302,7 +252,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 let values = Object.values(patientData);
                 
                 let filteredValues:any = values.reduce(function(allFilteredValues: any, value) {
-                    // if(typeof(value)=='string') if((value.toLowerCase()==filter) || filter=='') allFilteredValues.push(value);
+                
                     if(typeof(value)=='string') if((value.toLowerCase()).includes(filter.toLowerCase()) || filter=='') allFilteredValues.push(value);
                     return allFilteredValues;
                 }, []);
@@ -320,12 +270,11 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 
                 var patientData = {}
                 if(todaysDate== null) {
-                    // console.log('filteredData', filteredData);
                     patientData = {
                         "ID": filteredData.patientID || filteredData['ID'],
                         'Email': filteredData.email || filteredData['Email'],
                         'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
-                        // "Date of Birth": filteredData.dateOfBirth || filteredData['Date of Birth'],
+                      
                         'IC': filteredData.ic || filteredData['IC'],
                         "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
                         "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
@@ -337,7 +286,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                                         View Report
                                     </a><br></br>
                                 </Button>,
-                        // 'Diagnosis': filteredData['Diagnosis'],
                         "": <div style={{display: 'flex'}}>
                                 <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                     <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
@@ -348,8 +296,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 }
                 else{
                     var hasDiagnosis = false;
-                    // console.log('filteredData', filteredData);
-                    // console.log('todaysDate', todaysDate);
                     if(filteredData.comments) {
                         hasDiagnosis = filteredData.comments.some((comment: any)=> {
                             let tempDate = (new Date(comment.created)).toLocaleDateString([], {
@@ -367,18 +313,12 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         "ID": filteredData.patientID || filteredData['ID'],
                         'Email': filteredData.email || filteredData['Email'],
                         'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
-                        // "Date of Birth": filteredData.dateOfBirth || filteredData['Date of Birth'],
+                      
                         'IC': filteredData.ic || filteredData['IC'],
                         "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
                         "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
                         "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
-                        // "Consultation Status": hasDiagnosis==true?<div className="done">Completed</div> : <div className="not-done">Pending</div>,
-                        // "Obesity and Diseases Prediction": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                        //                                 <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
-                        //                                     <img src="/assets/images/view.png"/><br />
-                        //                                     View Report
-                        //                                 </a><br></br>
-                        //                             </Button>,
+                      
                         "Report Number": filteredData.reportID || filteredData['Report'],
                         "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                     <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
@@ -386,7 +326,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                                         View Report
                                     </a><br></br>
                                 </Button>,
-                        // 'Diagnosis': filteredData['Diagnosis'],
                         "": <div style={{display: 'flex'}}>
                                 <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                     <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
@@ -474,10 +413,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         else if (((pagePaginationArray.length-1) - x) < 2 || ((x < pageVisibility && (pageVisibility - x) < 2) || (x > pageVisibility && (x - pageVisibility) <2) || x == pageVisibility)) {
                             pagination.push(pagePaginationArray[x]);
                         }
-                        // else if((x < pageVisibility && (pageVisibility - x) < 2) || (x > pageVisibility && (x - pageVisibility) <2) || x == pageVisibility) {
-                        
-                        //     pagination.push(pagePaginationArray[x]);
-                        // }
                         else {
                             if(hiddenLastPartIndexes.length == 0) {
                                 hiddenLastPartOfArray.index = x+1;
@@ -490,9 +425,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                         if (x < 3 || (((pagePaginationArray.length-1) - x) < 3)) {
                             pagination.push(pagePaginationArray[x]);
                         } 
-                        // else if(((pagePaginationArray.length-1) - x) < 3) {
-                        //     pagination.push(pagePaginationArray[x]);
-                        // }
                         else {
                             if(hiddenFirstPartIndexes.length == 0 && hiddenLastPartIndexes.length == 0) {
                                 pagination.push(hiddenLastPartOfArray);
@@ -550,7 +482,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                     <TextInput icon={true} placeholder="Search for a patient" value={filter} required={false} error={''} name='search' label="" onChange={handleSearchChange} />
                     </div>
                 </Row>
-                <div style={{width: 'inherit', display: 'flex', alignItems:'center', flexDirection:'column'}}> {/* height:'1148px'*/}
+                <div style={{width: 'inherit', display: 'flex', alignItems:'center', flexDirection:'column'}}>
                     <Table 
                         columns={columns}
                         filteredData={filteredData[pageVisibility]? filteredData[pageVisibility]: []}

@@ -2,8 +2,6 @@ import { omitBy, isNil, isUndefined, isEmpty } from 'lodash';
 
 const ObesityPredictionModel = (data: any) => {
     return omitBy({
-        // gender : data.gender,
-        // race : data.race,
         healthAndFamilyHistory: {
             BMI : data.bmi,
             familyHistory : data["family-history"],

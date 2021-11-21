@@ -16,19 +16,8 @@ interface RadioInputProps {
 }
 
 const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultValue, placeholder, error, required, values, multiple, onSelect}) => {
-    const [ currentValue, setCurrentValue] = useState<any>('');
+      
     useEffect(()=> {
-
-        // console.log('values length', values.length);
-        // if(values.length > 3) {
-        //     (document.querySelector(`div[name='${name}'].radio-input--values`) as HTMLInputElement).style.flexDirection = 'column';
-        // }
-    },[]);
-    
-    useEffect(()=> {
-     
-        setCurrentValue(defaultValue);
-
         
         values.map((value:any)=> {
            
@@ -41,19 +30,7 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultVa
         })
     },[defaultValue])
     const handleChecked = (event: any) => { //React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>
-        // console.log('event.target.name', event.target.name);
-        // console.log('event', event);
-        // const checked = event;
-        // console.log('checked', checked);
-        // var checked = document.querySelector(`input[name='${event.target?.name}']`) as HTMLInputElement;
-        // console.log('checked', checked);
-        // console.log('selector.checked1', selector.checked);
-        // selector.checked=!(selector.checked);
-        // checked.checked = true;
-        // console.log('defaultValue',defaultValue);
-        // if(defaultValue==event.target.value) {
-        //     event.target.value = '';
-        // }
+       
         if (onSelect) onSelect(name,  event.target.value);
 
         if(multiple==false) {

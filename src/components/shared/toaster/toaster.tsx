@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { styles } from '../animation';
 import Radium from 'radium';
-import { toasterAtom, ToasterAtomType } from 'Recoil/toaster.atom';
 import { useTranslation } from 'react-i18next';
 import './toaster.scss';
 
@@ -17,7 +16,7 @@ interface ToasterProps {
     
 }
         
-const Toaster: React.FC<ToasterProps> = ({props, style, toasterID}) => {
+const Toaster: React.FC<ToasterProps> = ({props, toasterID}) => {
     const [ toasterStyle, setToasterStyle ] = useState<any>(styles.fadeInRight);
     const [toasterProps, setToasterProps ] = useState<any>({type: '', message:''});
     const { t } = useTranslation();  

@@ -60,10 +60,7 @@
         color: white;
         background-color: $token-button-primary-background-color-base;
         border: 0px solid grey;
-        // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;
-        // box-shadow: 4px 3px 6px 1px rgb(128 105 169 / 60%);
         
-        // font-size: 16px;
         font-size: 20px;
         cursor: pointer;
         font-weight: 400;
@@ -72,8 +69,7 @@
         &:hover{
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
-            // box-shadow: 4px 3px 6px 1px #533883, 0px 0px 3px 6px #ffffff;
-            // box-shadow: 4px 4px 6px #48297d;
+         
             box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
             border: 0px solid white;
         }

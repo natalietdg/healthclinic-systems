@@ -52,12 +52,7 @@ const DisplayReport: React.FC<DisplayReportProps> = ({patientData, edit=false}) 
                                 day: 'numeric'
                             })} ({yearAge} years {monthAge > 0? monthAge.toString() + ' months': ''})</h4>
                         </span>
-                        {/* <h4>Age: {new Date(patientData?.dateOfBirth).toLocaleDateString([], {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            })} {yearAge} years {monthAge > 0? monthAge.toString() + ' months': ''}
-                        </h4> */}
+                        
                     <span className="span">
                             <h3 className="span--title">IC</h3>
                             <h4 className='span--text'>{patient?.ic}</h4>
@@ -86,7 +81,7 @@ const DisplayReport: React.FC<DisplayReportProps> = ({patientData, edit=false}) 
                             <h2 className="title">Obesity and Comorbidities Prediction</h2>
                             {
                                 patient?.obesityPredictionReports && patient?.obesityPredictionReports.map((report: any, index: number) => {
-                                // return <Patient.MLPredictionReport key={report.id} data={report} patient={true}/>
+                              
                                 return (
                                     <Row>
                                         <div style={{width: 'inherit'}}>

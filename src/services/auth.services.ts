@@ -4,25 +4,25 @@ import { base64Url, decodeBase64Url, validateToken } from 'Helpers/';
 
 export const login = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-    const port = process.env.PORT;
 
     try {
         const response = await axios({
             method: 'POST',
-            url: `http://${url}:${port}/auth/login/`,
+            url: `https://${url}/auth/login/`,
             responseType: 'json',
-            data: data
+            data: data,
+            headers: {
+                'Access-Control-Allow-Origin': 'true',
+                'Access-Control-Allow-Headers': 'Origin, X-Requested-With',
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
         });
-       
-        console.log('response', response);
 
         const refreshToken = response.data.refresh;
         const accessToken = response.data.access;
   
         const validatedAccessToken = validateToken(accessToken);
-        // console.log('validatedAccessToken', validatedAccessToken);
         const validatedRefreshToken = validateToken(refreshToken);
-        // console.log('validatedRefreshToken', validatedRefreshToken);
 
         if (validatedAccessToken.error || validatedRefreshToken.error) {
             return { error: 'Invalid Token'};
@@ -38,7 +38,6 @@ export const login = async(data: any) => {
                 localStorage.setItem('user', data.username);
                 localStorage.setItem('userID', validatedAccessToken.payload.user_id);
             }
-            // console.log('localStorage', localStorage);
     
             return "success";
         }
@@ -52,13 +51,12 @@ export const login = async(data: any) => {
 
 export const refreshAccessToken = async() => {
     const url = process.env.PUBLIC_PATH;
-    const port = process.env.PORT;
     const refreshToken = localStorage.getItem('refreshToken');
 
     try {
         const response = await axios({
             method: 'POST',
-            url: `http://${url}:${port}/auth/login/refresh/`,
+            url: `https://${url}/auth/login/refresh/`,
             data: {
                 refresh: refreshToken
             },
@@ -87,13 +85,13 @@ export const refreshAccessToken = async() => {
 
 export const logout = async() => {
     const url = process.env.PUBLIC_PATH;
-    const port = process.env.PORT;
+    
     const accessToken = localStorage.getItem('accessToken');
     
     try {
         const response = await axios({
             method: 'POST',
-            url: `http://${url}:${port}/auth/logout/`,
+            url: `https://${url}/auth/logout/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        

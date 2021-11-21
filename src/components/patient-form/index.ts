@@ -1,4 +1,4 @@
-import MLPredictionReport from "./ml-prediction-report";
+import MLPredictionReport from './ml-prediction-report';
 import PatientInformation from "./patient-information";
 
 export default {

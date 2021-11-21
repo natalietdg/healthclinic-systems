@@ -1,8 +1,7 @@
 import React from 'react';
 import './search-input.scss';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
-import addressInput from '../address-input';
+
 interface SearchInputProps {
     searchOptions: string[];
     subtitle?: any;
@@ -17,8 +16,7 @@ interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = ({searchOptions, subtitle, label, name, required, error, value, defaultValue, onSearch}) => {
 
-    const { t } = useTranslation();
-    const handleSelect = (e: React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>) => {
+    const handleSelect = (e: any ) => { //React.MouseEvent<HTMLInputElement, globalThis.MouseEvent>
         onSearch(name, e.target?.value);
     }
 
@@ -26,15 +24,7 @@ const SearchInput: React.FC<SearchInputProps> = ({searchOptions, subtitle, label
         <div className="search-input">
             <h4 className={classNames("search-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
             <p><i>{subtitle}</i></p>
-                {/* <search className="search-input--input" onChange={(e:any) => handleSearch(e)}>
-                    {
-                        searchOptions.map((option, index) => {
-                            return <option name={option.name} key={index} value={option.value}>
-                                {option.label || t(`label.${option.name}`)}
-                            </option>
-                        })
-                    }
-                </search> */}
+              
             <input className="search-input--input" type='search' list={name} defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
             
             <datalist id={name} style={{zIndex: 996}}>

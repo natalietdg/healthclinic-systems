@@ -2,18 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { styles } from 'Components/shared/animation';
-import LoadingPage from 'Pages/loading-page';
 import { useTranslation } from 'react-i18next';
-import Radium from 'radium';
 import { encode } from 'Helpers/';
 import { CommentType, commentAtom} from 'Recoil/patient.atom';
 import './patient-information.scss';
-import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValuesFunction, sodaCandyFrequencyValuesFunction, occupationValuesFunction, processedFoodIntakeValuesFunction, fruitsIntakeValuesFunction, grainBeansIntakeValuesFunction, vegetableIntakeValuesFunction, snacksFrequencyValuesFunction, dessertFrequencyValuesFunction, milkTeaCoffeeLowfatValuesFunction, eggFrequencyValuesFunction, friedFoodFrequencyValuesFunction, dairyFrequencyValuesFunction, meatFrequencyValuesFunction, healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, nicotineAmtValuesFunction, heightFunction, weightFunction, yearFunction, lastHundredYearsFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
-import { Container, Page, Row, Col, ImageUpload, Modal, Toaster } from 'Components/shared';
+import { sleepHoursValuesFunction, seatedHoursValuesFunction, computerHoursValuesFunction, sodaCandyFrequencyValuesFunction, occupationValuesFunction, processedFoodIntakeValuesFunction, fruitsIntakeValuesFunction, grainBeansIntakeValuesFunction, vegetableIntakeValuesFunction, snacksFrequencyValuesFunction, dessertFrequencyValuesFunction, milkTeaCoffeeLowfatValuesFunction, eggFrequencyValuesFunction, friedFoodFrequencyValuesFunction, dairyFrequencyValuesFunction, meatFrequencyValuesFunction, healthHistoryValuesFunction, cigarettesPerDayValuesFunction, BMIStatus, heightFunction, weightFunction, averageAlcoholConsumptionValuesFunction } from 'Data/patientInformationValues';
+import { Page, Row, Col, ImageUpload, Modal } from 'Components/shared';
 import errorHandler from 'Utils/error-handler';
-import _, { omitBy, isEmpty, isUndefined, isEqual } from 'lodash';
+import _, { omitBy, isEmpty, isUndefined } from 'lodash';
 import PagePane from 'Components/shared/page/page-pane'
-import { TextInput, AlertBox, RadioInput, SelectInput, TextArea, Checkbox, AddressInput, DateInput, SearchInput, Table } from 'Components/shared';
+import { TextInput, AlertBox, RadioInput, SelectInput, TextArea, DateInput, SearchInput } from 'Components/shared';
 import { PersonalInformationFormValidation } from './personal-information.validation';
 import { ObesityPredictionValidation } from './obesity-prediction.validation';
 import { CommentsValidation } from './comments.validation';
@@ -60,28 +58,14 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         weight: -1,
         height: -1,
         BMI: -1,
-        // healthHistory: {
-        //     heartAttack: false,
-        //     highCholesterol: false,
-        //     heartOperation: false,
-        //     congenitalHeartDisease: false,
-        //     noCondition: false, //if this is true, then healthHistory is false
-        //     // diabetes: false,
-        //     // hypertension:  false,
-        // },
+     
         familyHistory: { 
             heartAttack: '',
             highCholesterol: '',
             heartOperation: '',
             congenitalHeartDisease: '',
             noCondition: '', //if this is true, then healthHistory is false
-            // heartAttack: 'No',
-            // highCholesterol: 'No',
-            // heartOperation: 'No',
-            // congenitalHeartDisease: 'No',
-            // noCondition: 'No', //if this is true, then healthHistory is false
-            // diabetes: false,
-            // hypertension:  false,
+           
         },
     }
 
@@ -110,33 +94,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         bbqIntake: '',
         moreThreeCoffeeFrequencyIntake: '',
         lessThanTwoDairyServingsDailyIntake: '',
-        lessThanThreeTimesNLMGMRCAYWeeklyIntake: '' //NL- Nasi Lemak, MGM - Mee Goreng Mamak, RC - Roti Canai, AP - Ayam Percik
-
-        // alcoholFrequency: "2-3 drinks per month",
-        // bbqIntake: "Yes",
-        // cruciferousVegetablesFrequencyIntake: "Yes",
-        // dairyFrequency: "1-2 times per week",
-        // dessertFrequency: "2-3 times per week",
-        // eggFrequency: "5-7 eggs per week",
-        // fiveFruitFrequencyIntake: "Yes",
-        // fourCitrusFrequencyIntake: "No",
-        // friedFoodFrequency: "2-4 times per week",
-        // fruitsIntake: "3-4 servings per day",
-        // grainBeansIntake: "3-4 servings per day",
-        // lessFiveOrangeYellowFruitVegeFrequencyIntake: "No",
-        // lessThanThreeTimesNLMGMRCAYWeeklyIntake: "No",
-        // lessThanTwoDairyServingsDailyIntake: "Yes",
-        // meatFrequency: "Once per week",
-        // meatOverFriedFood: "No",
-        // milkTeaCoffeeLowfat: "2-3 times per week",
-        // moreThreeCoffeeFrequencyIntake: "No",
-        // nitrateSaltMeatFrequencyIntake: "No",
-        // processedFoodIntake: "2-3 per week",
-        // smokedMeatFishFrequencyIntake: "Yes",
-        // snacksFrequency: "4-6 times per week",
-        // sodaCandyFrequency: "0-1 time per week",
-        // vegetableIntake: "1-2 servings per day",
-        // vegetarian: "Yes"
+        lessThanThreeTimesNLMGMRCAYWeeklyIntake: '' 
     }
 
     const defaultLifestyleInformation = {
@@ -157,13 +115,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const [ pageVisibility, setPageVisibility ] = useState(-1);
     const healthHistoryValues: any = healthHistoryValuesFunction();
     const cigarettesPerDayValues: any = cigarettesPerDayValuesFunction();
-    const nicotineAmtValues: any = nicotineAmtValuesFunction();
     const height: any = heightFunction();
     const weight: any = weightFunction();
-    const yearsOption: any = yearFunction();
     const seatedHoursValues = seatedHoursValuesFunction();
     const computerHoursValues = computerHoursValuesFunction();
-    const lastHundredYears = lastHundredYearsFunction();
     const occupationValues = occupationValuesFunction();
     const snacksFrequencyValues = snacksFrequencyValuesFunction();
     const meatFrequencyValues = meatFrequencyValuesFunction();
@@ -184,70 +139,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const [ healthAndFamilyHistory, setHealthAndFamilyHistory ] = useState<any>(defaultHealthAndFamilyHistory);
     const [ dietaryIntake, setDietaryIntake ] = useState<any>(defaultDietaryIntakeInformation);
     const [ lifestyleInformation, setLifestyleInformation ] = useState<any>(defaultLifestyleInformation);
-
-    const pages = [
-        {
-            name: 'personalInformation',
-            index: 0,
-            fields: [
-                "firstName",
-                "lastName",
-                "ic",
-                "race",
-                "gender",
-                "profilePicBlob",
-                "phoneNumber"
-            ]
-        },
-        {
-            name: 'healthHistory',
-            index: 1,
-            fields: [
-                "weight",
-                "height",
-                "healthHistory",
-                "familyHistory",
-            ]
-        },
-        {
-            name: 'dietaryIntake',
-            index: 2,
-            fields: [
-                "eightHoursOfSleep",
-                "stress",
-                "exercise",
-                "smoking",
-                "friedFood",
-                "meat",
-                "fruits",
-                "vegetables",
-                "processedFood",
-            ]
-        },
-        {
-            name: 'lifestyleInformation',
-            index: 3,
-            fields: [
-                "eightHoursOfSleep",
-                "stress",
-                "exercise",
-                "smoking",
-                "friedFood",
-                "meat",
-                "fruits",
-                "vegetables",
-                "processedFood",
-            ]
-        },
-        {
-            name: 'comments',
-            index: 4,
-            fields: [
-                "comments",
-                "diagnosis"
-            ]
-        }
-    ]
 
     useEffect(()=> {
 
@@ -311,21 +202,16 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             });
 
             if (personalInformation.profilePicBlob instanceof Blob) {
-                // console.log('blob', personalInformation.profilePicBlob);
                 value.profilePicBlob = personalInformation.profilePicBlob;
-                // console.log('value', value);
             }
             else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
                 setError({profilePicBlob: 'Profile Pic is not a file'});
                 throw 'Not a file';
             }
-            // console.log(moment(personalInformation.dateOfBirth));
             onSubmit(value, 'save');
 
         }
         catch(err: any) {
-            var tempErrors:any = {};
-            // console.log('inner', err);
 
             if(err.inner) {
                 var errorArray = err.inner.map((error: any) => {
@@ -340,51 +226,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                      errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
                      return errorObj;
                  })
-                 // console.log('errorArray', errorArray);
+               
                  setError(errorArray);
             }
-            
-            // err?.inner.map((error: any, index: number)=> {
-            //     let { path, value }:any = errorHandler.validation(error);
-
-            //     if(value.includes('required')) {
-            //         const [ first, ...last] = value.split(' ');
-                   
-            //         value =  t(`${value}`, { field: t(`label.${path}`)} );
-            //     }
-
-            //     if (path.indexOf('.')!==-1) {
-            //         const str = path.split('.');
-            //         path = str[0];
-            //         subPath = str[1];
-            //         // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
-            //     }
-            //     // else {
-            //     //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-            //     // }
-               
-            //     pages.map((page, index)=> {
-                   
-            //         if(page.fields.includes(path) || page.fields.includes(subPath)) {
-            //             // console.log('page', page);
-            //             setPageVisibility(page.index);
-            //         }
-            //     })
-    
-            //     if (document.querySelector(`input[name=${path}]`)) {
-            //         (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
-    
-            //     }
-            //     else if (document.querySelector(`div[name=${path}]`)) {
-            //         (document.querySelector(`div[name=${path}]`) as HTMLInputElement).focus();
-            //     }
-                
-            //     tempErrors[path]= value;
-            // })
-          
-            // setError(tempErrors);
-            var subPath = '';
-
             
         }
     }
@@ -392,17 +236,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const submitObesityPredictionData = async(event: any) => {
         event.preventDefault();
         let tempHealthAndFamilyHistory:any = _.omit(healthAndFamilyHistory, ['height', 'weight']);
-        // var tempFamilyHistory:any = "";
-        // let familyHistoryKeys = Object.keys(tempHealthAndFamilyHistory.familyHistory);
-
-        // console.log(familyHistoryKeys);
-        // familyHistoryKeys.map((key)=> {
-        //     if(tempHealthAndFamilyHistory.familyHistory[key]==true)
-        //     // tempFamilyHistory.push(key);
-        //     tempFamilyHistory = key;
-        // });
-        // console.log(tempFamilyHistory);
-        // tempHealthAndFamilyHistory.familyHistory = tempFamilyHistory;
+       
         const fullData = {
             patientID: personalInformation.patientID,
             reportID: personalInformation.reportID,
@@ -455,8 +289,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     else {
                         message = t(`label.${subPath}`) + " " + last.join(' ') + '.';
                     }
-                    
-                    // setError({...error, [path]: {[subPath]: t(`${value}`, { field: t(`label.${subPath}`)})} });
+                  
                 }
                 else {
                     if(message.includes('must be one of')) {
@@ -470,17 +303,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     }
                     
                 }
-                // else {
-                //     setError({...error, [path]: t(`${value}`, { field: t(`label.${path}`)}) });
-                // }
-               
-                pages.map((page, index)=> {
-                   
-                    if(page.fields.includes(path) || page.fields.includes(subPath)) {
-                        // console.log('page', page);
-                        setPageVisibility(page.index);
-                    }
-                })
     
                 if (document.querySelector(`input[name=${path}]`)) {
                     (document.querySelector(`input[name=${path}]`) as HTMLInputElement).focus();
@@ -494,10 +316,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     ...tempErrors,
                     [subPath]: message
                 }
-                // tempErrors[path] = {
-                //     ...tempErrors[path],
-                //     [subPath]: message
-                // };
+              
             })
             setError(tempErrors);
             var subPath = '';
@@ -530,9 +349,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         
         try{
 
-            // console.log(moment(personalInformation.dateOfBirth));
-  
-
            let patientData = {
                fullName: personalInformation.fullName,
                ic: personalInformation.ic,
@@ -552,9 +368,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             });
             
             if (personalInformation.profilePicBlob instanceof Blob) {
-                // console.log('blob', personalInformation.profilePicBlob);
                 value.profilePicBlob = personalInformation.profilePicBlob;
-                // console.log('value', value);
             }
             else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
                 setError({profilePicBlob: 'Profile Pic is not a file'});
@@ -564,16 +378,11 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
            onSubmit(value, action);
         }
         catch(err: any) {
-            var tempErrors:any = {};
-            // console.log('err', err.inner);
             var errorArray = err.inner.map((error: any) => {
                 let tempErr: any = errorHandler.validation(error);
-                // console.log('tempErr', tempErr);
                 let { path, value, type } = tempErr;
 
                 if(type && tempErr[type]) {
-                    // console.log('type', type);
-                    // console.log('tempErr[type]', tempErr[type]);
                     return {
                         [path] : t(`${value}`, {field: t(`label.${path}`), [type]: tempErr[type]})
                     };
@@ -588,17 +397,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                  errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
                  return errorObj;
              })
-             // console.log('errorArray', errorArray);
              setError(errorArray);
-            var subPath = '';
-
-            
         }
-    }
-
-
-    const handleConfirm = (event: React.MouseEvent<HTMLButtonElement>) => {
-        
     }
 
 
@@ -610,11 +410,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     const handleTextChange = (name: string, value: any) => {
         setToaster({ type:'success', message: value});
-        // let tempProps: any = {
-        //     type: 'success', message: value
-        // }
-
-        // Toaster(tempProps, styles.fadeInRight);
+     
         let tempError = error;
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
 
@@ -624,10 +420,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             name = name.split('.')[0];
 
             if (name.includes('personalInformation')) {
-                // setPersonalInformation({...personalInformation, [name]: {
-                //     ...personalInformation[name],
-                //     [subName]: value
-                // }});
 
                 setPersonalInformation({...personalInformation, [subName]: value});
             }
@@ -656,28 +448,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
             return;
         }
-        // else 
-        // setPersonalInformation({...personalInformation, [name]: value });
-
-        // if(name=='ic' && value.length > 5 && personalInformation.dateOfBirth != '') {
-        //     if(personalInformation.dateOfBirth!='') {
-        //         let tempData = (personalInformation.dateOfBirth.split('-')).join('');
-        //         console.log('tempData', tempData);
-        //         tempData = tempData.slice(2, tempData.length);
-
-        //         value = value.slice(0, 6);
-        //         console.log('tempData', tempData);
-        //         if(value.includes(tempData)) {
-        //             console.log('tempData', tempData);
-        //         }
-        //         if(value!==tempData) {
-        //             setError({
-        //                 [name]: 'IC must match date of birth'
-        //             })
-        //         }
-        //     }
-            
-        // }
     }
 
      const handleCommentChange = (name: string, value: any) => {
@@ -688,17 +458,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         setError(tempError);
         if(name.indexOf('.')!==-1) {
             let subName = (name.split('.')[1]).toString();
-            // let index = parseInt((name.split('[')[1]).split(']')[0]);
-            // console.log('index', index);
-            // subName = subName.split('[')[0];
-            name = name.split('.')[0];
             
-            // let tempArray = [...clinicComments];
-            // let item: any = {...tempArray[index]};
-            // item[subName] = value;
-            // tempArray[index] = item;
-
-            // setClinicComments(tempArray);
+            name = name.split('.')[0];
 
             setModalComment({...modalComment, [subName]: value})
         }
@@ -747,13 +508,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
             return;
         }
-        
-        // setPersonalInformation({...personalInformation, [name]: value });
+       
     }
-
-    // useEffect(() => {
-    //     console.log('personalInformation', personalInformation);
-    // },[personalInformation])
 
     const handleSelectRadio = (name: string, value: any) => {
         value = (value=='true' || value=='false')? (value==='true'): value;
@@ -801,151 +557,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
             return;
         }
-        // setPersonalInformation({...personalInformation, [name]: value});
-     
-    }
-
-    const handleChecked = (name: string, subName: string, value: any) => {
-        let tempError = error;
-        if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
-
-        setError(tempError);
-
-        // if(healthAndFamilyHistory.healthHistory.noCondition==true) {
-        //     setHealthAndFamilyHistory({
-        //         ...healthAndFamilyHistory,
-        //         healthHistory: {
-        //             ...healthAndFamilyHistory.healthHistory,
-        //             highCholesterol: false,
-        //             heartAttack: false,
-        //             congenitalHeartDisease: false,
-                    
-        //         }
-        //     })
-        // }
-
-        // if(healthAndFamilyHistory.familyHistory.noCondition==true) {
-        //     setHealthAndFamilyHistory({
-        //         ...healthAndFamilyHistory,
-        //         familyHistory: {
-        //             highCholesterol: false,
-        //             heartAttack: false,
-        //             congenitalHeartDisease: false
-        //         }
-        //     })
-        // }
-        let tempSubName = '';
-
-        if (name.indexOf('.') !== -1) {
-            tempSubName = name.split('.')[1];
-            name = name.split('.')[0];
-        }
-
-        if (name.includes('personalInformation')) {
-
-            if (tempSubName != '') {
-                setPersonalInformation({
-                    ...personalInformation, 
-                    [tempSubName]: {
-                        ...personalInformation[tempSubName],
-                        [subName]: value,
-                    }}
-                );
-            }
-            else {
-                setPersonalInformation({
-                    ...personalInformation, 
-                    [name]: {
-                        ...personalInformation[name],
-                        [subName]: value,
-                    }}
-                );
-            }
-        }
-
-        if (name.includes('healthAndFamilyHistory')) {
-            if (tempSubName != ''){
-                if(subName=='noCondition' && value == true) {
-                    setHealthAndFamilyHistory({
-                        ...healthAndFamilyHistory,
-                        [tempSubName]: {
-                            congenitalHeartDisease: false,
-                            heartOperation: false,
-                            heartAttack: false,
-                            highCholesterol: false,
-                            [subName]: value
-                        }
-                    });
-                }
-                else {
-                    setHealthAndFamilyHistory({
-                        ...healthAndFamilyHistory,
-                        [tempSubName]: {
-                            ...healthAndFamilyHistory[tempSubName],
-                            [subName]: value
-                        }
-                    });
-                }
-                
-            }
-            else {
-                setHealthAndFamilyHistory({
-                    ...healthAndFamilyHistory,
-                    [name]: {
-                        ...healthAndFamilyHistory[name],
-                        [subName]: value
-                    }
-                });
-            }
-            
-        }
-
-        if (name.includes('dietaryIntake')) {
-
-            if(tempSubName != '') {
-                setDietaryIntake({
-                    ...dietaryIntake,
-                    [tempSubName]: {
-                        ...dietaryIntake[tempSubName],
-                        [subName]: value
-                    }
-                });
-            }
-            else {
-                setDietaryIntake({
-                    ...dietaryIntake,
-                    [name]: {
-                        ...dietaryIntake[name],
-                        [subName]: value
-                    }
-                });
-            }
-            
-        }
-
-        if (name.includes('lifestyleInformation')) {
-
-            if(tempSubName != '') {
-                setLifestyleInformation({
-                    ...lifestyleInformation,
-                    [tempSubName]: {
-                        ...lifestyleInformation[tempSubName],
-                        [subName]: value
-                    }
-                });
-            }
-            else {
-                setLifestyleInformation({
-                    ...lifestyleInformation,
-                    [name]: {
-                        ...lifestyleInformation[name],
-                        [subName]: value
-                    }
-                });
-            }
-            
-        }
-
     }
 
     const handleSelectChange = (name: string, value: any) => {
@@ -988,36 +599,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
             return;
         }
-        // setPersonalInformation({...personalInformation, [name]: value})
-    }
-
-    const handleAddressChange = (name: string, value: any) => {
-        let tempError = error;
-        if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
-
-        setError(tempError);
-        setPersonalInformation({...personalInformation, address: {
-                ...personalInformation.address,
-                [name]: value
-            }
-        });
     }
 
     const handleImageChange = (action: string = 'add', name: string, blob: any) => {
-        // const response: any = upload(blob);
-        // console.log('blob', blob);
-        // console.log('name', name);
-        // console.log('blob', blob);
         if(name.toLowerCase().includes('comment')){
             let subName = name.split('.')[1];
             if(modalComment[subName].length > 0 && action=='add') {
                 setModalComment({...modalComment, [subName]: [blob]});
-                // if (blob instanceof Blob) {
-                //     setModalComment({...modalComment, [subName]: [...modalComment[subName], blob]});
-                // }
-                // else {
-                //     setModalComment({...modalComment, [subName]: [...modalComment[subName], ...blob]});
-                // }
                
 
             }
@@ -1025,45 +613,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 if (blob instanceof Blob) {
                     setModalComment({...modalComment, [subName]: [blob]});
                 }
-                // else {
-                //     setModalComment({...modalComment, [subName]: [...blob]});
-                // }
             }
-           
-            // let subName = name.split('.')[1];
-         
-            // let index = parseInt((name.split('[')[1]).split(']')[0]);
-       
-            // name = name.split('[')[0];
-            // var tempArray:any = [...clinicComments];
-            // if(clinicComments[index][subName].length > 0 && action == 'add') {
-            //     // console.log('1');
-            //     let item: any = {...tempArray[index]};
-            //     let subItem = item[subName];
-            //     // item[subName] = blob;
-            //     subItem = subItem.concat([...blob]);
-            //     // console.log('subItem', subItem);
-            //     item[subName] = subItem;
-            //     tempArray[index] = item;
-            // }
-            // else {
-            //     // console.log('1');
-            //     if(blob instanceof Blob) {
-            //         let item = {...tempArray[index]};
-            //         item[subName] = [blob];
-            //         // tempArray[index][subName].push(blob);
-            //         tempArray[index] = item;
-            //     }
-            //     else {
-            //         let item = {...tempArray[index]};
-            //         item[subName] = [...blob];
-            //         tempArray[index] = item;  
-            //     }
-
-                
-            // }
-       
-            // setClinicComments(tempArray);
         }
         else {
             if(name.indexOf('.')!==-1) {
@@ -1076,26 +626,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
     }
 
-    const newComment = () => {
-        const newcomment: any = {
-            id: -1,
-            diagnosis: 'Bone pain.',
-            comment: 'Bone pain in pelvic area. Will refer to bone specialist.',
-            user: {},
-            image: []
-        }
-
-        setClinicComments([
-        ...clinicComments, newcomment
-        ]);
-        
-        
-    }
-
     const createEditComment = (e: any) => {
         e.preventDefault();
         const index = modalComment.arrayIndex;
-        // console.log('clinicComment', clinicComments[index])
      
         var user:any = localStorage.getItem('username')|| '';
         if(user!='') {
@@ -1109,22 +642,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 username: 'admin2'
             }
         }
-        // let tempComment = omitBy({
-        //     patientID: personalInformation.patientID,
-        //     id: clinicComments[index].id || undefined,
-        //     diagnosis: clinicComments[index].diagnosis,
-        //     comment: clinicComments[index].comment,
-        //     user: user,
-        //     image: clinicComments[index].image || undefined
-        // }, isUndefined);
-        // let tempImg = modalComment?.image.filter((img:any, index: any)=> {
-        //     return !isUndefined(img) && img != null
-        // });
-
-        // console.log('tempImg', tempImg);
         var image:any = [];
         if(_.isEqual(clinicComments[index]?.image, modalComment?.image)) {
-            // tempComment = _.omit(tempComment, ['image']);
             image = undefined;
         }
         else {
@@ -1156,13 +675,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             });
             
             let action = tempComment?.id > -1? 'edit comment': 'create comment';
-            // console.log('value', value);
             onSubmit(tempComment, action);
         }
         catch(err: any) {
-            // console.log('err', err);
             if(err.inner) {
-                // console.log('err.inner', err.inner);
                 var errorArray = err.inner.map((error: any) => {
                     let { path, value}: any = errorHandler.validation(error);
      
@@ -1175,7 +691,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                      errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
                      return errorObj;
                  })
-                //  console.log('errorArray', errorArray);
                  setError(errorArray);
             }
         }
@@ -1185,35 +700,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const editComment = (e: any) => {
       
         const index = parseInt(e.target.id);
-
-        // console.log('clinicComment', clinicComments[index])
-        // console.log('index', e.target.id);
-        // console.log('localStorage', localStorage);
-        // var user:any = localStorage.getItem('user')|| '';
-        // console.log('user', user);
-        // if(user!='') {
-        //     user = localStorage.getItem('user');
-        //     user = {
-        //         username: user
-        //     }
-        // }
-        // else {
-        //     user= {
-        //         username: 'admin1'
-        //     }
-        // }
-        // let tempComment = omitBy({
-        //     patientID: personalInformation.patientID,
-        //     id: clinicComments[index].id || undefined,
-        //     diagnosis: clinicComments[index].diagnosis,
-        //     comment: clinicComments[index].comment,
-        //     image: clinicComments[index].image || undefined,
-        //     user: user,
-        // }, isUndefined);
-       
-        // onSubmit(tempComment, 'edit comment');
-    
-        // ...clinicComments[index]
         let tempComment:any = {
             id: clinicComments[index].id,
             diagnosis: clinicComments[index].diagnosis,
@@ -1228,15 +714,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         toggleCommentModalVisibility(true, index);
     }
 
-    const removeComment = (e: any) => {
-        let index = parseInt(e.target.id);
-        let tempComments = [...clinicComments];
-        tempComments.splice(index, 1);
-        setClinicComments([
-            ...tempComments
-        ])   
-    }
-
     const toggleCommentModalVisibility = (visible: boolean, index:number=-1) => {
         if(index == -1) {
             setModalComment({
@@ -1246,15 +723,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 image: []
             })
         }
-        // else {
-        //     setModalComment({...clinicComments[index]});
-        // }
 
         setCommentModal(visible);
     }
 
     return (
-        <>
+        <div data-testid={"patient-information"}>
             <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                 <Row>
                 
@@ -1291,38 +765,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 { personalInformation.patientID !==-1 && 
                     <div className="back"><button className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.reportID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
                 }
-            {/* {
-                personalInformation.patientID !== -1 &&
-        
-                <ProgressBar  
-                currentPage={pageVisibility}
-                maxSize = {maxSize}
-                onClick={setPageVisibility}
-                pages={[
-                    {
-                        name: 'new-patient',
-                        index: 0
-                    },
-                    {
-                        name: 'health-history',
-                        index: 1
-                    },
-                    {
-                        name: 'dietary-intake',
-                        index: 2
-                    },
-                    {
-                        name: 'lifestyle-information',
-                        index: 3
-                    },
-                    {
-                        name: 'diagnosis-comments',
-                        index: 4
-                    }
-                ]}
-                />
-            } */}
-         
+           
             <Page visibility= {pageVisibility} numOfChildren={setMaxSize}>
                 <PagePane index={0}>
                     <div className="division">
@@ -1420,13 +863,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <AlertBox error={error?.gender} name={t('label.gender')} />
                                     </Col>
                                 </Row>
-                                
-                                {/* <Row>
-                                    <div style={{width: 'inherit'}}>
-                                        <TextArea value={personalInformation.reasonForConsultation} required error={error?.reasonForConsultation} name='personalInformation.reasonForConsultation' label={t('label.reasonForConsultation')} onChange={handleTextChange} />
-                                        <AlertBox error={error?.reasonForConsultation} name={t('label.reasonForConsultation')} />
-                                    </div>
-                                </Row> */}
+                              
                             </div>
                             <div className="divider--fifty">
                                 <Row>
@@ -1440,14 +877,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                         </div>
                         <div style={{width: '80%', display: 'flex'}}> 
                             <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
-                                {/* {
-                                    pageVisibility > 0 && personalInformation.patientID!== -1 && <button className="standard" onClick={prevPage}>Prev</button>
-                                }   */}
+                                
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
-                                {/* {
-                                    pageVisibility < (maxSize - 1 ) && personalInformation.patientID!== -1 && <button className="standard" onClick={nextPage}>Next</button>
-                                } */}
+                               
                                 {
                                     personalInformation.patientID!== -1 ?
                                     <button className="save" onClick={save}>{'Save'}</button>
@@ -1525,15 +958,12 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                         </div>
                         <div style={{width: '100%', display: 'flex'}}> 
                             <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
-                                {/* {
-                                    pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
-                                }   */}
+                               
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                                 {
                                     pageVisibility < (maxSize - 1 ) &&  <button className="standard" onClick={nextPage}>Next</button>
                                 }
-                                    {/* <button className="save" onClick={saveAndContinue}>Save and Continue</button> */}
                             </div>
                         </div>
                     </div>
@@ -1562,7 +992,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                         <AlertBox error={error?.alcoholFrequency} name={t('label.avgAlcoholConsumption')} />
                                     </div>
                                 </Row>
-                                {/* } */}
                                 <Row>
                                     <div style={{width: 'inherit'}}>
                                         <SelectInput 
@@ -2072,7 +1501,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             {
                                 pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
                             }
-                            {/* <button className="save" onClick={saveAndContinue}>Save and Continue</button> */}
+                          
                         </div>
                     </div>
                 </PagePane> }
@@ -2300,7 +1729,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                             <AlertBox error={error?.dietaryPlan} name={t('label.dietaryPlan')} />
                                         </div>
                                     </Row>
-                                    {/* } */}
                                 </div>
                             </div>
                         </div>
@@ -2312,9 +1740,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
-                            {/* {
-                                pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
-                            } */}
+                           
                             <button className="save" onClick={(e) => submitObesityPredictionData(e)}>Generate Prediction Report</button>
                         </div>
                     </div>
@@ -2342,8 +1768,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                         <TextInput subtitle={comment?.updated != ''? `Last updated: ${new Date(comment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: ''} disabled key={comment?.id} value={comment?.diagnosis} required error={!!error[`comment[${index}]`]?.diagnosis} name={`comment[${index}].diagnosis`} label={`${t('label.diagnosis')}` + (comment?.created!=undefined? `  Date: ${new Date(comment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
                                                         <AlertBox error={error[`comment[${index}]`]?.diagnosis} name={t('label.diagnosis')} />
                                                     </div>
-                                                
-                                                
                                                 
                                                 </Row>
 
@@ -2375,16 +1799,9 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     <Row>
                         <div style={{width: '100%', display: 'flex'}}> 
                             <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
-                                {/* {
-                                    pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
-                                } */}
-                                
+                             
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
-                                {/* {
-                                    pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
-                                } */}
-                                {/* <button className="save" onClick={save}>Save and Continue</button> */}
                             </div>
                         </div>
                     </Row>
@@ -2394,7 +1811,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             </Page>
             </div>
         </div>
-        </>
+        </div>
     )
 }
 

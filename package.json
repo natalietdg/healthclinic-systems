@@ -13,18 +13,21 @@
     "@testing-library/user-event": "^12.1.10",
     "@types/crypto-js": "^4.0.2",
     "@types/radium": "^0.24.4",
-    "@types/react": "^17.0.19",
+    "@types/react": "^17.0.35",
     "@types/react-animations": "^1.0.0",
     "@types/react-dom": "^17.0.10",
     "@types/react-helmet": "^6.1.2",
     "@types/react-router-dom": "^5.1.8",
+    "@types/testing-library__react": "^10.2.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.5",
     "axios": "^0.21.1",
-    "babel-loader": "^8.2.2",
+    "babel-loader": "^8.2.3",
     "babel-plugin-transform-runtime": "^6.23.0",
     "classnames": "^2.3.1",
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "i18next": "^20.6.0",
+    "jest": "^27.3.1",
     "module-alias": "^2.2.2",
     "radium": "^0.26.1",
     "react": "^17.0.2",
@@ -50,7 +53,7 @@
     "build:prod": "cross-env NODE_ENV=production webpack --config webpack.config.js",
     "watch": "./node_modules/.bin/webpack --watch --config webpack.config.js",
     "serve": "",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -72,6 +75,7 @@
     ]
   },
   "devDependencies": {
+    "@types/enzyme": "^3.10.10",
     "@types/react-router": "^5.1.16",
     "chai-enzyme": "^1.0.0-beta.1",
     "clean-webpack-plugin": "^4.0.0",
@@ -84,8 +88,16 @@
     "enzyme-to-json": "^3.6.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "file-loader": "^6.2.0",
+    "html-minimizer-webpack-plugin": "^3.3.2",
     "html-webpack-plugin": "^5.5.0",
-    "jest": "^27.3.1",
+    "identity-obj-proxy": "^3.0.0",
+    "image-minimizer-webpack-plugin": "^2.2.0",
+    "imagemin-gifsicle": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-optipng": "^8.0.0",
+    "imagemin-svgo": "^10.0.0",
+    "json-minimizer-webpack-plugin": "^3.1.1",
+    "mini-css-extract-plugin": "^2.4.5",
     "react-test-renderer": "^17.0.2",
     "sass-loader": "^12.3.0",
     "style-dictionary": "^3.0.2",
@@ -96,9 +108,36 @@
     "webpack-dev-server": "^4.5.0"
   },
   "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/setupTest.js"
+    ],
+    "verbose": true,
+    "testEnvironment": "jsdom",
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "ts",
+      "tsx",
+      "scss"
+    ],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
+      "\\.(scss|less|css)$": "identity-obj-proxy",
+      "^@root(.*)$": "<rootDir>/src$1",
+      "^Components(.*)$": "<rootDir>/src/components$1",
+      "^Pages(.*)$": "<rootDir>/src/pages$1",
+      "^Recoil(.*)$": "<rootDir>/src/recoil$1",
+      "^Utils(.*)$": "<rootDir>/src/utils$1",
+      "^Services(.*)$": "<rootDir>/src/services$1",
+      "^Public(.*)$": "<rootDir>/public$1",
+      "^Shared(.*)$": "<rootDir>/src/components/shared$1",
+      "^Helpers(.*)$": "<rootDir>/src/helpers$1",
+      "^src(.*)$": "<rootDir>/src$1",
+      "^Data(.*)$": "<rootDir>/src/data$1"
     },
     "snapshotSerializers": [
       "enzyme-to-json/serializer"

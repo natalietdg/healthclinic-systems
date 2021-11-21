@@ -29,54 +29,7 @@ export const healthHistoryValuesFunction = () => {
             value: 'NO CONDITIONS',
             label: "No Conditions"
         },
-        // {
-        //     name:'heartDisease',
-        //     value: 'heartDisease',
-        //     label: t('label.heartDisease')
-        // },
-        // {
-        //     name:'stroke',
-        //     value: 'stroke',
-        //     label: t('label.stroke')
-        // },
-        
-        // {
-        //     name:'elevatedTriglycerides',
-        //     value: 'elevatedTriglycerides',
-        //     label: t('label.elevatedTriglycerides')
-        // },
-        // {
-        //     name:'diabetes',
-        //     value: 'diabetes',
-        //     label: t('label.diabetes')
-        // },
-        // {
-        //     name:'hypertension',
-        //     value: 'hypertension',
-        //     label: t('label.hypertension')
-        // },
-        
-        // {
-        //     name:'sleepingDisorder',
-        //     value: 'sleepingDisorder',
-        //     label: t('label.sleepingDisorder')
-        // },
-        // {
-        //     name:'otherVascularCondition',
-        //     value: 'otherVascularCondition',
-        //     label: t('label.otherVascularCondition')
-        // },
     ])
-}
-
-export const lastHundredYearsFunction = () => {
-    var lastHundredYears = [];
-
-    for(let x = 0; x<= 100; x++) {
-        var date = new Date();
-        lastHundredYears.push((date.getFullYear()-x).toString());
-    }
-    return lastHundredYears;
 }
 
 export const weightFunction = () => {
@@ -102,15 +55,6 @@ export const heightFunction = () => {
     return height;
 }
 
-export const yearFunction = () => {
-    var yearsOption = [];
-    for(let x = 1; x<=100; x++) {
-        yearsOption.push(x.toString());   
-    }
-
-    return yearsOption;
-}
-
 export const cigarettesPerDayValuesFunction = () => { 
     const { t } = useTranslation();
     return ([
@@ -134,79 +78,9 @@ export const cigarettesPerDayValuesFunction = () => {
             "name": "cigarettesPerDay",
             "value": '20-29 cigarette sticks per day' //has this label
         },
-        // {
-        //     "label": t('label.numberOfCigarettesPerDay', {'min': 30, 'max': 39}),
-        //     "name": "cigarettesPerDay",
-        //     "value": ["30", "39"]
-        // },
-        // {
-        //     "label": t('label.moreThanNumberOfCigarettes', {'min': 40, 'max': 40}),
-        //     "name": "cigarettesPerDay",
-        //     "value": ["40", "40"]
-        // }
      ])
 }
 
-export const  nicotineAmtValuesFunction = () => {
-    const { t } = useTranslation();
-    return ([
-        {
-            label: t("label.nicotineAmt", {percentage: 0, amt: 0}),
-            name: "nicotineAmt",
-            value: ["0"],
-        },
-        {
-            label: t("label.nicotineAmt", {percentage: 3, amt: 0.3}),
-            name: "nicotineAmt",
-            value: [3]
-        },
-        {
-            label: t("label.nicotineAmt", {percentage: 6, amt: 0.6}),
-            name: "nicotineAmt",
-            value: [6]
-        },
-        {
-            label: t("label.nicotineAmt", {percentage: 12, amt: 1.2}),
-            name: "nicotineAmt",
-            value: ["12"]
-        },
-        {
-            label: t("label.nicotineAmt", {percentage: 24, amt: 2.4}),
-            name: "nicotineAmt",
-            value: ["24"]
-        },
-        {
-            label: t("label.nicotineAmt", {percentage: 36, amt: 3.6}),
-            name: "nicotineAmt",
-            value: ["36"]
-        }
-    ])
-}
-
-// export const alcoholTypesValuesFunction = () => {
-//     return [
-//         {
-//             label: "Beer (Ales, Wheat beer, Fruit beer - 2% to 12% ABV)",
-//             name: "beer",
-//             value: "Beer (Ales, Wheat beer, Fruit beer - 2% to 12% ABV)"
-//         },
-//         {
-//             label: "Cider (Apple wine - 2% to 8.5% ABV)",
-//             name: "cider",
-//             value: "Cider (Apple wine - 2% to 8.5% ABV)",
-//         },
-//         {
-//             label: "Wine (Red, Rose, White, Champagne, Fortified wine - 9% to 16% ABV)",
-//             name: "wine",
-//             value: "Wine (Red, Rose, White, Champagne, Fortified wine - 9% to 16% ABV)",
-//         },
-//         {
-//             label: "Spirits (Vodka, Whisky, Rum, Tequila, Gin - 20% to 80% ABV)",
-//             name: "spirits",
-//             value: "Spirits (Vodka, Whisky, Rum, Tequila, Gin - 20% to 80% ABV)",
-//         },
-//     ]
-// }
 
 export const averageAlcoholConsumptionValuesFunction = () => {
     const { t } = useTranslation();
@@ -216,11 +90,6 @@ export const averageAlcoholConsumptionValuesFunction = () => {
             "name": "avgAlcoholConsumption",
             "value": '2-3 drinks per month'// "DO NOT CONSUME ALCOHOL" do not have this label
         },
-        // {
-        //     "label": t('label.noAlcoholConsumption', {'min': 0, 'max': 0}),
-        //     "name": "avgAlcoholConsumption",
-        //     "value": ["0", "0", "none"]
-        // },
         {
             "label": t('label.avgAlcoholConsumptionRange', {'min': 2, 'max': 3, 'period': 'month'}),
             "name": "avgAlcoholConsumption",
@@ -292,7 +161,6 @@ export const BMIStatus = (BMIWeight: any) => {
 }
 
 export const meatFrequencyValuesFunction = () => {
-    const { t } = useTranslation();
     return [
         {
             "label": "Once per week",
@@ -323,7 +191,6 @@ export const meatFrequencyValuesFunction = () => {
 }
 
 export const dairyFrequencyValuesFunction = () => {
-    const { t } = useTranslation();
     return [
         {
             "label": "Once per week",
@@ -376,11 +243,6 @@ export const friedFoodFrequencyValuesFunction = () => {
             "name": "friedFoodFrequency",
             "value": "5-6 times per week", //has this label
         },
-        // {
-        //     "label": "7 or more times per week",
-        //     "name": "friedFoodFrequency",
-        //     "value": "5-6 times per week",// tested, dont have. "7 or more times per week" omitted because training data doesnt have this label
-        // },
     ]
 }
 
@@ -397,11 +259,6 @@ export const eggFrequencyValuesFunction = () => {
             "name": "eggFrequency",
             "value": "5-7 eggs per week" //has this label
         },
-        // {
-        //     "label": "12 or more eggs per week",
-        //     "name": "eggFrequency",
-        //     "value": "12 or more eggs per week"
-        // },
         {
             "label": "8-11 eggs per week",
             "name": "eggFrequency",
@@ -445,13 +302,7 @@ export const milkTeaCoffeeLowfatValuesFunction = () => {
 }
 
 export const dessertFrequencyValuesFunction = () => {
-    const { t } = useTranslation();
     return [
-        // {
-        //     "label": "7 or more times per week",
-        //     "name": "dessertFrequency",
-        //     "value": "7 or more times per week"
-        // },
         {
             "label": "4-6 times per week",
             "name": "dessertFrequency",
@@ -471,13 +322,7 @@ export const dessertFrequencyValuesFunction = () => {
 }
 
 export const snacksFrequencyValuesFunction = () => {
-    const { t } = useTranslation();
     return [
-        // {
-        //     "label": "7 or more times per week",
-        //     "name": "snacksFrequency",
-        //     "value": "7 or more times per week"
-        // },
         {
             "label": "2-3 times per week",
             "name": "snacksFrequency",
@@ -497,7 +342,6 @@ export const snacksFrequencyValuesFunction = () => {
 }
 
 export const sodaCandyFrequencyValuesFunction = () => {
-    const { t } = useTranslation();
     return [
         {
             "label": "2-3 times per week",
@@ -519,7 +363,6 @@ export const sodaCandyFrequencyValuesFunction = () => {
 }
 
 export const vegetableIntakeValuesFunction = () => {
-    const { t } = useTranslation();
     return [
         {
             "label": "0 servings per day",
@@ -562,23 +405,11 @@ export const grainBeansIntakeValuesFunction = () => {
             "name": "grainBeansIntake",
             "value": "3-4 servings per day", //has this label
         },
-        // {
-        //     "label": "5 or more servings per day",
-        //     "name": "grainBeansIntake",
-        //     "value": "5 or more servings per day" //do not have this label
-        // }
-        //tried 5 servings per day
     ]
 }
 
 export const fruitsIntakeValuesFunction = () => {
-    const { t } = useTranslation();
     return [
-        // {
-        //     "label": "5 or more servings per day",
-        //     "name": "fruitsIntake",
-        //     "value": "5 or more servings per day" // do not have this label
-        // },
         {
             "label": "3-4 servings per day",
             "name": "fruitsIntake",
@@ -600,13 +431,7 @@ export const fruitsIntakeValuesFunction = () => {
 }
 
 export const processedFoodIntakeValuesFunction = () => {
-    const { t } = useTranslation();
     return [
-        // {
-        //     "label": "3 or more per day",
-        //     "name": "processedFoodIntake",
-        //     "value": "3 or more per day"
-        // },
         {
             "label": "1-2 per day",
             "name": "processedFoodIntake",
@@ -626,7 +451,6 @@ export const processedFoodIntakeValuesFunction = () => {
 }
 
 export const occupationValuesFunction = () => {
-    const { t } = useTranslation();
     return [
         {
             "label": "Housewife",
@@ -735,7 +559,6 @@ export const occupationValuesFunction = () => {
 }
 
 export const computerHoursValuesFunction = () => {
-    const { t } = useTranslation();
 
     return [
         {
@@ -764,7 +587,6 @@ export const computerHoursValuesFunction = () => {
 }
 
 export const seatedHoursValuesFunction = () => {
-    const { t } = useTranslation();
 
     return [
         {
@@ -792,7 +614,6 @@ export const seatedHoursValuesFunction = () => {
 }
 
 export const sleepHoursValuesFunction = () => {
-    const { t } = useTranslation();
 
     return [
         {
@@ -810,10 +631,5 @@ export const sleepHoursValuesFunction = () => {
             name: "computerHours",
             value: "Less than 6 hours", //has this label
         },
-        // {
-        //     label: "Less than an hour",
-        //     name: "computerHours",
-        //     value: "Less than 4 hours"
-        // }
     ]
 }
