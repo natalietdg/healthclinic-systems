@@ -11,11 +11,6 @@ export const login = async(data: any) => {
             url: `https://${url}/auth/login/`,
             responseType: 'json',
             data: data,
-            headers: {
-                'Access-Control-Allow-Origin': 'true',
-                'Access-Control-Allow-Headers': 'Origin, X-Requested-With',
-                "Content-Type": "application/x-www-form-urlencoded"
-            }
         });
 
         const refreshToken = response.data.refresh;
