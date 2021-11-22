@@ -3,9 +3,16 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
 
 module.exports = {
-    mode: 'development',
+    performance: {
+        hints: false
+    },
+    mode: 'production',
     entry: './src/index.js',
     output: {
         filename: '[name].bundle.js',
@@ -14,9 +21,11 @@ module.exports = {
         clean: true
     },
     plugins: [
+        new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: 'Output Management',
-          template: './src/index.html'
+          template: './src/index.html',
+          inject: true,
         }),
         new CopyWebPackPlugin({
             patterns: [
@@ -31,7 +40,17 @@ module.exports = {
             safe: true
         })
     ],
-    devtool: 'inline-source-map',
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new HtmlMinimizerWebpackPlugin(),
+            new TerserPlugin({
+                parallel: true
+            }),
+            new JsonMinimizerPlugin()
+        ]
+    },
+    devtool: 'source-map',
     devServer: {
         static: path.resolve(__dirname, 'public'),
         historyApiFallback: true,
