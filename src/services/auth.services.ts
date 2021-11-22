@@ -4,7 +4,7 @@ import { base64Url, decodeBase64Url, validateToken } from 'Helpers/';
 
 export const login = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-
+    console.log('process.env', process.env);
     try {
         const response = await axios({
             method: 'POST',
