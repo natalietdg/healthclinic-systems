@@ -3,7 +3,6 @@ import './App.css';
 import { RecoilRoot } from 'recoil';
 import React, { useEffect } from 'react';
 import { routes } from './routes';
-require('dotenv').config();
 import Shell from './shell';
 import './i18n';
 

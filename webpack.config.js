@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const dotenv = require('dotenv').config({path: path.resolve(__dirname, '/.env')});
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -23,6 +23,9 @@ module.exports = {
         clean: true
     },
     plugins: [
+        new webpack.DefinePlugin({
+            "process.env":dotenv.parsed
+        }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: 'Output Management',
@@ -37,10 +40,6 @@ module.exports = {
                 }
             ]
         }),
-        new Dotenv({
-            path: './.env',
-            safe: true
-        })
     ],
     optimization: {
         minimize: true,

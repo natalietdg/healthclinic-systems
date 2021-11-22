@@ -10,8 +10,7 @@ app.get('*', (req, res) => {
 });
 
 const PORT = process.env.PORT || 8080;
-console.log('process.env', process.env);
-console.log('process.env.PUBLIC_PATH', process.env.PUBLIC_PATH);
+
 app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`);
 });
