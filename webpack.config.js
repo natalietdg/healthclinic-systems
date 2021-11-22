@@ -7,9 +7,22 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
+const dotEnv = new webpack.DefinePlugin({
+    "process.env": {
+        'NODE_PATH': JSON.stringify(process.env.NODE_PATH),
+        'PUBLIC_PATH': JSON.stringify(process.env.PUBLIC_PATH),
+        'SECRET_KEY': JSON.stringify(process.env.SECRET_KEY),
+        'JWT_ALG': JSON.stringify(process.env.JWT_ALG),
+        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+        'JWT_TYPE':JSON.stringify(process.env.JWT_TYPE),
+        'WEBSITE':JSON.stringify(process.env.WEBSITE),
+        'BUSINESS': JSON.stringify(process.env.BUSINESS),
+        'EMAIL':JSON.stringify(process.env.EMAIL)
+    }
+});
 
 console.log('dirname', __dirname);
-
+console.log('process.env', process.env);
 module.exports = {
     performance: {
         hints: false
@@ -23,9 +36,6 @@ module.exports = {
         clean: true
     },
     plugins: [
-        new webpack.DefinePlugin({
-            "process.env":dotenv.parsed
-        }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: 'Output Management',
@@ -99,5 +109,8 @@ module.exports = {
                 }]
             },
         ]
-    }
+    },
+    plugins: [
+        dotEnv
+    ]
 }
