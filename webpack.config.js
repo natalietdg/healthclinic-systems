@@ -34,10 +34,6 @@ module.exports = {
         clean: true
     },
     plugins: [
-        new Dotenv({
-            path: './.env',
-            safe: true
-        }),
         new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
           title: 'Output Management',
