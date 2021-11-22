@@ -2,18 +2,19 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 const dotenv = require('dotenv').config({path: path.resolve(__dirname, '/.env')});
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
+
 const dotEnv = new webpack.DefinePlugin({
     "process.env": {
         'NODE_PATH': JSON.stringify(process.env.NODE_PATH),
         'PUBLIC_PATH': JSON.stringify(process.env.PUBLIC_PATH),
         'SECRET_KEY': JSON.stringify(process.env.SECRET_KEY),
         'JWT_ALG': JSON.stringify(process.env.JWT_ALG),
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'JWT_TYPE':JSON.stringify(process.env.JWT_TYPE),
         'WEBSITE':JSON.stringify(process.env.WEBSITE),
         'BUSINESS': JSON.stringify(process.env.BUSINESS),
@@ -21,8 +22,6 @@ const dotEnv = new webpack.DefinePlugin({
     }
 });
 
-console.log('dirname', __dirname);
-console.log('process.env', process.env);
 module.exports = {
     performance: {
         hints: false
@@ -32,11 +31,14 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        publicPath: "/",
         clean: true
     },
     plugins: [
-        new CleanWebpackPlugin(),
+        new Dotenv({
+            path: './.env',
+            safe: true
+        }),
+        new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
         new HtmlWebpackPlugin({
           title: 'Output Management',
           template: './src/index.html',
@@ -47,9 +49,14 @@ module.exports = {
                 {
                     context: 'public/',
                     from: 'assets/**/*',
+                },
+                {
+                    from: 'src/*.html',
+                    to: 'dist/'
                 }
             ]
         }),
+        dotEnv
     ],
     optimization: {
         minimize: true,
@@ -110,7 +117,4 @@ module.exports = {
             },
         ]
     },
-    plugins: [
-        dotEnv
-    ]
 }
