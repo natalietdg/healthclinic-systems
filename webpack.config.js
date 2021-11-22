@@ -21,6 +21,17 @@ module.exports = {
         clean: true
     },
     plugins: [
+        new webpack.DefinePlugin({
+            NODE_PATH=JSON.stringify(process.env.NODE_PATH),
+            PUBLIC_PATH=JSON.stringify(process.env.PUBLIC_PATH),
+            SECRET_KEY=JSON.stringify(process.env.SECRET_KEY),
+            JWT_ALG=JSON.stringify(process.env.JWT_ALG),
+            NODE_ENV=JSON.stringify(process.env.NODE_ENV),
+            JWT_TYPE=JSON.stringify(process.env.JWT_TYPE),
+            WEBSITE=JSON.stringify(process.env.WEBSITE),
+            BUSINESS=JSON.stringify(process.env.BUSINESS),
+            EMAIL=JSON.stringify(process.env.EMAIL)
+        }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
           title: 'Output Management',
