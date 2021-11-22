@@ -8,6 +8,8 @@ const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");
 
+console.log('dirname', __dirname);
+
 module.exports = {
     performance: {
         hints: false
@@ -47,7 +49,7 @@ module.exports = {
             ]
         }),
         new Dotenv({
-            path: './.env',
+            path: path.resolve(__dirname,'.env'),
             safe: true
         })
     ],
