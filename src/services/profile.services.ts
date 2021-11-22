@@ -10,7 +10,7 @@ export const fetchProfile = async(userID: number) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/users/${userID}`,
+            url: `${url}/users/${userID}`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -44,7 +44,7 @@ export const updateProfile = async(data: any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `https://${url}/users/${data.userID}/`,
+            url: `${url}/users/${data.userID}/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -54,7 +54,7 @@ export const updateProfile = async(data: any) => {
         if(dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `https://${url}/users/${data.userID}/`,
+                url: `${url}/users/${data.userID}/`,
                 headers: {
                     'Authorization': `Bearer ${accessToken}`        
                 },

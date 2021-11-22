@@ -13,7 +13,7 @@ export const uploadImage = async(data: any)=> {
     try {
         const response = await axios({
             method:'POST',
-            url: `https://${url}/images/`,
+            url: `${url}/images/`,
             data: formData,
             headers: {
                 "Content-Type": "multipart/form-data; boundary=--------------------------907931495521859766893792"
@@ -50,7 +50,7 @@ export const savePatientInformation = async(data:any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `https://${url}/patients/${data.patientID}/`,
+            url: `${url}/patients/${data.patientID}/`,
             responseType: 'json',
             data: normalizedData,
             headers: {
@@ -61,7 +61,7 @@ export const savePatientInformation = async(data:any) => {
         if (dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `https://${url}/patients/${data.patientID}/`,
+                url: `${url}/patients/${data.patientID}/`,
                 data: dataWithoutProfilePic,
                 headers: {
                     'Authorization': `Bearer ${accessToken}`        
@@ -98,7 +98,7 @@ export const createPatient = async(data:any) => {
     try {
         var response = await axios({
             method: 'POST',
-            url: `https://${url}/patients/`,
+            url: `${url}/patients/`,
             responseType: 'json',
             data: normalizedData,
             headers: {
@@ -110,7 +110,7 @@ export const createPatient = async(data:any) => {
         if (dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `https://${url}/patients/${responseData.patientID}/`,
+                url: `${url}/patients/${responseData.patientID}/`,
                 data: dataWithoutProfilePic,
                 headers: {
                     'Authorization': `Bearer ${accessToken}`        
@@ -132,7 +132,7 @@ export const updatePatientInformation = async(data: any) => {
     try {
         const response = await axios({
             method: 'PUT',
-            url: `https://${url}/patients/${data}`
+            url: `${url}/patients/${data}`
 
         });
 
@@ -169,7 +169,7 @@ export const fetchComments = async(patientID: any) => {
     try {
         const response = await axios({
             method:'GET',
-            url: `https://${url}/patients/${parseInt(patientID)}/comments/`,
+            url: `${url}/patients/${parseInt(patientID)}/comments/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
@@ -209,7 +209,7 @@ export const createComments = async(data: any) => {
     try {
         const response = await axios({
             method:'POST',
-            url: `https://${url}/patients/${patientID}/comments/`,
+            url: `${url}/patients/${patientID}/comments/`,
             headers: {
                 "Content-Type": "multipart/form-data; boundary=--------------------------907931495521859766893792",
                 'Authorization': `Bearer ${accessToken}`        
@@ -247,7 +247,7 @@ export const editComments = async(data: any) => {
     try {
         const response = await axios({
             method:'PUT',
-            url: `https://${url}/comments/${commentID}/`,
+            url: `${url}/comments/${commentID}/`,
             responseType: 'json',
             data: formData,
             headers: {
@@ -269,7 +269,7 @@ export const fetchPatientInformation = async(patientID: any) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/patients/${parseInt(patientID)}/`,
+            url: `${url}/patients/${parseInt(patientID)}/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
@@ -313,7 +313,7 @@ export const fetchPatientList = async() => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/patients/`,
+            url: `${url}/patients/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
@@ -344,7 +344,7 @@ export const fetchReport = async(reportID: string) => {
     try{
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/patienthealthrecords/?search=${reportID}`,
+            url: `${url}/patienthealthrecords/?search=${reportID}`,
             responseType: 'json',
         });
 
@@ -399,7 +399,7 @@ export const generateObesityPrediction = async(data: any) => {
         const response:any = await axios({
             method: 'POST',
             responseType: 'json',
-            url: `https://${url}/obesity/v1/comorbidities_classifier/predict`,
+            url: `${url}/obesity/v1/comorbidities_classifier/predict`,
             data: normalizedData,
            
             headers: {
@@ -426,7 +426,7 @@ export const setPatientandFeedbackMLRequest = async(data: any) => {
     try {
         const response = await axios({
             method: 'PUT',
-            url: `https://${url}/obesity/v1/mlrequests/${data.reportID}`,
+            url: `${url}/obesity/v1/mlrequests/${data.reportID}`,
             data: tempData,
             responseType: 'json',
             headers: {
@@ -449,7 +449,7 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/obesity/v1/mlrequests`,
+            url: `${url}/obesity/v1/mlrequests`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`
@@ -495,7 +495,7 @@ export const fetchObesityPredictionReport = async(reportID: any) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `https://${url}/obesity/v1/mlrequests/${reportID}`,
+            url: `${url}/obesity/v1/mlrequests/${reportID}`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`

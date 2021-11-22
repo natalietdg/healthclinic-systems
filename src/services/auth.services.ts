@@ -8,7 +8,7 @@ export const login = async(data: any) => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://${url}/auth/login/`,
+            url: `${url}/auth/login/`,
             responseType: 'json',
             data: data,
         });
@@ -51,7 +51,7 @@ export const refreshAccessToken = async() => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://${url}/auth/login/refresh/`,
+            url: `${url}/auth/login/refresh/`,
             data: {
                 refresh: refreshToken
             },
@@ -86,7 +86,7 @@ export const logout = async() => {
     try {
         const response = await axios({
             method: 'POST',
-            url: `https://${url}/auth/logout/`,
+            url: `${url}/auth/logout/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
