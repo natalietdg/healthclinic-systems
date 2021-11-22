@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebPackPlugin = require('copy-webpack-plugin');
-const Dotenv = require('dotenv-webpack');
+const Dotenv = require('dotenv').config({path: __dirname + './.env'});
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
@@ -22,15 +22,7 @@ module.exports = {
     },
     plugins: [
         new webpack.DefinePlugin({
-            NODE_PATH: JSON.stringify(process.env.NODE_PATH),
-            PUBLIC_PATH:JSON.stringify(process.env.PUBLIC_PATH),
-            SECRET_KEY:JSON.stringify(process.env.SECRET_KEY),
-            JWT_ALG:JSON.stringify(process.env.JWT_ALG),
-            NODE_ENV:JSON.stringify(process.env.NODE_ENV),
-            JWT_TYPE:JSON.stringify(process.env.JWT_TYPE),
-            WEBSITE:JSON.stringify(process.env.WEBSITE),
-            BUSINESS:JSON.stringify(process.env.BUSINESS),
-            EMAIL:JSON.stringify(process.env.EMAIL)
+            "process.env": JSON.stringify(Dotenv.parsed)
         }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({

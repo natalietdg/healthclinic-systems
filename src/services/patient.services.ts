@@ -5,7 +5,6 @@ import { isEmptyBindingElement } from 'typescript';
 
 export const uploadImage = async(data: any)=> {
     const url = process.env.PUBLIC_PATH;
-    
 
     const formData = new FormData();
     formData.append('image', data);
