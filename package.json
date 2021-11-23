@@ -1,7 +1,6 @@
 {
   "name": "capstone-frontend",
   "version": "0.1.0",
-  "proxy": "https://wing-me-zebra-9a6ba4d293fd3a5b.onporter.run",
   "private": true,
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.15.0",
@@ -62,6 +61,7 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
+  "proxy": "https://wing-me-zebra-9a6ba4d293fd3a5b.onporter.run",
   "eslintConfig": {
     "extends": [
       "react-app",
