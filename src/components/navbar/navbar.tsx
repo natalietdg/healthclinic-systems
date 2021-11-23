@@ -110,17 +110,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             }
         }
     },[])
-
-    useEffect(()=> {
-        if (dates.todaysDate =='') {
-            let tempDates = generateTodaysDate();
-
-            setDates({
-                todaysDate: tempDates.todayDate,
-                expiryDate: tempDates.todayDate
-            });
-        }
-    },[])
+    
     var path = location.pathname.split('/')[1];
 
     if(typeof(localStorage) !== 'undefined' && (path == 'patient')) {

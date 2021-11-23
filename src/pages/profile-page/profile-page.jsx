@@ -48,7 +48,6 @@ const ProfilePage = ({}) => {
     }
 
     const submit = async(profileInfo) => {
-        console.log('profileInfo', profileInfo);
 
         let tempData = {
             ...profileInfo,

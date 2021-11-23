@@ -303,8 +303,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                                 month: 'long',
                                 day: 'numeric'
                             });
-                         
-                            if(_.isEqual(tempDate, todaysDate)) console.log('haha true');
+                        
                             if (_.isEqual(tempDate, todaysDate))  return true;
                         })
                     }

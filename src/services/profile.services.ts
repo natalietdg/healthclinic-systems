@@ -15,7 +15,7 @@ export const fetchProfile = async(userID: number) => {
                 'Authorization': `Bearer ${accessToken}`        
             },
         });
-        console.log('response', response.data);
+
         return normalizer.response.profile(response.data);
     }
     catch(err: any) {
@@ -29,7 +29,7 @@ export const updateProfile = async(data: any) => {
 
     var normalizedData = normalizer.model.profile(data);
     var dataWithoutProfilePic:any = null;
-    console.log('normalizedData', normalizedData);
+
     if(normalizedData.image instanceof Blob) {
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
@@ -61,7 +61,7 @@ export const updateProfile = async(data: any) => {
                 data: dataWithoutProfilePic
             });
         }
-        console.log('response', response.data);
+        
         return normalizer.response.profile(response.data);
     }
     catch(err: any) {
