@@ -41,7 +41,9 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
 
     return (
         <table style={{width: width? width: '80%'}}>
+             {(filteredData && filteredData.length > 0 )?
             <tbody> 
+                
                 <tr onMouseEnter={(e: any) => { e.target.parentElement.style.boxShadow = "3px 3px 6px white"}}>
                     {
                         columns.map((column: any, index: number)=> {
@@ -52,7 +54,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                     }
                 </tr>
                
-                {(filteredData && filteredData.length > 0 )? filteredData.map((rowValues: any, index: any)=> {
+                {filteredData.map((rowValues: any, index: any)=> {
                         return (
                             <tr key={index}>
                                 {columns.map((column: any, index: any) => {
@@ -65,11 +67,12 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                             
                         )
                         
-                    }): <tr style={{ display: 'flex', alignItems: 'center'}}><td>{DisplayWaiting()}</td></tr>
+                    })
                  }
                  
-            </tbody>       
-            
+            </tbody> 
+            : <tbody><tr style={{ display: 'flex', alignItems: 'center'}}><td>{DisplayWaiting()}</td></tr></tbody>      
+        }
         </table>
     )
 }   
