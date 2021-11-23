@@ -68,7 +68,15 @@ module.exports = {
     devServer: {
         static: path.resolve(__dirname, 'public'),
         historyApiFallback: true,
-        port: process.env.PORT || 8080
+        port: process.env.PORT || 8080,
+        proxy: {
+            '/api': {
+                target: "http://localhost:8080",
+                router: () => "https://wing-me-zebra-9a6ba4d293fd3a5b.onporter.run",
+                secure: false,
+                changeOrigin: true
+            }
+        }
     },
     resolve: {
         extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
