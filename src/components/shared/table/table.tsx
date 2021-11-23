@@ -52,7 +52,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                     }
                 </tr>
                
-                {filteredData.map((rowValues: any, index: any)=> {
+                {(filteredData && filteredData.length > 0 )? filteredData.map((rowValues: any, index: any)=> {
                         return (
                             <tr key={index}>
                                 {columns.map((column: any, index: any) => {
@@ -65,8 +65,9 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                             
                         )
                         
-                    })
+                    }): <tr>{DisplayWaiting()}</tr>
                  }
+                 
             </tbody>       
             
         </table>
