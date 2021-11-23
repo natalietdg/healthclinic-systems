@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { generateTodaysDate } from 'Helpers/';
-import { dateAtom, DateType } from 'Recoil/date.atom';
-import { useRecoilState } from 'recoil';
 import { useHistory } from 'react-router-dom';
 import { fetchBackground } from 'Services/background.services';
 import { Container } from 'Components/shared';
@@ -16,24 +13,8 @@ interface DashboardProps {
 
 const Dashboard:React.FC<DashboardProps> = () => {
     let history = useHistory();
-    const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
-    const [ todaysDate, setTodaysDate ] = useState<any>('');
     const [ bg, setBg ] = useState<any>({});
     const [ user, setUser ] = useState<any>('Natalie');
-
-    useEffect(()=> {
-        if (dates.todaysDate =='') {
-            let tempDates = generateTodaysDate();
-
-            setDates({
-                todaysDate: tempDates.todayDate,
-                expiryDate: tempDates.todayDate
-            });
-
-            setTodaysDate(tempDates.todayDate);
-        }
-    },[])
-
     const getBackground = async() => {
         const response = await fetchBackground();
         setBg(response);

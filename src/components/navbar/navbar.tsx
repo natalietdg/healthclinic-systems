@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { encode, generateTodaysDate } from 'Helpers/';
+import { encode } from 'Helpers/';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { refreshAccessToken } from 'Services/auth.services';
