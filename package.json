@@ -62,7 +62,6 @@
     "test": "jest",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://wing-me-zebra-9a6ba4d293fd3a5b.onporter.run",
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -728,7 +728,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     return (
-        <div data-testid={"patient-information"}>
+        <div style={{width: 'inherit'}}>
             <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                 <Row>
                 

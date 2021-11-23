@@ -10,8 +10,7 @@ import { Modal } from 'Components/shared';
 import { Toaster, Container, Row, Table } from 'Components/shared';
 import LoadingPage from 'Pages/loading-page/loading-page';
 import { fetchBackground } from 'Services/background.services';
-import { fetchReport, setPatientandFeedbackMLRequest, savePatientInformation, fetchPatientInformation, editComments, fetchComments, uploadImage, fetchAllObesityPredictionReport } from 'Services/patient.services';
-import Report from 'Components/report';
+import { fetchReport, setPatientandFeedbackMLRequest } from 'Services/patient.services';
 import './view-patient-page.scss';
 const ViewPatientPage = () => {
     var history = useHistory();
@@ -21,8 +20,6 @@ const ViewPatientPage = () => {
     const [patientInformation, setPatientInformation ] = useState<any>({});
     const [ obesityPredictionReport, setObesityPredictionReport ] = useState<any>({});
     const [ obesityPredictionReportModal, setObesityPredictionReportModal ] = useState<boolean>(false);
-    const [ feedbackModal, setFeedbackModal ] = useState<boolean>(false);
-    const [patientComments, setPatientComments] = useState([]);
     const [toasterProps, setToasterProps] = useState<any>({
         type: '',
         message: ''
