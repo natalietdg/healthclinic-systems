@@ -10,7 +10,8 @@ export const fetchProfile = async(userID: number) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `${url}/users/${userID}`,
+            // url: `${url}/users/${userID}`,
+            url: `/users/${userID}`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -29,7 +30,7 @@ export const updateProfile = async(data: any) => {
 
     var normalizedData = normalizer.model.profile(data);
     var dataWithoutProfilePic:any = null;
-    console.log('normalizedData', normalizedData);
+   
     if(normalizedData.image instanceof Blob) {
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
@@ -44,7 +45,8 @@ export const updateProfile = async(data: any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `${url}/users/${data.userID}/`,
+            // url: `${url}/users/${data.userID}/`,
+            url: `/users/${data.userID}/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },

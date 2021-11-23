@@ -1,6 +1,8 @@
 {
   "name": "capstone-frontend",
   "version": "0.1.0",
+  "proxy": "https://wing-me-zebra-9a6ba4d293fd3a5b.onporter.run",
+  "homepage": "http://health.clinic.systems/",
   "private": true,
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.15.0",
@@ -28,6 +30,7 @@
     "crypto-js": "^4.1.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "http-proxy-middleware": "^2.0.1",
     "i18next": "^20.6.0",
     "jest": "^27.3.1",
     "module-alias": "^2.2.2",
