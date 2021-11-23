@@ -3,7 +3,6 @@ import _, { omit } from 'lodash';
 import Patient from 'Components/patient-form';
 import { encode } from 'Helpers/';
 import { useHistory } from 'react-router-dom';
-import { DateType, dateAtom } from 'Recoil/date.atom';
 import { styles } from 'Components/shared/animation';
 import { decode } from 'Helpers/';
 import { Toaster } from 'Components/shared';
@@ -11,20 +10,13 @@ import { fetchBackground } from 'Services/background.services';
 import { savePatientInformation, fetchPatientInformation, setPatientandFeedbackMLRequest, generateObesityPrediction, createComments, editComments, fetchComments, createPatient, uploadImage } from 'Services/patient.services';
 import './new-patient-page.scss';
 import { useParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 
 const NewPatientPage = () => {
-     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
-    const [ todaysDate, setTodaysDate ] = useState<any>('');
     let history = useHistory();
     const [ toaster, setToaster ] = useState<any>({
         message: '',
         type: ''
     });
-
-    useEffect(()=> {
-        setTodaysDate(dates.todaysDate);
-    },[]);
 
     const [ bg, setBg ] = useState<any>({});
     const [patient, setPatient] = useState<any>({});

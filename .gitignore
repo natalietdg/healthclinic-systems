@@ -4,3 +4,7 @@ yarn-error.log
 build/
 yarn.lock
 __test__
+server.key
+server.pass.key
+server.csr
+README.md
