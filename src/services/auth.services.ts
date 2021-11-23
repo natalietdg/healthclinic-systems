@@ -4,7 +4,7 @@ import { base64Url, decodeBase64Url, validateToken } from 'Helpers/';
 
 export const login = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-    
+    console.log('url', url);
     try {
         const response = await axios({
             method: 'POST',
@@ -12,10 +12,6 @@ export const login = async(data: any) => {
             // url: `/auth/login/`,
             responseType: 'json',
             data: data,
-            headers: {
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Headers": "X-Requested-With"
-            }
         });
 
         const refreshToken = response.data.refresh;
@@ -92,8 +88,8 @@ export const logout = async() => {
     try {
         const response = await axios({
             method: 'POST',
-            // url: `${url}/auth/logout/`,
-            url: `/auth/logout/`,
+            url: `${url}/auth/logout/`,
+            // url: `/auth/logout/`,
             responseType: 'json',
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
