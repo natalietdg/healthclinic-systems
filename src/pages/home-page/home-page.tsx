@@ -38,7 +38,7 @@ const HomePage: React.FC<HomePageProp> = () => {
     useEffect(()=> {
         if(loginState.state=='success') {
             setTimeout(function() {
-                history.push('/home');
+                // history.push('/home');
             }, 3500);
         }
     },[loginState])

@@ -16,6 +16,9 @@ export function validateToken (JWTToken: any) {
     var parsedHeaders = JSON.parse(base64Headers);
     var parsedPayload = JSON.parse(base64Payload);
 
+    console.log('parsedHeaders', parsedHeaders);
+    console.log('parsedPayload', parsedPayload);
+
     //validating jwt structure
     if(parsedHeaders.alg != JWTAlg && parsedHeaders.type != JWTType) {
         return { error: 'Invalid Token'}
