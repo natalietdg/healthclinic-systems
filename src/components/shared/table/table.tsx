@@ -65,7 +65,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                             
                         )
                         
-                    }): <tr>{DisplayWaiting()}</tr>
+                    }): <tr style={{ display: 'flex', alignItems: 'center'}}>{DisplayWaiting()}</tr>
                  }
                  
             </tbody>       
