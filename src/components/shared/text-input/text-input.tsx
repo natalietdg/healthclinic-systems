@@ -27,7 +27,7 @@ const TextInput: React.FC<TextInputProps> = ({icon, type='text', disabled = fals
         <div className="text-input">
             <h4 className={classNames("text-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
             {subtitle !='' && <p>{subtitle}</p>}
-            {icon && <img src="/assets/images/search.png"></img>  }
+            {icon && <img alt="search" src="/assets/images/search.png"></img>  }
             <input disabled={disabled} className={classNames("text-input--input", {'error-input': !!error })} name={name} placeholder={placeholder?placeholder:''} type={type} onChange={(event) => handleTextChange(event)} value={value} />      
             
         </div>

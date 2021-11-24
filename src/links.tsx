@@ -3,13 +3,13 @@ export const Links = [
         to: '/home',
         img: '/assets/images/home.png',
         name: 'Home',
-        aria: 'home',
+        aria: 'home button',
     },
     {
         to: '/patients',
         img: '',
         name: 'Patients Database',
-        aria: 'patients database'
+        aria: 'patients database button'
     },
     {
         to: '',
@@ -21,13 +21,13 @@ export const Links = [
         to: '/new-patient',
         img: '',
         name: 'Add New Patient',
-        aria: 'new patient'
+        aria: 'new patient button'
     },
     {
         to: '/profile',
         img: '/assets/images/user.png',
         name: 'profile',
-        aria: 'profile'
+        aria: 'profile button'
     },
    
 ]

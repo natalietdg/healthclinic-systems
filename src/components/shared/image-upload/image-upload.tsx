@@ -133,12 +133,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                         imgArray.map((tempUrl, index) => {
                          
                             return <span>
-                                <img className="img-upload" src={tempUrl} style={{width: '150px', height: '150px'}}/>
-                                <button name = {index.toString()} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
+                                <img alt="upload image" className="img-upload" src={tempUrl} style={{width: '150px', height: '150px'}}/>
+                                <button aria-label="remove image button" name = {index.toString()} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img alt="close window" style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
                             </span>
                         })
 
-                        : <p style={{display: 'flex', flexDirection:'column'}}><img className="img-upload" style={{boxShadow:"none", width: '100px', height: '100px'}} src="/assets/images/photo.png" />No photos</p>}
+                        : <p style={{display: 'flex', flexDirection:'column'}}><img alt="no photos" className="img-upload" style={{boxShadow:"none", width: '100px', height: '100px'}} src="/assets/images/photo.png" />No photos</p>}
                         </div>
                 }
             </div>
@@ -147,8 +147,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
             {
                 multiple == false && comment == false && disabled ==false && 
                 <span>
-                    <img className="img-upload" id="upload-img" src={imgUrl} />
-                    <button name = {name} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
+                    <img alt="upload image" className="img-upload" id="upload-img" src={imgUrl} />
+                    <button aria-label="remove image button" name = {name} style={{background: 'rgb(0,0,0,0)', border: '0px solid grey', position: 'relative', top: '-167px', right: '-92px'}} onClick={ (e) => removePic(e)} ><img alt="close window" style={{width: '20px', height: '20px', padding: '0px', margin: '0px', boxShadow: 'none'}} src="/assets/images/close-window.png" /></button>
                   
                 </span>
             }

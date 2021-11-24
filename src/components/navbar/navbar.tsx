@@ -161,7 +161,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                             return (link.name=='placeholder')? <h3 key={index}>{pageName}</h3> : link.name=='profile'? 
                             <li key={index} style={{padding: '7px'}}>
                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <button aria-label="Profile" onMouseEnter={showDropdown} className="profile-button"><img aria-label={link.aria} className="profile" src="/assets/images/user.png" /></button>
+                                <button aria-label="Profile button" onMouseEnter={showDropdown} className="profile-button"><img alt={link.aria} className="profile" src="/assets/images/user.png" /></button>
                                     <ul onMouseLeave={hideDropdown} className="dropdown--ul">
                                         <li className="dropdown--li"><Link to="/profile">My Profile</Link></li>
                                         <li className="dropdown--li"><button aria-label={link.aria} onClick={logOut}>Logout</button></li>
@@ -169,8 +169,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                                </div>
                                 
                             </li>
-                            : link.name =='Generate Obesity Prediction Report'? <li key={index}><Link key={index} to={`/patient/edit/${encode(-1)}/${encode(1)}`}><span className="span">{link.name}</span></Link></li>
-                            : link.img!='' ? <li key={index} style={{padding: "7px"}}><Link key={index} to={link.to}><span className="span"><img aria-label={link.aria} style={{boxShadow: '3px 5px 9px 0px rgb(0 0 0 / 25%)', borderRadius: '50%', padding: '5px'}} src={link.img} /></span></Link></li>
+                            : link.name =='Generate Obesity Prediction Report'? <li key={index}><Link aria-label={link.aria} key={index} to={`/patient/edit/${encode(-1)}/${encode(1)}`}><span className="span">{link.name}</span></Link></li>
+                            : link.img!='' ? <li key={index} style={{padding: "7px"}}><Link aria-label='' key={index} to={link.to}><span className="span"><img alt='' style={{boxShadow: '3px 5px 9px 0px rgb(0 0 0 / 25%)', borderRadius: '50%', padding: '5px'}} src={link.img} /></span></Link></li>
                             :<li key={index}><Link key={index} to={link.to}><span className="span">{link.name}</span></Link></li>
                         })
                     }

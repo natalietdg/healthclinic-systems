@@ -76,7 +76,7 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                     </Row>
                 </div>
             </div>
-            <Row><button className="save" onClick={save}>Save</button></Row>
+            <Row><button aria-label="save profile button" className="save" onClick={save}>Save</button></Row>
             </div>
         </div>
     )

@@ -128,7 +128,7 @@ const HomePage: React.FC<HomePageProp> = () => {
                 <Modal visible={termsAndConditionsModal} onClose={()=> {setTermsAndConditionsModal(false)}}>
                     <TermsAndConditionsPage />
                     <div className="terms-and-conditions-button">
-                        <button className="button" onClick={fetchUserReport}>I agree with the terms and conditions.</button>
+                        <button aria-label="I agree with terms and conditions button" className="button" onClick={fetchUserReport}>I agree with the terms and conditions.</button>
                     </div>
                 
                 </Modal>
@@ -138,7 +138,7 @@ const HomePage: React.FC<HomePageProp> = () => {
                         <meta name="description" content="Caring about your needs, one step at a time." />
                     </Helmet>
                     <div>
-                        <button className="login-button" onClick={()=> toggleModalVisibility(true)}>Staff Login</button>
+                        <button aria-label="login button" className="login-button" onClick={()=> toggleModalVisibility(true)}>Staff Login</button>
                         <Modal onClose={toggleModalVisibility} visible={modalVisibility}>
                             <LoginForm loginError={error} onConfirm={signIn} />
                         </Modal>

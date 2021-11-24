@@ -9,6 +9,7 @@ import { decode } from 'Helpers/';
 import { Toaster } from 'Components/shared';
 import './report-page.scss';
 import report from 'Components/report';
+import { Helmet } from 'react-helmet';
 
 const ReportPage = ({}) => {
     const [patientData, setPatientData] = useState<any>({});
@@ -46,6 +47,7 @@ const ReportPage = ({}) => {
     },[])
     return(
         <div className="report-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-3']?.imageUrl})`}}>
+            <Helmet><title>Report Page</title></Helmet>
             <Toaster toasterID="reportPage-toaster" style={{...styles.fadeInRight}} props={toasterProps}/>
             <div className="report-page">
                 <DisplayReport patientData={patientData}/>

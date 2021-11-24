@@ -91,8 +91,8 @@ const DisplayReport: React.FC<DisplayReportProps> = ({patientData, edit=false}) 
                                                     month: 'long',
                                                     day: 'numeric'
                                                 })}</h3>
-                                                <button id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}} className="button"> 
-                                                    <p id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}}><img id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
+                                                <button aria-label="view full report button" id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}} className="button"> 
+                                                    <p id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}}><img alt="view full report" id={index.toString()} onClick={(e: any) => {openObesityPredictionReportModal(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
                                                 </button>
                                             </div>
                                         </div>

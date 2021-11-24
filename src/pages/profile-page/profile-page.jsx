@@ -5,6 +5,7 @@ import { styles } from 'Components/shared/animation';
 import { fetchProfile, updateProfile } from 'Services/profile.services';
 import { Profile } from 'Components/';
 import './profile-page.scss';
+import { Helmet } from 'react-helmet';
 
 
 const ProfilePage = ({}) => {
@@ -75,6 +76,7 @@ const ProfilePage = ({}) => {
 
     return (
         <div className="profile-page-bg" style={{backgroundImage:`url(${bg['vertical-bg']?.imageUrl})`}}>
+            <Helmet><title>Profile Page</title></Helmet>
             <Toaster style={{...styles.fadeInRight}} toasterID="profile-page-toaster" props={toasterProps}/>
             <div className="profile-page">
                 <Profile profileData={profileInformation} onSubmit={submit} />

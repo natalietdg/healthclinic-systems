@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './ml-prediction-report-page.scss';
-import { useParams } from 'react-router-dom';
+import {Helmet} from 'react-helmet';
+
 import { fetchBackground } from 'Services/background.services';
 
 interface MLPredictionReportPageProps {
@@ -25,6 +26,7 @@ const MLPredictionReportPage: React.FC<MLPredictionReportPageProps> = ({data}) =
 
     return (
         <div className="ml-prediction-report-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}>
+            <Helmet><title>Obesity Prediction Report Page</title></Helmet>
             <div className="ml-prediction-report-page">
                 <h2>Obesity Prediction Report</h2>
             </div>

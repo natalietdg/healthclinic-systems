@@ -2,12 +2,17 @@ import React from 'react';
 import { styles } from 'Components/shared/animation';
 import Radium from 'radium';
 import './loading-page.scss';
+import { Helmet } from 'react-helmet';
 
 
 const LoadingPage = () => {
     return (
         <Radium.StyleRoot style={{height: 'inherit'}}>
+            <Helmet>
+                <title>Loading Page</title>
+            </Helmet>
             <div className="loading-page" style={{...styles.fadeIn, animationIterationCount: 5}}>
+               
                 <h2>Loading{
                     
                     [1,2,3].map((number)=> {

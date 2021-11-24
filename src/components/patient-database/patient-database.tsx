@@ -270,15 +270,15 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                     "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
                     "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
                     "Report Number": filteredData.reportID || filteredData['Report'],
-                    "Medical Report": <Button aria-label="View Report" id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                    "Medical Report": <Button aria-label="View Report Button" id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
                                 <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
-                                    <img aria-label="View Report" src="/assets/images/view.png"/><br />
+                                    <img alt="View Report" src="/assets/images/view.png"/><br />
                                     View Report
                                 </a><br></br>
                             </Button>,
                     "": <div style={{display: 'flex'}}>
                             <Button aria-label="View Patient" id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img aria-label="view patient" src="/assets/images/view.png"/><br />View Patient</a>
+                                <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img alt="view patient" src="/assets/images/view.png"/><br />View Patient</a>
                                 <br></br>
                             </Button>
                         </div>
@@ -299,7 +299,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
             var pagePaginationArray: any = [];
     
             for(let x = 0; x < maxSize; x++) {
-                let button = <><button onClick={(e)=>changePage(e)} className={classNames({current: (x==pageVisibility)})} key={x+1}>{x+1}</button></>
+                let button = <><button aria-label={`page number ${x+1}`} onClick={(e)=>changePage(e)} className={classNames({current: (x==pageVisibility)})} key={x+1}>{x+1}</button></>
                 let pageButton = {
                     index: x+1,
                     props: button
@@ -322,12 +322,12 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
     
             var hiddenFirstPartOfArray: any = {
                 index: 0,
-                props: <button onClick={showHiddenFirstPartButtons} id="hiddenFirstPart">......</button>
+                props: <button aria-label="Show previous buttons" onClick={showHiddenFirstPartButtons} id="hiddenFirstPart">......</button>
             };
     
             var hiddenLastPartOfArray: any = {
                 index: 0,
-                props: <button onClick={showHiddenLastPartButtons} id="hiddenLastPart">......</button>
+                props: <button aria-label="Show later buttons"onClick={showHiddenLastPartButtons} id="hiddenLastPart">......</button>
             };
     
             var hiddenFirstPartIndexes = [];
@@ -442,7 +442,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 </div>
                 
                 <Row className="pagination">
-                    <button aria-label="prev page"  onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img aria-label="previous page"  src="/assets/images/left.png" /></button>
+                    <button aria-label="prev page button"  onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img alt="previous page"  src="/assets/images/left.png" /></button>
                     <div>
                     {
                         pagePagination != [] &&  
@@ -452,7 +452,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                     }
                     </div>
                     
-                    <button aria-label="next page"  onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img aria-label="next page" src="/assets/images/right.png" /></button>
+                    <button aria-label="next page button"  onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img alt="next page" src="/assets/images/right.png" /></button>
                 </Row>
             </div>
         </Radium.StyleRoot>

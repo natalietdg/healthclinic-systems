@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Patient from 'Components/patient-form';
 import { useTranslation } from 'react-i18next';
 import { styles } from 'Components/shared/animation';
@@ -83,6 +84,7 @@ const ViewPatientPage = () => {
 
     return (
         <div className="view-patient-bg" style={{backgroundImage:`url(${bg['background-2']?.imageUrl})`}}>
+            <Helmet><title>View Patient Page</title></Helmet>
             <Modal onClose={closeObesityReport} visible={obesityPredictionReportModal}>
                 <Patient.MLPredictionReport data={obesityPredictionReport} patient={false} onSubmit={setFeedback}/>
             </Modal>
@@ -103,8 +105,8 @@ const ViewPatientPage = () => {
                                 <div style={{width: 'inherit'}}>
                                     <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                                         <h2 className="title">Personal Information</h2>
-                                        <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/`)} className="button"> 
-                                            <a href={`/patient/edit/${encode(patientInformation.patientID)}/`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Personal Information</a>
+                                        <button aria-label="edit patient's personal information button" onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/`)} className="button"> 
+                                            <a href={`/patient/edit/${encode(patientInformation.patientID)}/`}><img alt="edit" className="img" src="/assets/images/edit-dark.png"/>Edit Personal Information</a>
                                             <br></br>
                                         </button>
                                     </div>
@@ -138,7 +140,7 @@ const ViewPatientPage = () => {
                                     
                                 </div>
                                 <div style={{width: 'inherit', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-                                    <img className="profile-pic" src={imgUrl} />
+                                    <img alt="profile" className="profile-pic" src={imgUrl} />
                                 </div>
                                 
                             </Row>
@@ -149,8 +151,8 @@ const ViewPatientPage = () => {
                     <div style={{width: '100%'}}>
                         <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                             <h2 className="title">Obesity and Comorbidities Prediction</h2>
-                            <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`)}  className="button"> 
-                                <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`}><img className="img" src="/assets/images/add-grey.png"/>Add Obesity and Comorbidities Prediction Report</a>
+                            <button aria-label="add obesity and comorbidities prediction report: height, weight, and family history section button" onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`)}  className="button"> 
+                                <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(1)}`}><img alt="add" className="img" src="/assets/images/add-grey.png"/>Add Obesity and Comorbidities Prediction Report</a>
                                 <br></br>
                             </button>
                         </div>
@@ -168,8 +170,8 @@ const ViewPatientPage = () => {
                                                     month: 'long',
                                                     day: 'numeric'
                                                 })}</h3>
-                                                <button id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="button"> 
-                                                    <p id={index.toString()} onClick={(e: any) => {showObesityReport(e)}}><img id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
+                                                <button aria-label="show obesity report button" id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="button"> 
+                                                    <p id={index.toString()} onClick={(e: any) => {showObesityReport(e)}}><img alt="view" id={index.toString()} onClick={(e: any) => {showObesityReport(e)}} className="img" src="/assets/images/view.png"/>View Full Report</p>
                                                 </button>
                                             </div>
                                             <h4 className="sub-title">Prediction</h4>
@@ -198,7 +200,7 @@ const ViewPatientPage = () => {
                                                 predictionReport?.feedback == ''? 
                                                 <div>
                                                     <h4 className="sub-title">Feedback</h4>
-                                                    <button id={index.toString()} className="button" onClick={(e: any) => {showObesityReport(e)}}><img className="img" src="/assets/images/add-grey.png"/>Write Feedback</button> 
+                                                    <button aria-label="submit feedback button" id={index.toString()} className="button" onClick={(e: any) => {showObesityReport(e)}}><img alt="add" className="img" src="/assets/images/add-grey.png"/>Write Feedback</button> 
                                                 </div>
                                                 :
                                                 <span className="span">
@@ -219,8 +221,8 @@ const ViewPatientPage = () => {
                             <div style={{width: 'inherit'}}>
                                 <div style={{display: 'flex', justifyContent: 'flex-start', alignItems: 'center'}}>
                                     <h2 className="title">Diagnosis & Comments</h2>
-                                    <button onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`)} className="button"> 
-                                        <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`}><img className="img" src="/assets/images/edit-dark.png"/>Edit Diagnosis & Comments</a>
+                                    <button aria-label="go to edit diagnosis and comments section button" onClick={() => history.push(`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`)} className="button"> 
+                                        <a href={`/patient/edit/${encode(patientInformation.patientID)}/${encode(4)}`}><img alt="edit" className="img" src="/assets/images/edit-dark.png"/>Edit Diagnosis & Comments</a>
                                         <br></br>
                                     </button>
                                 </div>
