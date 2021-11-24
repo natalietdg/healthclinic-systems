@@ -50,7 +50,7 @@ const RadioInput: React.FC<RadioInputProps> = ({label, name, subtitle, defaultVa
                 {
                     values.map((value:any, index:number) => {
                         return  <div key={index} style={{padding: '0px 10px 0px 0px', display: 'flex'}}>
-                                    <input key={index} className="radio-input--input" name={`${name}.${value.name}`} placeholder={placeholder?placeholder:''} type="radio" onClick={(event: any) => handleChecked(event)} value={value.value} />
+                                    <input aria-label={label} key={index} className="radio-input--input" name={`${name}.${value.name}`} placeholder={placeholder?placeholder:''} type="radio" onClick={(event: any) => handleChecked(event)} value={value.value} />
                             <label className="radio-input--label">{value.label}</label></div>
                     })
                 }

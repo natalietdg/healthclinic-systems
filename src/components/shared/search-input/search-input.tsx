@@ -25,7 +25,7 @@ const SearchInput: React.FC<SearchInputProps> = ({searchOptions, subtitle, label
             <h4 className={classNames("search-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
             <p><i>{subtitle}</i></p>
               
-            <input className="search-input--input" type='search' list={name} defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
+            <input aria-label={label} className="search-input--input" type='search' list={name} defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
             
             <datalist id={name} style={{zIndex: 996}}>
                 {searchOptions.map((data, index)=> {

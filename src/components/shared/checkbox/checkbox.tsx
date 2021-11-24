@@ -38,6 +38,7 @@ const Checkbox: React.FC<CheckboxProps> = ({label, defaultValue, placeholder, na
                         return ( 
                             <div key={index}>
                                 <input 
+                                    aria-label={label}
                                     checked={input && checkBoxInput[`${value.name}`]?true: false}
                                     key={index} 
                                     className="checkbox--input" 
