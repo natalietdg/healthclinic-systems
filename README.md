@@ -1,6 +1,19 @@
 # Application for Healthcare Intervention
 
 
+<!-- Country Name (2 letter code) [AU]:MY
+State or Province Name (full name) [Some-State]:Selangor
+Locality Name (eg, city) []:Kajang
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Health Clinic Systems
+Organizational Unit Name (eg, section) []:Frontend 
+Common Name (eg, YOUR name) []:Natalie
+Email Address []:natalieleong19@gmail.com
+
+Please enter the following 'extra' attributes
+to be sent with your certificate request
+A challenge password []:chalpass156432!@    
+server.pass.key = healthpass1234
+-->
 
 ## Getting started
 

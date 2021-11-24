@@ -15,14 +15,6 @@ app.get('*', (req, res) => {
 
 const PORT = process.env.PORT || 8080;
 
-app.use('/api', createProxyMiddleware({
-    target: `http://localhost:8080/`,
-    changeOrigin: true,
-    onProxyRes: function (proxyRes, req, res) {
-        proxyRes.headers['access-control-allow-origin'] = '*';
-    }
-}));
-
 app.listen(PORT, () => {
     console.log(`App is running on port ${PORT}`);
 });
