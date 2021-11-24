@@ -22,7 +22,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
       
            return( 
             <Radium.StyleRoot>
-                <h4 style={{...styles.fadeIn, textAlign: 'center', color: '#7e4ed1'}}>Fetching patient data
+                <h4 style={{...styles.fadeIn, textAlign: 'center', color: '#7e4ed1'}}>Fetching database
                 {
                     
                     [1,2,3].map((number)=> {
@@ -71,7 +71,7 @@ const Table: React.FC<TableProps> = ({columns, width, filteredData, visibility='
                  }
                  
             </tbody> 
-            : <tbody><tr style={{ display: 'flex', alignItems: 'center'}}><td>{DisplayWaiting()}</td></tr></tbody>      
+            : <tbody><tr><td>{DisplayWaiting()}</td></tr></tbody>      
         }
         </table>
     )
