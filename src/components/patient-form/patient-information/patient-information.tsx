@@ -753,7 +753,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 
                 </Row>
                 <Row> 
-                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
+                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img aria-label="new comment"  style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
                 </Row>
 
             </Modal>
@@ -1753,7 +1753,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
-                            <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
+                            <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img aria-label="new comment"  className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
                            
                             
                         </div>

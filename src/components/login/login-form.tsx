@@ -89,7 +89,7 @@ const LoginForm: React.FC<LoginFormProp> = ({loginError, onConfirm}) => {
                     </div> 
                 </div>
                 <div>
-                    <button className="button" onClick={(event) => handleConfirm(event)}> Sign In </button>
+                    <button aria-label="Login" className="button" onClick={(event) => handleConfirm(event)}> Sign In </button>
                 </div>
             </form>
         </div>

@@ -71,7 +71,7 @@ const MLPredictionReport:React.FC<MLPredictionReportProps> = ({data, patient=tru
                             <h4 className="title">Please add feedback.</h4>
                             <TextArea error={!!error?.feedback} label="" name="feedback" value={tempFeedback} onChange={handleTextChange}/>
                             <AlertBox name="feedback" error={error?.feedback}/>
-                            <button className="button" onClick={() => {onSubmit?onSubmit(tempFeedback):() => {}}}><img className="img" src="/assets/images/add-grey.png"/>Add Feedback</button> 
+                            <button className="button" onClick={() => {onSubmit?onSubmit(tempFeedback):() => {}}}><img aria-label="add feedback"  className="img" src="/assets/images/add-grey.png"/>Add Feedback</button> 
                         </div>
                     </Row>
                     :<h4 className='span--text'>

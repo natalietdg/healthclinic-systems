@@ -23,15 +23,6 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
 
     const { t } = useTranslation();
     const [maxSize, setMaxSize] = useState(0);
-    const { date }:any = useParams();
-    var todaysDate: any = date? decode(date): null;
-    if(todaysDate!=null) {
-        todaysDate = (new Date (todaysDate)).toLocaleDateString([], {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-        });
-    }
     const [ pageVisibility, setPageVisibility ] = useState(0);
 
     const columns = columnProps? columnProps :[
@@ -269,70 +260,30 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 }
                 
                 var patientData = {}
-                if(todaysDate== null) {
-                    patientData = {
-                        "ID": filteredData.patientID || filteredData['ID'],
-                        'Email': filteredData.email || filteredData['Email'],
-                        'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
-                      
-                        'IC': filteredData.ic || filteredData['IC'],
-                        "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
-                        "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
-                        "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
-                        "Report Number": filteredData.reportID || filteredData['Report'],
-                        "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                    <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
-                                        <img src="/assets/images/view.png"/><br />
-                                        View Report
-                                    </a><br></br>
-                                </Button>,
-                        "": <div style={{display: 'flex'}}>
-                                <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                    <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
-                                    <br></br>
-                                </Button>
-                            </div>
-                    };
-                }
-                else{
-                    var hasDiagnosis = false;
-                    if(filteredData.comments) {
-                        hasDiagnosis = filteredData.comments.some((comment: any)=> {
-                            let tempDate = (new Date(comment.created)).toLocaleDateString([], {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric'
-                            });
-                        
-                            if (_.isEqual(tempDate, todaysDate))  return true;
-                        })
-                    }
-
-                    patientData = {
-                        "ID": filteredData.patientID || filteredData['ID'],
-                        'Email': filteredData.email || filteredData['Email'],
-                        'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
-                      
-                        'IC': filteredData.ic || filteredData['IC'],
-                        "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
-                        "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
-                        "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
-                      
-                        "Report Number": filteredData.reportID || filteredData['Report'],
-                        "Medical Report": <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                    <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
-                                        <img src="/assets/images/view.png"/><br />
-                                        View Report
-                                    </a><br></br>
-                                </Button>,
-                        "": <div style={{display: 'flex'}}>
-                                <Button id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
-                                    <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}`}><img src="/assets/images/view.png"/><br />View Patient</a>
-                                    <br></br>
-                                </Button>
-                            </div>
-                    }
-                }
+                patientData = {
+                    "ID": filteredData.patientID || filteredData['ID'],
+                    'Email': filteredData.email || filteredData['Email'],
+                    'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
+                    
+                    'IC': filteredData.ic || filteredData['IC'],
+                    "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
+                    "Race": filteredData.race? t(`label.${filteredData.race.toLowerCase()}`): filteredData.race || filteredData['Race'],
+                    "Gender": filteredData.gender? t(`label.${filteredData.gender.toLowerCase()}`): filteredData.gender || filteredData['Gender'],
+                    "Report Number": filteredData.reportID || filteredData['Report'],
+                    "Medical Report": <Button aria-label="View Report" id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>
+                                    <img aria-label="View Report" src="/assets/images/view.png"/><br />
+                                    View Report
+                                </a><br></br>
+                            </Button>,
+                    "": <div style={{display: 'flex'}}>
+                            <Button aria-label="View Patient" id="span" keyName={`${currLength}, ${index}`} onClick={(key) => setLocalStorage(key)}> 
+                                <a href={`/patient/view/${encode(filteredData.reportID) || filteredData['ID']}`}><img aria-label="view patient" src="/assets/images/view.png"/><br />View Patient</a>
+                                <br></br>
+                            </Button>
+                        </div>
+                };
+                
              
                 tempArrayForCategorizing.push(patientData);
     
@@ -491,7 +442,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 </div>
                 
                 <Row className="pagination">
-                    <button onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img src="/assets/images/left.png" /></button>
+                    <button aria-label="prev page"  onClick={()=> {pageVisibility != 0? setPageVisibility(pageVisibility-1): {}}}><img aria-label="previous page"  src="/assets/images/left.png" /></button>
                     <div>
                     {
                         pagePagination != [] &&  
@@ -501,7 +452,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                     }
                     </div>
                     
-                    <button onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img src="/assets/images/right.png" /></button>
+                    <button aria-label="next page"  onClick={()=> {pageVisibility != (maxSize-1)? setPageVisibility(pageVisibility+1): {}}}><img aria-label="next page" src="/assets/images/right.png" /></button>
                 </Row>
             </div>
         </Radium.StyleRoot>
