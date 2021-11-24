@@ -37,7 +37,7 @@ const FetchReport: React.FC<FetchReportProps> = ({onFetch, error}) => {
                 <h3 className="heading">Are you a <label style={{color: '#8f60df'}}>patient</label>?</h3>
                 <TextInput name="reportNo" value={reportNumber} label='Please key in your report number here.' error={!!reportError?.reportNo} onChange={handleChange} />
                 <AlertBox name="reportNo" error={reportError?.reportNumber}/>
-                <button className="button" onClick={()=> {onFetch(reportNumber)}}>View Report</button>
+                <button aria-label="view report button" className="button" onClick={()=> {onFetch(reportNumber)}}>View Report</button>
             </div>
             
         </div>

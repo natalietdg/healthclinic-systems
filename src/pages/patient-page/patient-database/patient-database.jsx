@@ -29,7 +29,7 @@ const PatientDatabase = () => {
 
     return (
         <div className="patient-database-bg" style={{backgroundImage:`url(${bg['background']?.imageUrl})`}}>
-
+            <Helmet><title>Patient Database</title></Helmet>
             <div className="patient-database">
                 <PatientDatabse visible={"Database"} patients={patientList}/>    
             </div>

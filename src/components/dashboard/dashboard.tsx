@@ -40,8 +40,8 @@ const Dashboard:React.FC<DashboardProps> = () => {
                                 <div className='sub-container'>
                                     <h3> Quick Access </h3>
                                     <Container flexDirection="row">
-                                        <button onClick={()=> {history.push('/new-patient')}}><img src="/assets/images/new-patient.png" />Add New Patient</button>
-                                        <button onClick={()=> {history.push('/patients')}}><img src="/assets/images/users.png" />Patient Database</button>
+                                        <button aria-label="Add New Patient button" onClick={()=> {history.push('/new-patient')}}><img alt="New Patient" src="/assets/images/new-patient.png" />Add New Patient</button>
+                                        <button aria-label="Patient Database button" onClick={()=> {history.push('/patients')}}><img alt="Patient Database" src="/assets/images/users.png" />Patient Database</button>
                                     </Container>
                                 </div>
                             </div>

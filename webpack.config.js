@@ -5,6 +5,7 @@ const CopyWebPackPlugin = require('copy-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 const dotenv = require('dotenv').config({path: path.resolve(__dirname, '/.env')});
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin");
 const HtmlMinimizerWebpackPlugin = require('html-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const JsonMinimizerPlugin = require("json-minimizer-webpack-plugin");

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import _, { omit } from 'lodash';
 import Patient from 'Components/patient-form';
 import { encode } from 'Helpers/';
+import { Helmet } from 'react-helmet';
 import { useHistory } from 'react-router-dom';
 import { styles } from 'Components/shared/animation';
 import { decode } from 'Helpers/';
@@ -192,6 +193,7 @@ const NewPatientPage = () => {
 
     return(
         <div className="new-patient-page-bg" style={{backgroundImage:`url(${bg['vertical-bg-2']?.imageUrl})`}}> 
+           <Helmet><title>New Patient Page</title></Helmet>
             <Toaster props={toaster} toasterID="patient-toaster" style={{...styles.fadeInRight}}/>
                 <div className="new-patient-page">
                     <Patient.PatientInformation page={pageNumber} onSubmit={submit} comments = {patientComments} data={patient}/>

@@ -729,6 +729,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     return (
         <div style={{width: 'inherit'}}>
+            <title></title>
             <Modal visible={commentModal} onClose={toggleCommentModalVisibility}>
                 <Row>
                 
@@ -753,7 +754,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 
                 </Row>
                 <Row> 
-                    <button className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
+                    <button aria-label="submit comment button" className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img alt="new comment"  style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
                 </Row>
 
             </Modal>
@@ -763,7 +764,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             <div className="div" style={{...styles.fadeIn}}>
             
                 { personalInformation.patientID !==-1 && 
-                    <div className="back"><button className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.reportID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
+                    <div className="back"><button aria-label="go back to patient's view button" className="back--button" onClick={()=> {history.push(`/patient/view/${encode(personalInformation.reportID)}`)}}>Go back to {personalInformation?.fullName}'s view</button></div> 
                 }
            
             <Page visibility= {pageVisibility} numOfChildren={setMaxSize}>
@@ -885,8 +886,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                     personalInformation.patientID!== -1 ?
                                     <button className="save" onClick={save}>{'Save'}</button>
                                     :<Row>
-                                        <button className="save" onClick={(event)=>createPatient(event, 'create')}>{'Add Patient'}</button>
-                                        <button className="save" onClick={(event)=>createPatient(event, 'add another')}>{'Add Patient and Add Another'}</button>
+                                        <button aria-label="add new patient button"className="save" onClick={(event)=>createPatient(event, 'create')}>{'Add Patient'}</button>
+                                        <button aria-label="add new patient and add another button" className="save" onClick={(event)=>createPatient(event, 'add another')}>{'Add Patient and Add Another'}</button>
                                     </Row>
                                 }
                             </div>
@@ -962,7 +963,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                                 {
-                                    pageVisibility < (maxSize - 1 ) &&  <button className="standard" onClick={nextPage}>Next</button>
+                                    pageVisibility < (maxSize - 1 ) &&  <button aria-label="next page button" className="standard" onClick={nextPage}>Next</button>
                                 }
                             </div>
                         </div>
@@ -1493,13 +1494,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     <div style={{width: '100%', display: 'flex'}}> 
                         <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                             {
-                                pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
+                                pageVisibility > 0 && <button aria-label="previous page button" className="standard" onClick={prevPage}>Prev</button>
                             }
                             
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                             {
-                                pageVisibility < (maxSize-1) &&  <button className="standard" onClick={nextPage}>Next</button>
+                                pageVisibility < (maxSize-1) &&  <button aria-label="next page button" className="standard" onClick={nextPage}>Next</button>
                             }
                           
                         </div>
@@ -1735,13 +1736,13 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                         <div style={{width: '100%', display: 'flex'}}> 
                         <div style={{ justifyContent: 'flex-start', float: 'right', width: '100%', alignSelf: 'flex-start', display: 'flex'}}>
                             {
-                                pageVisibility > 0 && <button className="standard" onClick={prevPage}>Prev</button>
+                                pageVisibility > 0 && <button aria-label="previous page button" className="standard" onClick={prevPage}>Prev</button>
                             }
                             
                         </div>
                         <div style={{display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'flex-end'}}>
                            
-                            <button className="save" onClick={(e) => submitObesityPredictionData(e)}>Generate Prediction Report</button>
+                            <button aria-label="generate obesity and comorbidities prediction report button" className="save" onClick={(e) => submitObesityPredictionData(e)}>Generate Prediction Report</button>
                         </div>
                     </div>
                     </PagePane>
@@ -1753,7 +1754,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
-                            <button className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
+                            <button aria-label="new comment button" className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img alt="new comment"  className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
                            
                             
                         </div>
@@ -1778,7 +1779,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                                                     </div>
                                                 </Row>
                                                 <Row>
-                                                    <button id={index} className="save" onClick={(e) => {editComment(e)}}><img style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</button>
+                                                    <button aria-label="edit comment button" id={index} className="save" onClick={(e) => {editComment(e)}}><img alt="edit comment" style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</button>
                                                 </Row>
                                         </>
                                     })

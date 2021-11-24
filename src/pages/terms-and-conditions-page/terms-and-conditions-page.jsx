@@ -1,5 +1,6 @@
 import React from 'react';
 import './terms-and-conditions-page.scss';
+import { Helmet } from 'react-helmet';
 
 const TermsAndConditionsPage = () => {
     const website = process.env.WEBSITE;
@@ -7,6 +8,7 @@ const TermsAndConditionsPage = () => {
     const email = process.env.EMAIL;
     return (
         <div className="terms-and-conditions-page">
+            <Helmet><title>Terms and Conditions DashboardPage</title></Helmet>
             <h1>Terms and Conditions</h1>
             <p>Last updated: November 08, 2021</p>
             <p>Please read these terms and conditions carefully before using Our Service.</p>

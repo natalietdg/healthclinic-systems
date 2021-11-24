@@ -2,13 +2,14 @@
 <html lang="en">
   <head>
     <base href="/" />
-    <meta
+    <meta http-equiv="Content-Security-Policy" content="script-src 'none'">
+    {% comment %} <meta
       http-equiv="Content-Security-Policy"
       content=" default-src 'self'; child-src child-src 'none'; img-src https://cdn.example.com 'self'; object-src 'none' "
-    />
+    /> {% endcomment %}
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
