@@ -30,7 +30,7 @@ const DateInput: React.FC<DateInputProps> = ({label, name, required, error, valu
         <div className="date-input">
             <h4 className={classNames("date-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
                
-            <input name={name} className={classNames("date-input--input", {'error-input': !!error })} value={date} type='date' list="options" defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
+            <input aria-label={label} name={name} className={classNames("date-input--input", {'error-input': !!error })} value={date} type='date' list="options" defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
         </div>
     )
 }
