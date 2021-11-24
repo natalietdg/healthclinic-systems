@@ -1,0 +1,78 @@
+.image-upload {
+    width: auto;
+    height: auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    .box {
+        min-height: 100px;
+        min-width: 232px;
+        max-width: 300px;
+        overflow: scroll;
+        width: auto;
+        height: auto;
+        padding: 10px;
+        box-shadow: 3px 5px 9px 0px rgb(0 0 0 / 25%);
+        border-radius: 20px;
+        margin: 10px;
+        font-family: $token-font-family-text;
+        &:hover, &:focus{
+            cursor: pointer;
+            border: 1px dashed $token-button-primary-background-color-base;
+        }
+        display: flex;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+
+        @media(min-width: 300px) {
+            justify-content: initial;
+        }
+    }
+
+    .required {
+        color: $token-font-color-danger;
+    }
+
+    .error {
+        color: $token-font-color-danger;
+    }
+
+    .img-upload {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        padding: 10px 10px;
+        box-shadow: 3px 5px 9px 0px rgb(0 0 0 / 25%);
+        margin: 10px 10px;
+    }
+
+    &--input {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: inherit;
+        width: 130px;
+        height: 45px;
+        border-radius: 8px;
+        color: white;
+        background-color: $token-button-primary-background-color-base;
+        border: 0px solid grey;
+        
+        font-size: 20px;
+        cursor: pointer;
+        font-weight: 400;
+        font-family: $token-font-family-text;
+
+        &:hover{
+            background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
+            color: $token-button-primary-text-color-hover;
+         
+            box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
+            border: 0px solid white;
+        }
+    }
+    
+}

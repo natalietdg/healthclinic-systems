@@ -1,0 +1,6 @@
+{
+    "radius": {
+        "default": { "value": "20px" },
+        "circle": { "value": "50%" }
+    }
+}

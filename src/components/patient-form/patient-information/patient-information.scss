@@ -1,0 +1,250 @@
+.patient-info {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(30px);
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    .div {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .back {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        right: 33%;
+        margin-top: 40px;
+        padding: 10px;
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: center;
+        width: auto;
+        background-color: rgb(0,0,0,0);
+        border: 0px solid;
+
+        &:hover, &:focus{
+            text-decoration: underline 2px solid $token-button-primary-background-color-base;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: inset -5px 5px 5px #b9b9b9, inset -3px -1px 7px #ffffff;
+        }
+        &--button {
+            font-family: $token-font-family-heading;
+            font-size: 22px;
+            background-color: rgb(0,0,0,0);
+            border: 0px solid;
+            padding: 10px;
+        }
+    }
+
+    h5 {
+        margin: 10px 0px 0px 0px;
+    }
+
+    .board {
+        text-align: center;
+        box-shadow: inset 5px 5px 5px #b9b9b9, inset -3px -1px 7px #ffffff;
+        border-radius: 20px;
+        padding: 20;
+        width: auto !important;
+        border: 1px solid #dfdfdf;
+    }
+
+    .division {
+        display: flex;
+        width: 100%;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .header {
+        padding: 0px 20px;
+        display: flex;
+    }
+    .content {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        @media (min-width: $token-media-query-lg) {
+            flex-direction: row;
+        }
+    }
+
+    .divider {
+        h3 {
+            font-family: $token-font-family-heading;
+            font-size: $token-font-size-lg;
+        }
+
+        h4 {
+            font-weight: 300;
+            font-family: $token-font-family-text;
+        }
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 20px;
+        height: 100%;
+
+        &--full {
+            width: 100% important;
+        }
+
+        &--fifty {
+            width: 50% !important;
+        }
+        
+        &--thirty {
+            width: 30%;
+        }
+
+        &--seventy{
+            width: 70%;
+        }
+    }
+
+    
+}
+.standard {
+    background-color: $token-button-primary-background-color-base;
+    min-width: 130px;
+    height: 45px;
+    border-radius: 10px;
+    margin: 20px 10px;
+    padding: 5px 10px;
+    font-family: $token-font-family-text;
+    color: $token-button-primary-text-color-base;
+    box-shadow: 3px 4px 9px -2px #aab4e7cc;
+    font-size: $token-font-size-md;
+    border: 0px solid white;
+    font-weight: 400;
+    &:hover {
+        background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
+        color: $token-button-primary-text-color-hover;
+        box-shadow:inset 5px 5px 6px #48297d, inset -2px -2px 6px #ba9dec;
+    }
+}
+
+.save {
+    background-color: $token-color-secondary-base;
+    min-width: 130px;
+    height: 45px;
+    border-radius: 10px;
+    margin: 20px 10px;
+    font-family: $token-font-family-text;
+    color: $token-button-primary-text-color-base;
+    font-size: $token-font-size-md;
+    border: 0px solid white;
+    font-weight: 400;
+    padding: 5px 10px;
+    &:hover{
+        background: linear-gradient(153.24deg, #008AFF 12.84%, #08B696 85.76%);
+        color: $token-button-primary-text-color-hover;
+        box-shadow: inset 4px 3px 6px 1px #0a6e74, inset -2px -2px 6px #83e3e9;
+    }
+}
+.delete {
+    background-color: $token-font-color-danger;
+    width: 130px;
+    height: 45px;
+    border-radius: 10px;
+    margin: 20px 10px;
+    font-family: $token-font-family-text;
+    color: $token-button-primary-text-color-base;
+    font-size: $token-font-size-md;
+    border: 0px solid white;
+    font-weight: 400;
+    box-shadow: 4px 3px 6px 1px #7a2828, 0px 0px 3px 6px #ffffff;
+    &:hover, &:focus {
+        background: linear-gradient(153.24deg, $token-font-color-danger 12.84%, #e72424 85.76%);
+        color: $token-button-primary-text-color-hover;
+        box-shadow: inset 4px 3px 6px 1px #7a2828, inset -2px -2px 6px #e72424;
+    }
+}
+.scale {
+    width: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+    .severely-underweight {
+        background-color: #dfff7e;
+        height: 50px;
+        margin: 2px; 
+        width: auto;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        color: white;
+        border-radius: 10px;
+    }
+    .underweight {
+        background-color: #ffd920;
+        height: 50px;
+        margin: 2px; margin: 2px; 
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+    }
+    .normal {
+        background-color: #0dff15;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        margin: 2px; 
+        width: auto;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+    }
+    .overweight {
+        background-color: #ffb020;
+        height: 50px;
+        margin: 2px; 
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+    }
+    .moderate-obese {
+        background-color: #e7530d;
+        height: 50px;
+        margin: 2px; 
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+    }
+    .severely-obese {
+        background-color: #dd2121;
+        height: 50px;
+        margin: 2px; 
+        display: flex;
+        align-items: center;
+        width: auto;
+        padding: 10px;
+        border-radius: 10px;
+        color: white;
+    }
+
+   
+}

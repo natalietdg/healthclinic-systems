@@ -1,0 +1,33 @@
+.new-patient-page-bg {
+    width: 100%;
+    height: auto;
+    min-height: 100%;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    backdrop-filter: blur(30px);
+    top: 10%;
+
+    @media (min-width: $token-media-query-lg) {
+        width: 100%;
+        height: 100%;
+    }
+
+    h2 {
+        font-family: $token-font-family-heading;
+        width: inherit;
+        font-size: 28px;
+    }
+
+    .new-patient-page {
+        display: flex;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        justify-content: center;
+        flex-direction: row;
+        align-items: flex-start;
+        backdrop-filter: blur(30px);
+
+    }
+}

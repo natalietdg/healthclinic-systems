@@ -1,0 +1,30 @@
+.page-pane {
+    width: auto;
+    max-height: auto;
+    height: auto;
+    padding: 40px;
+    background-color: white;
+    border-radius: 40px;
+    box-shadow: 10px 9px 38px #aab4e7c4, -3px -3px 6px #f1f1f1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    backdrop-filter: blur(30px);
+
+    @media(min-width: $token-media-query-lg) {
+        width: 80%;
+        height: auto;
+    }
+
+    &--child {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        width: 100%;
+    }
+    h3 {
+        text-align: left !important;
+    }
+    text-align: left !important;
+}

@@ -1,0 +1,94 @@
+.patient-database {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+
+    .done {
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        background-color: $token-color-secondary-base;
+        color: white;
+        position: relative;
+        left: 0%;
+        top: 50%;
+    }
+
+    .not-done {
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        background-color: #9ba8a9;
+        color: white;
+        position: relative;
+        left: 0%;
+        top: 50%;
+    }
+
+
+    .pagination {
+        margin-bottom: 40px;
+        margin-top: 40px;
+        background: white;
+        width: 320px;
+        border-radius: 20px;
+        box-shadow: 3px 4px 9px -2px #aab4e7cc;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    img {
+        width: 20px;
+        height: 20px;
+    }
+
+    span {
+        font-size: 12px;
+        box-shadow: 3px 5px 9px 0px #b8b9be;
+        display: none;
+        position: relative;
+        height: auto;
+        width: auto;
+        flex-direction: column;
+
+        a {
+            padding: 3px 3px;
+        }
+        
+    }
+    
+    button {
+        background: rgb(0, 0, 0, 0);
+        border: 0px;
+        font-family: $token-font-family-text;
+        color: $token-button-primary-background-color-base;
+        font-size: 17px;
+        text-align: center;
+    }
+
+    .button-array {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 3px 5px 9px 0px #b8b9be;
+        height: auto;
+        position: absolute;
+        width: 140px;
+        bottom: 7%;
+        right: var(--rightArray);
+    }
+    .current {
+        background: $token-button-primary-background-color-base;;
+        color: white;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+    }
+
+    
+}

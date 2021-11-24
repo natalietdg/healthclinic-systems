@@ -1,0 +1,14 @@
+.report-container {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: $token-media-query-lg) {
+        flex-direction: row;
+        align-content: space-around;
+        justify-content: space-around;
+    }
+}

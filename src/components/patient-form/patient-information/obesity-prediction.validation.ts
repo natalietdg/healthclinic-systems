@@ -1,0 +1,58 @@
+import * as Yup from 'yup';
+
+export const ObesityPredictionValidation = Yup.object().shape({
+    gender: Yup.mixed().oneOf(['Male', 'Female']).required(),
+    race: Yup.mixed().oneOf(['Chinese', 'Malay', 'Indian', 'Others']).required(),
+    healthAndFamilyHistory: Yup.object().shape({
+        BMI: Yup.number().min(1).required(),
+        familyHistory: Yup.mixed().oneOf(['Heart Attack', 'High Cholesterol', 'Heart Operation', 'Congenital Heart Disease', 
+                        'NO CONDITIONS'])
+    }),
+    dietaryIntakeInformation: Yup.object().shape({
+        alcoholFrequency: Yup.mixed().oneOf(['2-3 drinks per month', '2-3 drinks per week', '1-2 drinks per day', 
+                        '3 or more drinks per day']).required(),
+        meatFrequency: Yup.mixed().oneOf(['Once per week', '1-2 times per week', 'Daily', '2-3 times per month', 
+                        'Less than two times per month']).required(),
+        dairyFrequency: Yup.mixed().oneOf(['Once per week', '1-2 times per week', 'Daily', '2-3 times per month',
+                        'Less than two times per month', 'Never or once per month']).required(),
+        friedFoodFrequency: Yup.mixed().oneOf(['0-1 times per week', '2-4 times per week', 
+                        '5-6 times per week']).required(),
+        eggFrequency: Yup.mixed().oneOf(['0-1 eggs per week', '5-7 eggs per week', '2-4 eggs per week', 
+                        '8-11 eggs per week']).required(),
+        meatOverFriedFood: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        vegetarian: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        milkTeaCoffeeLowfat: Yup.mixed().oneOf(['7 times per week', '2-3 times per week', '4-6 times per week',
+                        '0-1 time per week']).required(),
+        dessertFrequency: Yup.mixed().oneOf(['2-3 times per week', '4-6 times per week', '0-1 times per week']).required(),
+        snacksFrequency: Yup.mixed().oneOf(["2-3 more times per week", '4-6 times per week', '0-1 time per week']).required(),
+        sodaCandyFrequency: Yup.mixed().oneOf(['2-3 times per week', '4-6 times per week', '0-1 times per week']).required(),
+        vegetableIntake: Yup.mixed().oneOf(['0 servings per day', '1-2 servings per day', '3-4 servings per day', '5 or more servings per day']).required(),
+        grainBeansIntake: Yup.mixed().oneOf(['0 servings per day', '1-2 servings per day', '3-4 servings per day']).required(),
+        fruitsIntake: Yup.mixed().oneOf(["0 servings per day", "1-2 servings per day", "3-4 servings per day"]).required(),
+        processedFoodIntake: Yup.mixed().oneOf(["Once per week or less", "1-2 per day", "2-3 per week"]).required(),
+        lessFiveOrangeYellowFruitVegeFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        lessThanThreeTimesNLMGMRCAYWeeklyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        lessThanTwoDairyServingsDailyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        moreThreeCoffeeFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        nitrateSaltMeatFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        smokedMeatFishFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        bbqIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        cruciferousVegetablesFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        fiveFruitFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+        fourCitrusFrequencyIntake: Yup.mixed().oneOf(['Yes', 'No']).required(),
+    
+    }),
+    lifestyleInformation: Yup.object().shape({
+        occupation: Yup.number().min(0).max(8).required(),
+        smokingFrequency: Yup.mixed().oneOf(['NON SMOKER', '1-9 cigarette sticks per day', '10-19 cigarette sticks per day', '20-29 cigarette sticks per day']).required(),
+        ergonomicWorkspace: Yup.mixed().oneOf(['No', 'Yes']),
+        computerHours: Yup.mixed().oneOf(["More than 6 hours", "Less than 6 hours", "Less than 4 hours"]).required(),
+        seatedHours: Yup.mixed().oneOf(["More than 8 hours", "Less than 6 hours", "Less than 4 hours"]).required(),
+        activeScale: Yup.number().min(1).max(10).required(),
+        durationOfSleep: Yup.mixed().oneOf(["More than 10 hours", "Less than 8 hours", "Less than 6 hours"]).required(),
+        stress: Yup.mixed().oneOf(['No', 'Yes']),
+        exerciseProgramme: Yup.mixed().oneOf(['No', 'Yes']),
+        personalTrainer: Yup.mixed().oneOf(['No', 'Yes']),
+        dietaryPlan: Yup.mixed().oneOf(['No', 'Yes']),
+    })
+})

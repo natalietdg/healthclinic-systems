@@ -1,0 +1,42 @@
+.checkbox {
+    font-family: $token-font-family-text;
+    width: auto;
+    height: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+
+    .required {
+        color: $token-font-color-danger;
+    }
+
+    .error {
+        color: $token-font-color-danger;
+    }
+
+    &--title {
+        font-size: 22px;
+        font-weight: $token-font-weight-normal;
+        margin: 10px 0px;
+        text-align: left;
+    }
+
+    &--input {
+        border: 0px solid grey;
+        box-shadow: 3px 2px 2px rgb(0 0 0 / 25%);
+        color: black;
+        padding: 3px 5px;
+    }
+
+    &--label {
+        padding: 10px 10px;
+        font-family: $token-font-family-text;
+        font-size: 20px;
+    }
+
+    &--values {
+        display:flex;
+        flex-direction: column;
+    }
+    
+}

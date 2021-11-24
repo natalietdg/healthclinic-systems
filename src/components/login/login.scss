@@ -1,0 +1,37 @@
+h3 {
+    font-family: $token-font-family-heading;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    .div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .button {
+        background-color: $token-button-primary-background-color-base;
+        width: 100px;
+        height: 40px;
+        border-radius: 10px;
+        font-family: $token-font-family-text;
+        color: $token-button-primary-text-color-base;
+        font-size: $token-font-size-md;
+        border: 0px solid white;
+        font-weight: 200;
+        margin: 20px 0px;
+        
+        box-shadow: 3px 5px 9px 0px #b8b9be, -3px -3px 6px #fff;
+        &:hover, &:active, &:focus {
+            color: $token-button-primary-text-color-hover;
+            box-shadow: 3px 5px 9px 0px rgba(0, 0, 0, 0.25);
+            border: 0px solid white;
+        }
+    }
+}
+

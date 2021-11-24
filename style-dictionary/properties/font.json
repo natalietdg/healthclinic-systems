@@ -1,0 +1,32 @@
+{
+    "font": {
+        "color": {
+            "default": { "value": "#3D3D3D" },
+            "success": { "value": "#10B9C4" },
+            "warning": { "value": "FF6F31" },
+            "danger": { "value": "#ed6767" }
+        },
+        "family": {
+            "heading": { "value": "'Bogue', serif" },
+            "text": { "value": "'Gill Sans MT', sans-serif" }
+        },
+        "weight": {
+            "normal": { "value": "400" },
+            "bold": { "value": "600" },
+            "bolder": { "value": "800" }
+        },
+        "size": {
+            "2xs": { "value": "0.625rem", "comment": "10px" },
+            "xs": { "value": "0.75rem", "comment": "12px" },
+            "sm": { "value": "0.875rem", "comment": "14px" },
+            "md": { "value": "1rem", "comment": "16px" },
+            "lg": { "value": "1.25rem", "comment": "20px" },
+            "xl": { "value": "1.5rem", "comment": "24px" },
+            "2xl": { "value": "2.25rem", "comment": "36px" },
+            "3xl": { "value": "3rem", "comment": "48px" },
+            "4xl": { "value": "4.5rem", "comment": "72px" },
+            "5xl": { "value": "5.625rem", "comment": "90px" }
+        }
+        
+    }
+}

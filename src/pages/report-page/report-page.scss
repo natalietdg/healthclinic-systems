@@ -1,0 +1,30 @@
+.report-page-bg {
+    width: 100%;
+    height: auto;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+
+    @media (min-width: $token-media-query-lg) {
+        width: 100%;
+        height: 100%;
+    }
+
+    h2 {
+        font-family: $token-font-family-heading;
+        width: inherit;
+        font-size: 28px;
+    }
+
+    .report-page {
+        display: flex;
+        backdrop-filter: blur(30px);
+        min-height: 100%;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+    }
+}

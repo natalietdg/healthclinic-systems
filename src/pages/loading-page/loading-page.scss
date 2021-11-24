@@ -1,0 +1,16 @@
+.loading-page {
+    h2 {
+        font-family: $token-font-family-heading;
+        font-size: 2.5rem;
+        text-align: center;
+        color: #5d00fb;
+    }
+    backdrop-filter: blur(30px);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    text-align: center;
+}

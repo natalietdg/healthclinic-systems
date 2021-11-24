@@ -1,0 +1,11 @@
+.alert-box {
+    font-family: $token-font-family-text;
+    display: var(--alert-box-display);
+    .error {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        color: $token-font-color-danger;
+        width: auto;
+    }
+}

@@ -1,0 +1,13 @@
+.row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px 0px;
+    height: auto;
+    align-items: center;
+    width: 100%;
+
+    @media(min-width: $token-media-query-lg) {
+        flex-direction: row;
+    }
+}

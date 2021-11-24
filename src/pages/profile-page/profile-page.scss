@@ -1,0 +1,29 @@
+.profile-page-bg {
+    width: 100%;
+    height: auto;
+    background-position-y: -188px;
+    background-position: center;
+    background-size: cover;
+    position: absolute;
+    padding: 20px 0px;
+    top: 10%;
+    @media (min-width: $token-media-query-lg) {
+        width: 100%;
+    }
+
+    h2 {
+        font-family: $token-font-family-heading;
+        width: inherit;
+        font-size: 28px;
+    }
+
+    .profile-page {
+        display: flex;
+        padding: 20px 0px;
+        width: 100%;
+        height: auto;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+    }
+}
