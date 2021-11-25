@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PatientDatabse from 'Components/patient-database';
+import {Helmet} from 'react-helmet';
 import  { fetchPatientList } from 'Services/patient.services';
 import { fetchBackground } from 'Services/background.services';
 

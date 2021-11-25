@@ -29,7 +29,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ blob, name, disabled=false, c
                 }
                 else {
                     if (typeof(blob)=='string') {
-                        setImgUrl(blob);
+                        if(blob!='') setImgUrl(blob);
                     }
                     else if(blob?.image) {  
                         setImgUrl(blob.image.full_size);
