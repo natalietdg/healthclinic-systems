@@ -21,7 +21,7 @@ export const fetchProfile = async(userID: number) => {
 
             return userProfile;
         });
-        return normalizer.response.profile(response[0]);
+        return normalizer.model.profile(response[0]);
     }
     catch(err: any) {
         return { error: err.message }
@@ -29,8 +29,6 @@ export const fetchProfile = async(userID: number) => {
 }
 export const updateProfile = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-    
-    const accessToken = localStorage.getItem('accessToken');
     
     var normalizedData = normalizer.response.profile(data);
     var dataWithoutProfilePic:any = null;
@@ -57,14 +55,11 @@ export const updateProfile = async(data: any) => {
             response = await axios({
                 method: 'PUT',
                 url: `${url}/userprofiles/${data.profileID}/`,
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`        
-                },
                 data: dataWithoutProfilePic
             });
         }
         
-        return normalizer.response.profile(response.data);
+        return normalizer.model.profile(response.data);
     }
     catch(err: any) {
         return { error: err.message }
