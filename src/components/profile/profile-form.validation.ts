@@ -1,7 +1,11 @@
 import * as Yup from 'yup';
 
 export const ProfileFormValidation = Yup.object().shape({
-    username: Yup.string().required(),
-    password: Yup.string().matches(/^(?=.*[AZa-z])(?=.*\d+)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}/).required(),
-    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], "Passwords don't match").required()
+    name: Yup.string().min(3).max(100).required(),
+    phone: Yup.string().matches(/01(\d){8}/g).required(),
+    email: Yup.string().min(3).max(100).matches(/(([\w0-9!@#$^&*]){0,100})[a-z]*mail.com/).required(),
+    dob: Yup.string().matches(/\d{4}-\d{2}-\d{2}/).required(),
+    ic: Yup.string().max(12).required(),
+    gender: Yup.mixed().oneOf(['M', 'F']).required(),
+    race: Yup.mixed().oneOf(['CH', 'MA', 'IN', 'OT']).required(),
 })

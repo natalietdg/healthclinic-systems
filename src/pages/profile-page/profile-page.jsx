@@ -11,7 +11,18 @@ import { Helmet } from 'react-helmet';
 const ProfilePage = ({}) => {
     const [ bg, setBg ] = useState({});
     const [ toasterProps, setToasterProps ] = useState({type: '', message: ''});
-    const [profileInformation, setProfileInformation] = useState({});
+    const [profileInformation, setProfileInformation] = useState({
+        profileID: -1,
+        image: '',
+        ic:  -1,
+        name:  '',
+        email: '',
+        phone: '',
+        gender:  '',
+        race:  '',
+        dob:  '',
+        userID: -1,
+    });
     const [ id, setID ] = useState(-1);
     
     useEffect(()=> {

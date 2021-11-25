@@ -10,13 +10,19 @@ export const fetchProfile = async(userID: number) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `${url}/users/${userID}`,
+            url: `${url}/usersprofiles/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
+        }).then((response: any) => {
+            const userProfile = response.data.filter((profile: any) => {
+                profile.user == userID
+            });
+
+            return userProfile;
         });
 
-        return normalizer.response.profile(response.data);
+        return normalizer.response.profile(response);
     }
     catch(err: any) {
         return { error: err.message }
