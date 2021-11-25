@@ -34,10 +34,10 @@ export const updateProfile = async(data: any) => {
     var dataWithoutProfilePic:any = null;
 
     if(normalizedData.image instanceof Blob) {
+        console.log('image');
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
         dataWithoutProfilePic =  new FormData();
-        dataWithoutProfilePic.append('name', tempData.name);
         dataWithoutProfilePic.append('image', tempData.image);
     }
     else {
