@@ -40,7 +40,7 @@ export const updateProfile = async(data: any) => {
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
         dataWithoutProfilePic =  new FormData();
-        dataWithoutProfilePic.append('username', tempData.username);
+        dataWithoutProfilePic.append('name', tempData.name);
         dataWithoutProfilePic.append('image', tempData.image);
     }
     else {
@@ -50,7 +50,7 @@ export const updateProfile = async(data: any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `${url}/users/${data.userID}/`,
+            url: `${url}/usersprofiles/${data.profileID}/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
@@ -60,7 +60,7 @@ export const updateProfile = async(data: any) => {
         if(dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `${url}/users/${data.userID}/`,
+                url: `${url}/usersprofiles/${data.profileID}/`,
                 headers: {
                     'Authorization': `Bearer ${accessToken}`        
                 },

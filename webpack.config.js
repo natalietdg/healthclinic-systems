@@ -32,7 +32,6 @@ module.exports = {
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist'),
-        clean: true,
         publicPath: '/',
     },
     plugins: [
@@ -82,9 +81,7 @@ module.exports = {
                         ascii_only: true
                     },
                 },
-                cache: true,
                 parallel: true,
-                sourceMap: true,
                 extractComments: false,
             }),
             new JsonMinimizerPlugin()
