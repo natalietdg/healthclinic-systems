@@ -15,7 +15,7 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
     const [ profileInformation, setProfileInformation ] = useState<any>({ 
         profileID: -1,
         image: '',
-        ic:  -1,
+        ic:  '',
         name:  '',
         email: '',
         phone: '',
@@ -116,7 +116,7 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                 <div className="divider--fifty">
                     <Row>
                         <div style={{width: 'inherit'}}>
-                            <TextInput onChange = {handleTextChange} value={profileInformation?.name} required error={!!error?.name} name="name" label={t('label.name')} />
+                            <TextInput onChange = {handleTextChange} value={profileInformation?.name} required error={!!error?.name} name="name" label={t('label.fullName')} />
                             <AlertBox error={error?.name} name={t('label.name')} />
                         </div>
                     </Row>
@@ -137,12 +137,12 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
 
                     <Row>
                         <div style={{width: 'inherit'}}>
-                            <TextInput onChange = {handleTextChange} value={profileInformation?.phone} required error={!!error?.phone} name="phone" label={t('label.phone')} />
+                            <TextInput onChange = {handleTextChange} value={profileInformation?.phone} required error={!!error?.phone} name="phone" label={t('label.phoneNumber')} />
                             <AlertBox error={error?.phone} name={t('label.phone')} />
                         </div>
                     </Row>
 
-                    <Row>
+                    <Row style={{justifyContent: 'flex-start'}}>
                         <RadioInput 
                             multiple={false}
                             values={[
@@ -167,7 +167,7 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                         <AlertBox error={error?.gender} name={t('label.gender')} />
                     </Row>
 
-                    <Row>
+                    <Row style={{justifyContent: 'flex-start'}}>
                         <RadioInput 
                             values={[
                                 {
