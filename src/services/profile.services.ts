@@ -19,9 +19,12 @@ export const fetchProfile = async(userID: number) => {
                 return profile.user == userID
             });
 
+            console.log('userprofile', userProfile);
+
             return userProfile;
         });
-
+        console.log('response', response);
+        console.log('normalizer.response.profile(response)', normalizer.response.profile(response));
         return normalizer.response.profile(response);
     }
     catch(err: any) {
