@@ -81,7 +81,12 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                 stripUnknown: false
             });
 
-            onSubmit(value);
+            let tempProfile = {
+                ...value,
+                profileID: profileInformation.profileID
+            }
+
+            onSubmit(tempProfile);
         }
         catch(err: any) {
 
