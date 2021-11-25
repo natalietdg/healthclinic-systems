@@ -33,6 +33,19 @@ const HomePage: React.FC<HomePageProp> = () => {
 
     useEffect(()=> {
         getBackground();
+
+        const user = localStorage.getItem('user') || '-1';
+        const userID = localStorage.getItem('userID') || -1;
+        const accessTokenExpiry = localStorage.getItem('accessTokenExpiry') || -1;
+        if(user!='-1' && userID!=-1) {
+            const now = Math.trunc(new Date().getTime() /1000);
+
+            if(now < accessTokenExpiry) {
+                setTimeout(function() {
+                    history.push('/');
+                }, 3000);
+            }
+        }
     },[])
 
     useEffect(()=> {
