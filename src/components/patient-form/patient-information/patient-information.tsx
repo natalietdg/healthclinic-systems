@@ -47,7 +47,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         fullName: '',
         phoneNumber: '',
         email: '',
-        profilePicBlob: {},
+        profilePicBlob: '',
         ic: '',
         gender: "",
         race: '',
@@ -204,7 +204,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             if (personalInformation.profilePicBlob instanceof Blob) {
                 value.profilePicBlob = personalInformation.profilePicBlob;
             }
-            else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
+            else if (typeof(personalInformation.profilePicBlob) != 'string' && personalInformation.profilePicBlob != '' && !(personalInformation.profilePicBlob instanceof Blob)){
                 setError({profilePicBlob: 'Profile Pic is not a file'});
                 throw 'Not a file';
             }
@@ -370,7 +370,8 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
             if (personalInformation.profilePicBlob instanceof Blob) {
                 value.profilePicBlob = personalInformation.profilePicBlob;
             }
-            else if ((personalInformation.profilePicBlob != {} && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
+           
+            if ((personalInformation.profilePicBlob!= '' && typeof(personalInformation.profilePicBlob) != 'string')&& !(personalInformation.profilePicBlob instanceof Blob)){
                 setError({profilePicBlob: 'Profile Pic is not a file'});
                 throw 'Not a file';
             }
@@ -736,7 +737,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                     <Col>
                         <Row>
                             <div style={{width: 'inherit'}}>
-                                <TextInput subtitle={modalComment?.updated? `Last updated: ${new Date(modalComment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`:''} key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.diagnosis} name="diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${new Date(modalComment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
+                                <TextInput subtitle={modalComment?.updated? `Last updated: ${new Date(modalComment?.updated).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`:''} key={modalComment?.id} value={modalComment?.diagnosis} required error={!!error?.diagnosis} name="modalComment.diagnosis" label={`${t('label.diagnosis')}` + (modalComment?.created!=undefined? `  Date: ${new Date(modalComment?.created).toLocaleDateString([], {year: 'numeric',  month: 'long',   day: 'numeric'})}`: '')} onChange={handleCommentChange} />      
                                 <AlertBox error={error?.diagnosis} name={t('label.diagnosis')} />
                             </div>
                         </Row>
@@ -754,7 +755,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 
                 </Row>
                 <Row> 
-                    <button aria-label="submit comment button" className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img alt="new comment"  style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
+                    <button aria-label="submit comment button" className="standard" id={modalComment.arrayIndex} onClick={createEditComment}>{modalComment?.id == -1? 'New Comment': <><img alt="edit comment"  style={{width: '20px', height: '20px'}} src="/assets/images/edit.png" />Edit Comment</>}</button>
                 </Row>
 
             </Modal>
@@ -1754,7 +1755,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                             
                         <div className="header">   
                             <h2>Diagnosis & Comments</h2>
-                            <button aria-label="new comment button" className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img alt="new comment"  className="img" style={{filter: 'brightness(0) invert(1)'}} src="/assets/images/add-grey.png"/>New Comment</button>
+                            <button aria-label="new comment button" className="standard" onClick={()=> {toggleCommentModalVisibility(true)}}><img alt="new comment"  className="img" style={{filter: 'brightness(0) invert(1)', width: '20px', height: '20px'}} src="/assets/images/add-grey.png"/>New Comment</button>
                            
                             
                         </div>
