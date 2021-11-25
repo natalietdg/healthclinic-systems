@@ -42,7 +42,7 @@ const HomePage: React.FC<HomePageProp> = () => {
 
             if(now < accessTokenExpiry) {
                 setTimeout(function() {
-                    history.push('/');
+                    history.push('/home');
                 }, 3000);
             }
         }
