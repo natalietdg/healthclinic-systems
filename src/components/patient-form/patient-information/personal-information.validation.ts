@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
 
 export const PersonalInformationFormValidation = Yup.object().shape({
-    profilePicBlob: Yup.string().optional(),
     fullName: Yup.string().min(3).max(100).required(),
     phoneNumber: Yup.string().matches(/01(\d){8}/g).required(),
     email: Yup.string().min(3).max(100).matches(/(([\w0-9!@#$^&*]){0,100})[a-z]*mail.com/).required(),

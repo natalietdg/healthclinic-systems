@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { lazy } from 'react';
 import HomePage from 'Pages/home-page';
 import ProfilePage from 'Pages/profile-page';
 import ReportPage from 'Pages/report-page';
