@@ -454,12 +454,12 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-        .then((response) => { 
+        .then((response: any) => { 
             return response.data.filter((MLReport: any, index: any)=> {
         
                 return MLReport.patient==patientID && MLReport.response != 'error'
                 })
-            }).then( (MLReports)=> {
+            }).then( (MLReports: any)=> {
                 const parsedReports = MLReports.map((report: any) => {
                     let input_data = JSON.parse(report.input_data);
                     let full_response = JSON.parse(report.full_response.replace(/'/g, "\""));
