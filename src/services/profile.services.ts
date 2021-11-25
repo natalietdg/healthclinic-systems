@@ -32,7 +32,7 @@ export const updateProfile = async(data: any) => {
     
     const accessToken = localStorage.getItem('accessToken');
     
-    var normalizedData = normalizer.model.profile(data);
+    var normalizedData = normalizer.response.profile(data);
     var dataWithoutProfilePic:any = null;
 
     if(normalizedData.image instanceof Blob) {
@@ -50,9 +50,6 @@ export const updateProfile = async(data: any) => {
         var response = await axios({
             method: 'PUT',
             url: `${url}/userprofiles/${data.profileID}/`,
-            headers: {
-                'Authorization': `Bearer ${accessToken}`        
-            },
             data: normalizedData
         });
 

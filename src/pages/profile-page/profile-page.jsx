@@ -60,9 +60,10 @@ const ProfilePage = ({}) => {
     }
 
     const submit = async(profileInfo) => {
-
+        console.log('profileInfo', profileInfo);
         let tempData = {
             ...profileInfo,
+            profileID: profileInfo.profileID,
             userID: id
         }
 
