@@ -31,7 +31,7 @@ export const updateProfile = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
     
     const accessToken = localStorage.getItem('accessToken');
-
+    
     var normalizedData = normalizer.model.profile(data);
     var dataWithoutProfilePic:any = null;
 
