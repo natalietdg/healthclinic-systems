@@ -16,7 +16,7 @@ export const fetchProfile = async(userID: number) => {
             },
         }).then((response: any) => {
             const userProfile = response.data.filter((profile: any) => {
-                profile.user == userID
+                return profile.user == userID
             });
 
             return userProfile;
