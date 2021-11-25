@@ -398,7 +398,7 @@ export const generateObesityPrediction = async(data: any) => {
         const response:any = await axios({
             method: 'POST',
             responseType: 'json',
-            url: `${url}/obesity/v1/comorbidities_classifier/predict`,
+            url: `http:/127.0.0.1:8000/obesity/v1/comorbidities_classifier/predict`,
             data: normalizedData,
            
             headers: {

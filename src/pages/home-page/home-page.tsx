@@ -41,9 +41,7 @@ const HomePage: React.FC<HomePageProp> = () => {
             const now = Math.trunc(new Date().getTime() /1000);
 
             if(now < accessTokenExpiry) {
-                setTimeout(function() {
-                    history.push('/home');
-                }, 3000);
+                history.push('/home');
             }
         }
     },[])
