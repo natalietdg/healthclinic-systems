@@ -62,7 +62,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         familyHistory: { 
             heartAttack: '',
             highCholesterol: '',
-            heartOperation: true,
+            heartOperation: 'Yes',
             congenitalHeartDisease: '',
             noCondition: '', //if this is true, then healthHistory is false
            
@@ -100,15 +100,15 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const defaultLifestyleInformation = {
         occupation: 4,
         smokingFrequency: 'NON SMOKER',
-        ergonomicWorkspace: false,
+        ergonomicWorkspace: 'No',
         computerHours: "Less than 4 hours",
         seatedHours: "Less than 4 hours",
-        activeScale: 10,
+        activeScale: '10',
         durationOfSleep: "Less than 6 hours",
-        stress: false,
-        exerciseProgramme: false,
-        personalTrainer: false,
-        dietaryPlan: false
+        stress: 'No',
+        exerciseProgramme: 'No',
+        personalTrainer: 'No',
+        dietaryPlan: 'No'
     }
 
     const [ error, setError ] = useState<any>({});
