@@ -52,7 +52,6 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                 [name]: blob
             }
     
-            console.log('profileInformation', profileInformation);
             setProfileInformation({
                 ...profileInformation, [name]: blob
             });

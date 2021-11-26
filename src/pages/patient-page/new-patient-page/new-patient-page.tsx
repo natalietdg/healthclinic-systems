@@ -168,12 +168,11 @@ const NewPatientPage = () => {
         else if (type=="prediction") {
             response = await generatePrediction(patientInformation);
             if (!response?.error) {
-                console.log('resopnse', response);
                 let data: any = {
                     reportID: response.request_id,
                     patientID: patientInformation.patientID
                 }
-                console.log('resopnse', response);
+                
                 response = await setPatientandFeedbackMLRequest(data);
                 if(response.error) {
                     setToaster({
