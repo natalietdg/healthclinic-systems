@@ -46,9 +46,10 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                 abortEarly: false,
                 stripUnknown: false
             });
-    
+
             let tempData = {
                 ...value,
+                profileID: profileInformation.profileID,
                 [name]: blob
             }
     
