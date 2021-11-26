@@ -94,14 +94,14 @@ const NewPatientPage = () => {
                 }, 5000)
                 
             }
-            else if (redirect=='prediction' || redirect=='create comment' || redirect == 'edit comment' || redirect=='save') {
+            else if (redirect=='create' || redirect=='prediction' || redirect=='create comment' || redirect == 'edit comment' || redirect=='save') {
                 setTimeout(function () {
                     history.push(`/patient/view/${encode(patient?.reportID)}`)
                 }, 5000)
             }
             else {
                 setTimeout(function () {
-                    history.push(`/patient/view/${encode(patient?.reportID)}`)
+                    history.push(`/patients`)
                 }, 5000)
             }
         }
@@ -161,6 +161,8 @@ const NewPatientPage = () => {
                     type: 'success',
                     message: 'Patient created successfully'
                 });                
+
+                setPatient(response);
             }
            
             
