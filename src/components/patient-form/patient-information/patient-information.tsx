@@ -44,25 +44,25 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     const defaultPersonalInformation = {
         patientID: -1,
-        fullName: 'Mary Wu',
-        phoneNumber: '01334543234',
-        email: 'marywu@mail.com',
+        fullName: '',
+        phoneNumber: '',
+        email: '',
         profilePicBlob: '',
-        ic: '211111108765',
-        gender: "F",
-        race: 'IN',
-        dateOfBirth: '2021-11-11'   
+        ic: '',
+        gender: "",
+        race: '',
+        dateOfBirth: ''   
     };
 
     const defaultHealthAndFamilyHistory = {
         weight: -1,
         height: -1,
-        BMI: 19,
+        BMI: -1,
      
         familyHistory: { 
             heartAttack: '',
             highCholesterol: '',
-            heartOperation: 'Yes',
+            heartOperation: '',
             congenitalHeartDisease: '',
             noCondition: '', //if this is true, then healthHistory is false
            
@@ -70,45 +70,45 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const defaultDietaryIntakeInformation = {
-        alcoholFrequency: "1-2 drinks per day",
-        meatFrequency: "1-2 times per week",
-        dairyFrequency: "Once per week",
-        friedFoodFrequency: "0-1 times per week",
-        eggFrequency: "0-1 eggs per week",
-        meatOverFriedFood: "No",
-        vegetarian: "No",
-        milkTeaCoffeeLowfat: "0-1 time per week", 
-        dessertFrequency: "0-1 times per week",
-        snacksFrequency: "0-1 time per week",
-        sodaCandyFrequency: "0-1 times per week",
-        vegetableIntake: "0 servings per day",
-        grainBeansIntake: "0 servings per day",
-        fruitsIntake: "0 servings per day",
-        processedFoodIntake: "Once per week or less",
-        fiveFruitFrequencyIntake: "No",
-        fourCitrusFrequencyIntake: "No",
-        lessFiveOrangeYellowFruitVegeFrequencyIntake: "No",
-        cruciferousVegetablesFrequencyIntake:"No",
-        smokedMeatFishFrequencyIntake: "No",
-        nitrateSaltMeatFrequencyIntake: "No",
-        bbqIntake: "No",
-        moreThreeCoffeeFrequencyIntake: "No",
-        lessThanTwoDairyServingsDailyIntake: "No",
-        lessThanThreeTimesNLMGMRCAYWeeklyIntake: "No" 
+        alcoholFrequency: "",
+        meatFrequency: "",
+        dairyFrequency: "",
+        friedFoodFrequency: "",
+        eggFrequency: "",
+        meatOverFriedFood: "",
+        vegetarian: "",
+        milkTeaCoffeeLowfat: "", 
+        dessertFrequency: "",
+        snacksFrequency: "",
+        sodaCandyFrequency: "",
+        vegetableIntake: "",
+        grainBeansIntake: "",
+        fruitsIntake: "",
+        processedFoodIntake: "",
+        fiveFruitFrequencyIntake: "",
+        fourCitrusFrequencyIntake: "",
+        lessFiveOrangeYellowFruitVegeFrequencyIntake: "",
+        cruciferousVegetablesFrequencyIntake:"",
+        smokedMeatFishFrequencyIntake: "",
+        nitrateSaltMeatFrequencyIntake: "",
+        bbqIntake: "",
+        moreThreeCoffeeFrequencyIntake: "",
+        lessThanTwoDairyServingsDailyIntake: "",
+        lessThanThreeTimesNLMGMRCAYWeeklyIntake: "" 
     }
 
     const defaultLifestyleInformation = {
-        occupation: 4,
-        smokingFrequency: 'NON SMOKER',
-        ergonomicWorkspace: 'No',
-        computerHours: "Less than 4 hours",
-        seatedHours: "Less than 4 hours",
-        activeScale: '10',
-        durationOfSleep: "Less than 6 hours",
-        stress: 'No',
-        exerciseProgramme: 'No',
-        personalTrainer: 'No',
-        dietaryPlan: 'No'
+        occupation: -1,
+        smokingFrequency: '',
+        ergonomicWorkspace: '',
+        computerHours: "",
+        seatedHours: "",
+        activeScale: '',
+        durationOfSleep: "",
+        stress: '',
+        exerciseProgramme: '',
+        personalTrainer: '',
+        dietaryPlan: ''
     }
 
     const [ error, setError ] = useState<any>({});
