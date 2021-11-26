@@ -1,7 +1,7 @@
 import { isNil, isUndefined, omitBy } from 'lodash';
 
 const PatientModel = (data:any) => {
-    const id = data.id? data.id:(data.url.split('s')[1]).split('/')[1];
+    const id = data.id? data.id:data.url.charAt(data.url.length-2);
    
     return omitBy({
         dateOfBirth: data.dob,
