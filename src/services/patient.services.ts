@@ -319,7 +319,7 @@ export const fetchPatientList = async() => {
             },
            
         })
-        const patientsData = response.data.map(async(patient: any)=> {
+        const patientsData = response.data.map((patient: any)=> {
             return normalizer.model.patient(patient);
         });
         return patientsData;
