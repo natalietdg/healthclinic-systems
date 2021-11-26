@@ -32,7 +32,7 @@ const ProfilePage = ({}) => {
     },[])
 
     const fetchProfileInformation = async() => {
-        const userID = localStorage.getItem('userID') || -1;
+        const userID = localStorage.getItem('userID') || '-1';
         const response = await fetchProfile(parseInt(userID));
 
         if(userID !== -1) {

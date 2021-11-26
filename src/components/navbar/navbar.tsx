@@ -5,6 +5,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { refreshAccessToken } from 'Services/auth.services';
 import {Toaster} from 'Components/shared'
+import { fetchProfile } from 'Services/profile.services';
 import { dateAtom, DateType } from 'Recoil/date.atom';
 import { styles } from 'Components/shared/animation';
 import { loginAtom, LoginAtomType } from 'Recoil/login.atom';
@@ -23,6 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         message: '',
         type: ''
     });
+    const [image, setImage] = useState<any>();
     let location = useLocation();
     let history = useHistory();
     const { t } = useTranslation();
@@ -57,7 +59,31 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         idleInterval = setInterval(idleTimer, 900000);
     });
 
+    const fetch = async() => {
+        const userID = localStorage.getItem('userID') || '-1';
+
+        if(userID!=='-1') {
+            const response = await fetchProfile(parseInt(userID));
+
+            if(response.image!=null && response.image!='') {
+                setImage(response.image);
+            }
+        }
+        else {
+            setToaster({
+                type: 'errors',
+                message: 'You are not logged in! Redirecting you to the home page...'
+            });
+
+            setTimeout(function() {
+                history.push('/');
+            }, 3000);
+        }
+        
+    }
+
     useEffect(() => {
+        fetch();
         startTimer();
         const interval = setInterval(() => {
             refresh();
