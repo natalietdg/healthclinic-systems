@@ -101,7 +101,7 @@ const NewPatientPage = () => {
             }
             else {
                 setTimeout(function () {
-                    history.push(`/patients`);
+                    history.push(`/patient/view/${encode(patient?.reportID)}`)
                 }, 5000)
             }
         }
