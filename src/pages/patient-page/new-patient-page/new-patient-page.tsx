@@ -167,10 +167,9 @@ const NewPatientPage = () => {
         }
         else if (type=="prediction") {
             response = await generatePrediction(patientInformation);
-
             if (!response?.error) {
                 let data: any = {
-                    reportID: response.request_id,
+                    reportID: response.id,
                     patientID: patientInformation.patientID
                 }
                 response = await setPatientandFeedbackMLRequest(data);
