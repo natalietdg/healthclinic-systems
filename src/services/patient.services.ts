@@ -411,10 +411,10 @@ export const generateObesityPrediction = async(data: any) => {
 
 export const setPatientandFeedbackMLRequest = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
-    
+    console.log('data', data);
     const accessToken = localStorage.getItem('accessToken');
     let tempData = omitBy({
-        patient: data.patientID? data.patientID: undefined,
+        patient: data.patientID? parseInt(data.patientID): undefined,
         feedback: data.feedback? data.feedback : undefined
     }, (value) => isUndefined(value));
     try {
