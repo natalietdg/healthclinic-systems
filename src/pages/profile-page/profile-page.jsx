@@ -52,7 +52,7 @@ const ProfilePage = ({}) => {
             });
             setProfileInformation(response);
 
-            useTimeout(() => {
+            setTimeout(() => {
                 location.reload();
             }, 3000);
         }
