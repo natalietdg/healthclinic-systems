@@ -38,6 +38,10 @@ export const updateProfile = async(data: any) => {
         normalizedData = _.omit(normalizedData, ['image']);
         dataWithoutProfilePic =  new FormData();
         dataWithoutProfilePic.append('image', tempData.image);
+        dataWithoutProfilePic.append('name', tempData.name);
+        dataWithoutProfilePic.append('ic', tempData.ic);
+        dataWithoutProfilePic.append('phone', tempData.phone);
+        dataWithoutProfilePic.append('email', tempData.email);
     }
     else {
         normalizedData = _.omit(normalizedData, ['image']);
