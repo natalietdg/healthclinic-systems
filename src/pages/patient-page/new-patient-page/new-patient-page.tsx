@@ -120,29 +120,47 @@ const NewPatientPage = () => {
 
             if(response.error) {
                 toasterMessage = 'Create comment failed';
+                setToaster({
+                    type: 'errors',
+                    message: 'Create comment failed'
+                });
             }
             else {
-                toasterMessage = 'Comment created successfully';
+                setToaster({
+                    type: 'errors',
+                    message: 'Comment created successfully'
+                });
             }
         }
         else if(type=='edit comment') {
             response = await editComments(patientInformation);
             if(response.error) {
-                toasterMessage = 'Edit comment failed';
+                setToaster({
+                    type: 'errors',
+                    message: 'Edit comment failed'
+                });
             }
             else {
-                toasterMessage = 'Comment edited successfully';
+                setToaster({
+                    type: 'errors',
+                    message: 'Comment edited successfully'
+                });
             }
         }
         else if (type=='create' || type=='add another') {
             response = await createPatient(patientInformation);
 
             if(response.error) {
-                toasterMessage = 'Create patient failed';
+                setToaster({
+                    type: 'errors',
+                    message: 'Create patient failed'
+                });
             }
             else {
-                setPatient(response);
-                toasterMessage = 'Patient created successfully';                
+                setToaster({
+                    type: 'errors',
+                    message: 'Patient created successfully'
+                });                
             }
            
             
@@ -157,10 +175,17 @@ const NewPatientPage = () => {
                 }
                 response = await setPatientandFeedbackMLRequest(data);
                 if(response.error) {
-                    toasterMessage = 'Create prediction report failed';
+                    setToaster({
+                        type: 'errors',
+                        message: 'Create prediction report failed'
+                    });
                 }
                 else {
-                    toasterMessage = 'Prediction report created successfully';
+
+                    setToaster({
+                        type: 'success',
+                        message: 'Prediction report created successfully'
+                    });
                 }
             }
         }
@@ -168,21 +193,20 @@ const NewPatientPage = () => {
             response = await savePatientInformation(patientInformation);
             setPatient(response);
             if(response.error) {
-                toasterMessage = 'Update patient failed';
+                setToaster({
+                    type: 'errors',
+                    message: 'Update patient failed'
+                });
             }
             else {
-                toasterMessage = 'Patient updated successfully';
+
+                setToaster({
+                    type: 'success',
+                    message: 'Patient updated successfully'
+                });
             }
             
         }
-    
-        if(response.error) toasterType = 'errors';
-        else toasterType = 'success';
-        
-        setToaster({
-            type: toasterType,
-            message: toasterMessage
-        });
 
         if(!response.error) {
             setRedirect(type);

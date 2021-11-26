@@ -319,14 +319,9 @@ export const fetchPatientList = async() => {
             },
            
         })
-        const patientsData = await Promise.all(response.data.map(async(patient: any)=> {
-            let tempPatient = patient;
-            let tempPatientID = (patient.url.split('s')[1]).split('/')[1];
-            let comments = await fetchComments(tempPatientID);
-        
-            tempPatient.comments = comments;
-            return normalizer.model.patient(tempPatient);
-        }));
+        const patientsData = response.data.map(async(patient: any)=> {
+            return normalizer.model.patient(patient);
+        });
         return patientsData;
     }
     catch(err:any) {

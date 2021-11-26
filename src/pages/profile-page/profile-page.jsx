@@ -51,6 +51,10 @@ const ProfilePage = ({}) => {
                 message: 'Profile fetched successfully'
             });
             setProfileInformation(response);
+
+            useTimeout(() => {
+                location.reload();
+            }, 3000);
         }
     }
 
