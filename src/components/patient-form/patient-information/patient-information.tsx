@@ -44,14 +44,14 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     const defaultPersonalInformation = {
         patientID: -1,
-        fullName: '',
-        phoneNumber: '',
-        email: '',
+        fullName: 'Mary Wu',
+        phoneNumber: '01334543234',
+        email: 'marywu@mail.com',
         profilePicBlob: '',
-        ic: '',
-        gender: "",
-        race: '',
-        dateOfBirth: ''   
+        ic: '211111108765',
+        gender: "F",
+        race: 'IN',
+        dateOfBirth: '2021-11-11'   
     };
 
     const defaultHealthAndFamilyHistory = {
