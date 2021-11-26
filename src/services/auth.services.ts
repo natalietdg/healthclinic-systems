@@ -99,6 +99,7 @@ export const logout = async() => {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('accessTokenExpiry');
         localStorage.removeItem('user');
+        localStorage.removeItem('userID');
 
         return "success";
     }

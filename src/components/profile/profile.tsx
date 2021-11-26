@@ -36,17 +36,48 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
         setProfileInformation({...profileInformation, [name]: value });
     }
 
-    const handleImageChange = (action: string, name: string, blob: Blob) => {
-        setProfileInformation({
-            ...profileInformation, [name]: blob
-        });
+    const handleImageChange = async(action: string, name: string, blob: Blob) => {
 
-        let tempData = {
-            ...profileInformation,
-            [name]: blob
+        try {
+            const value = await ProfileFormValidation.validateSync(omitBy({
+                ...profileInformation,
+            }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
+                strict: true,
+                abortEarly: false,
+                stripUnknown: false
+            });
+    
+            let tempData = {
+                ...value,
+                [name]: blob
+            }
+    
+            console.log('profileInformation', profileInformation);
+            setProfileInformation({
+                ...profileInformation, [name]: blob
+            });
+            onSubmit(tempData);
         }
+        catch(err: any) {
 
-        onSubmit(tempData);
+            if(err.inner) {
+                var errorArray = err.inner.map((error: any) => {
+                    let { path, value}: any = errorHandler.validation(error);
+     
+                     return {
+                         [path] : t(`${value}`, {field: t(`label.${path}`)})
+                     };
+                 });
+     
+                 errorArray = errorArray.reduce(function(errorObj: any, curr: any) {
+                     errorObj[Object.keys(curr)[0]] = Object.values(curr)[0]
+                     return errorObj;
+                 })
+               
+                 setError(errorArray);
+            }
+            
+        }
     }
 
     const handleSelectRadio = (name: string, value: any) => {
@@ -81,7 +112,12 @@ const Profile: React.FC<ProfileProps> = ({ profileData, onSubmit }) => {
                 stripUnknown: false
             });
 
-            onSubmit(value);
+            let tempProfile = {
+                ...value,
+                profileID: profileInformation.profileID
+            }
+
+            onSubmit(tempProfile);
         }
         catch(err: any) {
 

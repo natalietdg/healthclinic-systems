@@ -10,19 +10,18 @@ export const fetchProfile = async(userID: number) => {
     try {
         const response = await axios({
             method: 'GET',
-            url: `${url}/usersprofiles/`,
+            url: `${url}/userprofiles/`,
             headers: {
                 'Authorization': `Bearer ${accessToken}`        
             },
         }).then((response: any) => {
             const userProfile = response.data.filter((profile: any) => {
-                profile.user == userID
+                return profile.user == userID
             });
 
             return userProfile;
         });
-
-        return normalizer.response.profile(response);
+        return normalizer.model.profile(response[0]);
     }
     catch(err: any) {
         return { error: err.message }
@@ -31,16 +30,14 @@ export const fetchProfile = async(userID: number) => {
 export const updateProfile = async(data: any) => {
     const url = process.env.PUBLIC_PATH;
     
-    const accessToken = localStorage.getItem('accessToken');
-
-    var normalizedData = normalizer.model.profile(data);
+    var normalizedData = normalizer.response.profile(data);
     var dataWithoutProfilePic:any = null;
 
     if(normalizedData.image instanceof Blob) {
+        console.log('image');
         let tempData = normalizedData;
         normalizedData = _.omit(normalizedData, ['image']);
         dataWithoutProfilePic =  new FormData();
-        dataWithoutProfilePic.append('name', tempData.name);
         dataWithoutProfilePic.append('image', tempData.image);
     }
     else {
@@ -50,25 +47,19 @@ export const updateProfile = async(data: any) => {
     try {
         var response = await axios({
             method: 'PUT',
-            url: `${url}/usersprofiles/${data.profileID}/`,
-            headers: {
-                'Authorization': `Bearer ${accessToken}`        
-            },
+            url: `${url}/userprofiles/${data.profileID}/`,
             data: normalizedData
         });
 
         if(dataWithoutProfilePic) {
             response = await axios({
                 method: 'PUT',
-                url: `${url}/usersprofiles/${data.profileID}/`,
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`        
-                },
+                url: `${url}/userprofiles/${data.profileID}/`,
                 data: dataWithoutProfilePic
             });
         }
         
-        return normalizer.response.profile(response.data);
+        return normalizer.model.profile(response.data);
     }
     catch(err: any) {
         return { error: err.message }

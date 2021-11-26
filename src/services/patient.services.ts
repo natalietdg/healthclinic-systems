@@ -319,14 +319,9 @@ export const fetchPatientList = async() => {
             },
            
         })
-        const patientsData = await Promise.all(response.data.map(async(patient: any)=> {
-            let tempPatient = patient;
-            let tempPatientID = (patient.url.split('s')[1]).split('/')[1];
-            let comments = await fetchComments(tempPatientID);
-        
-            tempPatient.comments = comments;
-            return normalizer.model.patient(tempPatient);
-        }));
+        const patientsData = response.data.map(async(patient: any)=> {
+            return normalizer.model.patient(patient);
+        });
         return patientsData;
     }
     catch(err:any) {
@@ -398,7 +393,7 @@ export const generateObesityPrediction = async(data: any) => {
         const response:any = await axios({
             method: 'POST',
             responseType: 'json',
-            url: `${url}/obesity/v1/comorbidities_classifier/predict`,
+            url: `http:/127.0.0.1:8000/obesity/v1/comorbidities_classifier/predict`,
             data: normalizedData,
            
             headers: {
@@ -454,12 +449,12 @@ export const fetchAllObesityPredictionReport = async(patientID: any) => {
                 'Authorization': `Bearer ${accessToken}`
             }
         })
-        .then((response) => { 
+        .then((response: any) => { 
             return response.data.filter((MLReport: any, index: any)=> {
         
                 return MLReport.patient==patientID && MLReport.response != 'error'
                 })
-            }).then( (MLReports)=> {
+            }).then( (MLReports: any)=> {
                 const parsedReports = MLReports.map((report: any) => {
                     let input_data = JSON.parse(report.input_data);
                     let full_response = JSON.parse(report.full_response.replace(/'/g, "\""));

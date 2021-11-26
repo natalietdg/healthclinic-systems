@@ -51,6 +51,10 @@ const ProfilePage = ({}) => {
                 message: 'Profile fetched successfully'
             });
             setProfileInformation(response);
+
+            useTimeout(() => {
+                location.reload();
+            }, 3000);
         }
     }
 
@@ -60,9 +64,9 @@ const ProfilePage = ({}) => {
     }
 
     const submit = async(profileInfo) => {
-
         let tempData = {
             ...profileInfo,
+            profileID: profileInfo.profileID,
             userID: id
         }
 

@@ -3,7 +3,7 @@ import { omitBy, isUndefined } from 'lodash';
 const ProfileResponse = (data: any) => {
     return omitBy({
         id: data.profileID || -1,
-        image: data.image|| '',
+        image: data.image || '',
         ic: data.ic || -1,
         name: data.name || '',
         email: data.email || '',
