@@ -193,7 +193,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
         try{
            
-            var value = await PersonalInformationFormValidation.validateSync(omitBy({
+            var value:any = await PersonalInformationFormValidation.validateSync(omitBy({
                 ...personalInformation,
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,
@@ -359,7 +359,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                dateOfBirth: personalInformation.dateOfBirth
            }
            
-            var value = await PersonalInformationFormValidation.validateSync(omitBy({
+            var value:any = await PersonalInformationFormValidation.validateSync(omitBy({
                 ...patientData,
             }, (value)=> isEmpty(value) || value==='' || isUndefined(value)), {
                 strict: true,

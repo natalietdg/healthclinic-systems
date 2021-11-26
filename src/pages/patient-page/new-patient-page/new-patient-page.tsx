@@ -101,7 +101,7 @@ const NewPatientPage = () => {
             }
             else {
                 setTimeout(function () {
-                    history.push(`/patients`);
+                    history.push(`/patient/view/${encode(patient?.reportID)}`)
                 }, 5000)
             }
         }
@@ -127,7 +127,7 @@ const NewPatientPage = () => {
             }
             else {
                 setToaster({
-                    type: 'errors',
+                    type: 'success',
                     message: 'Comment created successfully'
                 });
             }
@@ -142,7 +142,7 @@ const NewPatientPage = () => {
             }
             else {
                 setToaster({
-                    type: 'errors',
+                    type: 'success',
                     message: 'Comment edited successfully'
                 });
             }
@@ -158,7 +158,7 @@ const NewPatientPage = () => {
             }
             else {
                 setToaster({
-                    type: 'errors',
+                    type: 'success',
                     message: 'Patient created successfully'
                 });                
             }
