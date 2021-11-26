@@ -89,9 +89,7 @@ const NewPatientPage = () => {
             if(redirect=='add another'){
                 setPatient({});
                
-                setTimeout(function () {
-                    history.push('/new-patient');
-                }, 5000)
+                location.reload();
                 
             }
             else if (redirect=='create' || redirect=='prediction' || redirect=='create comment' || redirect == 'edit comment' || redirect=='save') {
@@ -193,7 +191,7 @@ const NewPatientPage = () => {
         }
         else {
             response = await savePatientInformation(patientInformation);
-            setPatient(response);
+            
             if(response.error) {
                 setToaster({
                     type: 'errors',
@@ -201,7 +199,7 @@ const NewPatientPage = () => {
                 });
             }
             else {
-
+                setPatient(response);
                 setToaster({
                     type: 'success',
                     message: 'Patient updated successfully'
