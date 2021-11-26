@@ -51,10 +51,6 @@ const ProfilePage = ({}) => {
                 message: 'Profile fetched successfully'
             });
             setProfileInformation(response);
-
-            setTimeout(() => {
-                location.reload();
-            }, 3000);
         }
     }
 
@@ -83,6 +79,10 @@ const ProfilePage = ({}) => {
                 type: 'success',
                 message: 'Profile updated successfully'
             });
+
+             setTimeout(() => {
+                location.reload();
+            }, 3000);
 
             setProfileInformation(response);
         }
