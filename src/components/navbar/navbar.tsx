@@ -24,7 +24,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
         message: '',
         type: ''
     });
-    const [image, setImage] = useState<any>();
+    const [image, setImage] = useState<any>('/assets/images/user.png');
     let location = useLocation();
     let history = useHistory();
     const { t } = useTranslation();
@@ -187,7 +187,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                             return (link.name=='placeholder')? <h3 key={index}>{pageName}</h3> : link.name=='profile'? 
                             <li key={index} style={{padding: '7px'}}>
                                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <button aria-label="Profile button" onMouseEnter={showDropdown} className="profile-button"><img alt={link.aria} className="profile" src="/assets/images/user.png" /></button>
+                                <button aria-label="Profile button" onMouseEnter={showDropdown} className="profile-button"><img alt={link.aria} className="profile" src={image} /></button>
                                     <ul onMouseLeave={hideDropdown} className="dropdown--ul">
                                         <li className="dropdown--li"><Link to="/profile">My Profile</Link></li>
                                         <li className="dropdown--li"><button aria-label={link.aria} onClick={logOut}>Logout</button></li>
