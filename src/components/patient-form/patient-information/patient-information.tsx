@@ -98,7 +98,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     }
 
     const defaultLifestyleInformation = {
-        occupation: -1,
+        occupation: '',
         smokingFrequency: '',
         ergonomicWorkspace: '',
         computerHours: "",
@@ -139,6 +139,10 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const [ healthAndFamilyHistory, setHealthAndFamilyHistory ] = useState<any>(defaultHealthAndFamilyHistory);
     const [ dietaryIntake, setDietaryIntake ] = useState<any>(defaultDietaryIntakeInformation);
     const [ lifestyleInformation, setLifestyleInformation ] = useState<any>(defaultLifestyleInformation);
+
+    useEffect(() => {
+        console.log('lifestyleInformaiton', lifestyleInformation);
+    },[lifestyleInformation]);
 
     useEffect(()=> {
 
