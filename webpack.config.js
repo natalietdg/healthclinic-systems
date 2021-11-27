@@ -119,9 +119,9 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpe?g|png|gif|svg)$/i,
+                test: /\.(jpe?g|png|gif|svg|ttf|eot)$/i,
                 type: 'asset/resource',
-                use: ['file-loader']
+                use: ['file-loader'],
             },
             {
                 test: /\.(s?css|css|sass)$/i,
