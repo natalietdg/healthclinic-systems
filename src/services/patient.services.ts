@@ -402,6 +402,8 @@ export const generateObesityPrediction = async(data: any) => {
             },
         });
 
+        if(response.error) throw 'Could not created obesity report';
+
         return response?.data;
     }
     catch(err:any) {

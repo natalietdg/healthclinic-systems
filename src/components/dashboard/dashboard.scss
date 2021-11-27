@@ -61,7 +61,7 @@
 
         button {
             width: 19vw;
-            height: 9vw;
+            height: 10%;
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
             color: $token-button-primary-text-color-hover;
             box-shadow: -6px -7px 10px -1px #e5e5e5, 7px 6px 16px -5px #3f1b7c;
@@ -76,6 +76,7 @@
             font-size: 20px;
             border: 0px;
             border-radius: 10px;
+            padding: 20px;
 
             &:hover {
                 background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
