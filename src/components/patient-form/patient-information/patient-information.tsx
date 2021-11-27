@@ -140,10 +140,6 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
     const [ dietaryIntake, setDietaryIntake ] = useState<any>(defaultDietaryIntakeInformation);
     const [ lifestyleInformation, setLifestyleInformation ] = useState<any>(defaultLifestyleInformation);
 
-    useEffect(() => {
-        console.log('lifestyleInformaiton', lifestyleInformation);
-    },[lifestyleInformation]);
-
     useEffect(()=> {
 
         if(!isEmpty(data) && !data.error) {
