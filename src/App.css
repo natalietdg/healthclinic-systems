@@ -14,14 +14,41 @@
 }
 
 @font-face {
-  font-family: 'Bogue, serif';
-  src: local('Bogue', url(./fonts/Bogue\ Regular.ttf) format('ttf'));
+  font-family: 'Bogue';
+  src: url(./fonts/Bogue\ Regular.ttf) format('ttf'),
+        url(./fonts/Bogue\ Black.ttf) format('ttf'),
+        url(./fonts/Bogue\ Black\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Bold.ttf) format('ttf')
+        url(./fonts/Bogue\ Bold\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Extrabold.ttf) format('ttf')
+        url(./fonts/Bogue\ Extrabold\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Light.ttf) format('ttf')
+        url(./fonts/Bogue\ Light\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Medium.ttf) format('ttf')
+        url(./fonts/Bogue\ Medium\ Italic.ttf) format('ttf');
   font-weight: 400;
 }
 
 @font-face {
-  font-family:'Gill Sans MT, sans-serif';
-  src: local('Gill Sans MT', url(./fonts/gill-sans-mt.ttf) format('ttf')); 
+  font-family:'Gill Sans MT';
+  src: url(./fonts/gill-sans-mt.ttf) format('ttf'),
+        url(./fonts/Gill\ Sans\ MT\ Bold.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Bold\ Condensed.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Bold\ Extra\ Condensed.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Bold\ Italic.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Book.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Book\ Italic.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Condensed.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Extra\ Bold.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Heavy.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Heavy\ Italic.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Light.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Light\ Italic.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Medium.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Medium\ Italic.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Ultra\ Bold.ttf) format('ttf')
+        url(./fonts/Gill\ Sans\ MT\ Ultra\ Bold\ Condensed.ttf) format('ttf'); 
 }
 
 .App-header {
