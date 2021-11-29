@@ -26,13 +26,17 @@
         url(./fonts/Bogue\ Light.ttf) format('ttf')
         url(./fonts/Bogue\ Light\ Italic.ttf) format('ttf')
         url(./fonts/Bogue\ Medium.ttf) format('ttf')
-        url(./fonts/Bogue\ Medium\ Italic.ttf) format('ttf');
+        url(./fonts/Bogue\ Medium\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Semibold.ttf) format('ttf')
+        url(./fonts/Bogue\ Semibold\ Italic.ttf) format('ttf')
+        url(./fonts/Bogue\ Thin.ttf) format('ttf')
+        url(./fonts/Bogue\ Thin\ Italic.ttf) format('ttf');
   font-weight: 400;
   font-display: swap;
 }
 
 @font-face {
-  font-family:'Gill Sans MT';
+  font-family:'Gill Sans Mt';
   src: url(./fonts/gill-sans-mt.ttf) format('ttf'),
         url(./fonts/Gill\ Sans\ MT\ Bold.ttf) format('ttf')
         url(./fonts/Gill\ Sans\ MT\ Bold\ Condensed.ttf) format('ttf')

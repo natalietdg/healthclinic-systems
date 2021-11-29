@@ -1,5 +1,5 @@
 .radio-input {
-    font-family: 'Gill Sans MT';
+    font-family: 'Gill Sans Mt', sans-serif;
     width: auto;
     height: auto;
     display: flex;
@@ -32,7 +32,7 @@
         border: 1px solid grey;
         padding: 0px 10px;
         font-size: 20px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
 
         &:focus {
             outline: none;
@@ -51,7 +51,7 @@
 
     &--label {
         padding: 10px 0px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         font-size: 20px;
     }
 

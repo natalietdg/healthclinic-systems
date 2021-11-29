@@ -19,14 +19,14 @@
 .homepage {
 
     &-title {
-        font-family: Bogue;
+        font-family: 'Bogue', serif;
         font-size: $token-font-size-4xl;
         text-align: left;
         margin: 25px 0px;
     }
 
     &-subtitle {
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         font-size: $token-font-size-xl;
         color: $token-color-secondary-base;
         font-weight: 540;
@@ -43,14 +43,14 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: Bogue;
+        font-family: 'Bogue', serif;
 
         .heading {
             font-size: $token-font-size-xl;
         }   
 
         .text {
-            font-family: 'Gill Sans MT';
+            font-family: 'Gill Sans Mt', sans-serif;
             font-size: $token-font-size-md;
         }
 
@@ -63,7 +63,7 @@
         border-radius: 10px;
         width: 100px;
         height: 40px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         font-size: $token-font-size-md;
         position: absolute;
         box-shadow: 3px 5px 9px 0px #b8b9be, -3px -3px 6px #fff;
@@ -81,7 +81,7 @@
         width: 100px;
         height: 40px;
         border-radius: 10px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         color: $token-button-primary-text-color-base;
         font-size: $token-font-size-md;
         border: 1px solid rgb(0, 0, 0, 0);
@@ -108,7 +108,7 @@
         border-radius: 10px;
         padding: 10px;
         margin: 20px 10px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         color: $token-button-primary-text-color-base;
         font-size: $token-font-size-md;
         border: 0px solid white;

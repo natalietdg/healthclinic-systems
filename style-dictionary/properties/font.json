@@ -8,7 +8,7 @@
         },
         "family": {
             "heading": { "value": "'Bogue'" },
-            "text": { "value": "'Gill Sans MT'" }
+            "text": { "value": "'Gill Sans Mt', sans-serif" }
         },
         "weight": {
             "normal": { "value": "400" },
