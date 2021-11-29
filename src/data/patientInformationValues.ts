@@ -48,7 +48,7 @@ export const heightFunction = () => {
     var height = [];
 
     for(let x = 100; x<= 250; x++) {
-        height.push((x/100).toString());
+        height.push((x).toString());
     }
     
 
