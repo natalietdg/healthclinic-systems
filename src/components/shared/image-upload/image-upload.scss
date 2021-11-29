@@ -17,7 +17,7 @@
         box-shadow: 3px 5px 9px 0px rgb(0 0 0 / 25%);
         border-radius: 20px;
         margin: 10px;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
         &:hover, &:focus{
             cursor: pointer;
             border: 1px dashed $token-button-primary-background-color-base;
@@ -64,7 +64,7 @@
         font-size: 20px;
         cursor: pointer;
         font-weight: 400;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
 
         &:hover{
             background: linear-gradient(102.45deg, #8F60DF 0%, #6D3BC2 72.25%, #5D379E 98.73%);
