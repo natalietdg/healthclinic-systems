@@ -172,7 +172,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
 
     useEffect(()=> {
         if(healthAndFamilyHistory.weight> 0 && healthAndFamilyHistory.height > 0) {
-            const BMI = Math.trunc(healthAndFamilyHistory.weight/(healthAndFamilyHistory.height * healthAndFamilyHistory.height));
+            const BMI = Math.trunc(healthAndFamilyHistory.weight/((healthAndFamilyHistory.height/100) * (healthAndFamilyHistory.height/100)));
          
             const status = BMIStatus(BMI);
             setHealthAndFamilyHistory({...healthAndFamilyHistory, BMI: BMI})

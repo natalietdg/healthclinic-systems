@@ -13,6 +13,17 @@
   }
 }
 
+@font-face {
+  font-family: 'Bogue, serif';
+  src: local('Bogue', url(./fonts/Bogue\ Regular.ttf) format('ttf'));
+  font-weight: 400;
+}
+
+@font-face {
+  font-family:'Gill Sans MT, sans-serif';
+  src: local('Gill Sans MT', url(./fonts/gill-sans-mt.ttf) format('ttf')); 
+}
+
 .App-header {
   background-color: #282c34;
   height: auto;
