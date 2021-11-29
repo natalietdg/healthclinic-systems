@@ -1,5 +1,5 @@
 h3 {
-    font-family: Bogue;
+    font-family: 'Bogue', serif;
 }
 
 .login-form {
@@ -19,7 +19,7 @@ h3 {
         width: 100px;
         height: 40px;
         border-radius: 10px;
-        font-family: 'Gill Sans MT';
+        font-family: 'Gill Sans Mt', sans-serif;
         color: $token-button-primary-text-color-base;
         font-size: $token-font-size-md;
         border: 0px solid white;

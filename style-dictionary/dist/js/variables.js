@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Mon, 29 Nov 2021 12:30:17 GMT
+ * Generated on Mon, 29 Nov 2021 14:49:59 GMT
  */
 
 export const ButtonPrimaryTextColorBase = "#ffffff";
@@ -35,7 +35,7 @@ export const FontColorSuccess = "#10B9C4";
 export const FontColorWarning = "FF6F31";
 export const FontColorDanger = "#ed6767";
 export const FontFamilyHeading = "'Bogue'";
-export const FontFamilyText = "'Gill Sans MT'";
+export const FontFamilyText = "'Gill Sans Mt', sans-serif";
 export const FontWeightNormal = "400";
 export const FontWeightBold = "600";
 export const FontWeightBolder = "800";
