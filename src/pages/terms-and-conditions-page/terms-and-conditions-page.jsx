@@ -91,6 +91,7 @@ const TermsAndConditionsPage = () => {
             <ul>
             <li>By email: {email}</li>
             </ul>
+            <p>This web application was designed and coded by Zara Basyirah bt MD Shah and Natalie Leong Yuin May, for Aktiv Care Clinic.</p>
         </div>
     )
 }
