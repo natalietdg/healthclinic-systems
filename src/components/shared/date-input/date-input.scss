@@ -1,7 +1,7 @@
 .date-input {
     width: auto;
     font-size: 22px;
-    font-family: $token-font-family-text;
+    font-family: 'Gill Sans MT';
     width: auto;
     height: 80px;
     padding: 0px 10px;
@@ -31,7 +31,7 @@
         box-shadow: 3px 4px 9px -2px #aab4e7cc;
         padding: 0px 10px;
         font-size: 20px;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
 
         &:focus {
             outline: none;
@@ -49,7 +49,7 @@
 
     option {
         font-size: 20px;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
 
         &:hover, &:focus{
             outline: none;

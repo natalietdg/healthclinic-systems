@@ -1,5 +1,5 @@
 .radio-input {
-    font-family: $token-font-family-text;
+    font-family: 'Gill Sans MT';
     width: auto;
     height: auto;
     display: flex;
@@ -32,7 +32,7 @@
         border: 1px solid grey;
         padding: 0px 10px;
         font-size: 20px;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
 
         &:focus {
             outline: none;
@@ -51,7 +51,7 @@
 
     &--label {
         padding: 10px 0px;
-        font-family: $token-font-family-text;
+        font-family: 'Gill Sans MT';
         font-size: 20px;
     }
 

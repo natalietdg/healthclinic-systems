@@ -37,7 +37,7 @@
             box-shadow: inset -5px 5px 5px #b9b9b9, inset -3px -1px 7px #ffffff;
         }
         &--button {
-            font-family: $token-font-family-heading;
+            font-family: Bogue;
             font-size: 22px;
             background-color: rgb(0,0,0,0);
             border: 0px solid;
@@ -82,13 +82,13 @@
 
     .divider {
         h3 {
-            font-family: $token-font-family-heading;
+            font-family: Bogue;
             font-size: $token-font-size-lg;
         }
 
         h4 {
             font-weight: 300;
-            font-family: $token-font-family-text;
+            font-family: 'Gill Sans MT';
         }
 
         display: flex;
@@ -123,7 +123,7 @@
     border-radius: 10px;
     margin: 20px 10px;
     padding: 5px 10px;
-    font-family: $token-font-family-text;
+    font-family: 'Gill Sans MT';
     color: $token-button-primary-text-color-base;
     box-shadow: 3px 4px 9px -2px #aab4e7cc;
     font-size: $token-font-size-md;
@@ -142,7 +142,7 @@
     height: 45px;
     border-radius: 10px;
     margin: 20px 10px;
-    font-family: $token-font-family-text;
+    font-family: 'Gill Sans MT';
     color: $token-button-primary-text-color-base;
     font-size: $token-font-size-md;
     border: 0px solid white;
@@ -160,7 +160,7 @@
     height: 45px;
     border-radius: 10px;
     margin: 20px 10px;
-    font-family: $token-font-family-text;
+    font-family: 'Gill Sans MT';
     color: $token-button-primary-text-color-base;
     font-size: $token-font-size-md;
     border: 0px solid white;

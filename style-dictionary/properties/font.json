@@ -7,8 +7,8 @@
             "danger": { "value": "#ed6767" }
         },
         "family": {
-            "heading": { "value": "'Bogue', serif" },
-            "text": { "value": "'Gill Sans MT', sans-serif" }
+            "heading": { "value": "'Bogue'" },
+            "text": { "value": "'Gill Sans MT'" }
         },
         "weight": {
             "normal": { "value": "400" },
