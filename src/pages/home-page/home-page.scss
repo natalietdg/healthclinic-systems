@@ -19,7 +19,7 @@
 .homepage {
 
     &-title {
-        font-family: 'Bogue', serif;
+        font-family: 'Bogue Regular', serif;
         font-size: $token-font-size-4xl;
         text-align: left;
         margin: 25px 0px;
@@ -43,7 +43,7 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-family: 'Bogue', serif;
+        font-family: 'Bogue Regular', serif;
 
         .heading {
             font-size: $token-font-size-xl;
