@@ -21,16 +21,15 @@ const DateInput: React.FC<DateInputProps> = ({label, name, required, error, valu
     const { t } = useTranslation();
 
     const handleSelect = (e: any) => {
+        console.log('e', e.target?.value);
         onChange(name, e.target?.value);
     }
-
-
 
     return (
         <div className="date-input">
             <h4 className={classNames("date-input--title", { error: !!error })}>{label} {required? <strong className="required">*</strong>: ''}</h4>
                
-            <input aria-label={label} name={name} className={classNames("date-input--input", {'error-input': !!error })} value={date} type='date' list="options" defaultValue={defaultValue} onChange={(e:any) => handleSelect(e)}/>
+            <input aria-label={label} name={name} className={classNames("date-input--input", {'error-input': !!error })} value={date} type='date' list="options" onChange={(e:any) => handleSelect(e)}/>
         </div>
     )
 }
