@@ -263,7 +263,7 @@ const PatientDatabse: React.FC<PatientDatabseProps> = ({patients, columnProps, v
                 patientData = {
                     "ID": filteredData.patientID || filteredData['ID'],
                     'Email': filteredData.email || filteredData['Email'],
-                    'Full Name':  <a href={`/patient/view/${encode(filteredData.patientID) || filteredData['ID']}}`}>{filteredData.fullName || filteredData['Full Name']}</a>,
+                    'Full Name':  <a href={`/report/${encode(filteredData.reportID)}` || filteredData['Report']}>{filteredData.fullName || filteredData['Full Name']}</a>,
                     
                     'IC': filteredData.ic || filteredData['IC'],
                     "Phone Number": filteredData.phoneNumber || filteredData['Phone Number'],
