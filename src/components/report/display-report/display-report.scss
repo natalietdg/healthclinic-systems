@@ -9,7 +9,7 @@
     align-content: center;
 
     h2 {
-        font-family: 'Bogue Regular', serif;
+        font-family: 'Bogue', serif;
         width: inherit;
         color: #5d00fb;
         padding: 20px 10px;
@@ -71,7 +71,7 @@
     }
 
     .name {
-        font-family: 'Bogue Regular', serif;
+        font-family: 'Bogue', serif;
         width: auto;
         position: relative;
         color: #5d00fb;
@@ -98,7 +98,7 @@
     }
 
     .title {
-        font-family: 'Bogue Regular', serif;
+        font-family: 'Bogue', serif;
         width: auto;
         position: relative;
         color: $token-button-primary-background-color-base;
@@ -106,7 +106,7 @@
     }
 
     .subtitle {
-        font-family: 'Bogue Regular', serif;
+        font-family: 'Bogue', serif;
         width: auto;
         position: relative;
         border-bottom: 2px solid $token-button-primary-background-color-base;
