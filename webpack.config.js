@@ -94,7 +94,7 @@ module.exports = {
         port: process.env.PORT || 8080,
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
+        extensions: [".ts", ".tsx", ".jsx", ".js", ".json", ".ttf"],
         alias: {
             Components: path.resolve(__dirname, 'src/components'),
             Pages: path.resolve(__dirname, 'src/pages'),
@@ -106,6 +106,7 @@ module.exports = {
             Helpers: path.resolve(__dirname, 'src/helpers'),
             src: path.resolve(__dirname, 'src'),
             Data: path.resolve(__dirname, 'src/data'),
+            Fonts: path.resolve(__dirname, 'src/fonts')
         },
     },
     module: {
@@ -120,8 +121,15 @@ module.exports = {
             },
             {
                 test: /\.(jpe?g|png|gif|svg|ttf|eot)$/i,
+                include: path.resolve(__dirname, 'src/fonts'),
                 type: 'asset/resource',
-                use: ['file-loader'],
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: "[name].[ext]",
+                        outputPath: "fonts/"
+                    }
+                }],
             },
             {
                 test: /\.(s?css|css|sass)$/i,

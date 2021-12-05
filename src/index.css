@@ -15,7 +15,18 @@ code {
 
 @font-face {
   font-family: 'Bogue';
-  src: local('Bogue'), url("./fonts/Bogue\ Regular.ttf") format('truetype');
+  src: url("./fonts/Bogue\ Regular.ttf") format('truetype'),
+        url("./fonts/Bogue\ Black.ttf") format('truetype'),
+        url("./fonts/Bogue\ Black\ Italic.ttf") format('truetype'),
+        url("./fonts/Bogue\ Bold.ttf") format('truetype'),
+        url("./fonts/Bogue\ Bold\ Italic.ttf") format('truetype'),
+        url("./fonts/Bogue\ Extrabold.ttf") format('truetype'),
+        url("./fonts/Bogue\ Extrabold\ Italic.ttf") format('truetype'),
+        url("./fonts/Bogue\ Italic.ttf") format('truetype'),
+        url("./fonts/Bogue\ Light.ttf") format('truetype'),
+        url("./fonts/Bogue\ Light\ Italic.ttf") format('truetype'),
+        url("./fonts/Bogue\ Medium.ttf") format('truetype'),
+        url("./fonts/Bogue\ Medium\ Italic.ttf") format('truetype');
   font-display: swap;
 }
 
