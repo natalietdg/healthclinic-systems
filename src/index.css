@@ -32,22 +32,6 @@ code {
 
 @font-face {
   font-family:'Gill Sans Mt';
-  src: url('../dist/fonts/gill-sans-mt.ttf') format('truetype'),
-        url('../dist/fonts/Gill\ Sans\ MT\ Bold.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Bold\ Condensed.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Bold\ Extra\ Condensed.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Bold\ Italic.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Book.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Book\ Italic.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Condensed.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Extra\ Bold.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Heavy.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Heavy\ Italic.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Light.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Light\ Italic.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Medium.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Medium\ Italic.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Ultra\ Bold.ttf') format('truetype')
-        url('../dist/fonts/Gill\ Sans\ MT\ Ultra\ Bold\ Condensed.ttf') format('truetype'); 
+  src: url('../dist/fonts/gill-sans-mt.ttf') format('truetype');
   font-display: swap;
 }

@@ -49,6 +49,10 @@ module.exports = {
                     from: 'assets/**/*',
                 },
                 {
+                    context: 'src/',
+                    from: 'fonts/**/*',
+                },
+                {
                     from: 'src/*.html',
                     to: 'dist/'
                 }
