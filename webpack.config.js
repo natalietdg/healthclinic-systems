@@ -49,10 +49,6 @@ module.exports = {
                     from: 'assets/**/*',
                 },
                 {
-                    context: 'src/',
-                    from: 'fonts/**/*',
-                },
-                {
                     from: 'src/*.html',
                     to: 'dist/'
                 }
@@ -124,16 +120,16 @@ module.exports = {
                 }
             },
             {
-                test: /\.(jpe?g|png|gif|svg|ttf|eot)$/i,
-                include: path.resolve(__dirname, 'src/fonts'),
+                test: /\.(jpe?g|png|gif|svg|eot)$/i,
                 type: 'asset/resource',
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: "[name].[ext]",
-                        outputPath: "fonts/"
-                    }
-                }],
+                use: ['file-loader'],
+            },
+            {
+                test: /\.(ttf)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: './fonts/[name][ext]'
+                }
             },
             {
                 test: /\.(s?css|css|sass)$/i,
