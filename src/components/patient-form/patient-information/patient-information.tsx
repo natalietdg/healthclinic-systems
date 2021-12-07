@@ -376,6 +376,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
                 throw 'Not a file';
             }
 
+            setError({});
            onSubmit(value, action);
         }
         catch(err: any) {
@@ -409,9 +410,7 @@ const PatientInformation:React.FC<PatientInformationProps> = ({onSubmit, page, d
         }
     }
 
-    const handleTextChange = (name: string, value: any) => {
-        setToaster({ type:'success', message: value});
-     
+    const handleTextChange = (name: string, value: any) => {     
         let tempError = error;
         if(tempError.hasOwnProperty(name)) tempError = _.omit(tempError, [name]);
 

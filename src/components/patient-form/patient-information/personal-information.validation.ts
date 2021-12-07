@@ -2,7 +2,7 @@ import * as Yup from 'yup';
 
 export const PersonalInformationFormValidation = Yup.object().shape({
     fullName: Yup.string().min(3).max(100).required(),
-    phoneNumber: Yup.string().matches(/01(\d){8}/).required(),
+    phoneNumber: Yup.string().matches(/01(\d){8}$/).required(),
     email: Yup.string().min(3).max(100).matches(/(([\w0-9!@#$^&*]){0,100})[a-z]*mail.com/).required(),
     dateOfBirth: Yup.string().matches(/\d{4}-\d{2}-\d{2}/).required(),
     ic: Yup.string().max(12).required(),

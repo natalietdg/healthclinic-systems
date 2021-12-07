@@ -20,6 +20,8 @@ interface NavbarProps {
 const Navbar: React.FC<NavbarProps> = ({}) => {
     const [logoutState, setLogoutState] = useRecoilState<LoginAtomType>(loginAtom);
     const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
+    const [ timer, setTimer ] = useState<any>(false);
+    const [ countDown, setCountDown ] = useState<any>(0);
     const [ toaster, setToaster ] = useState<any>({
         message: '',
         type: ''
@@ -29,35 +31,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     let history = useHistory();
     const { t } = useTranslation();
     var name = '';
-
-    var idleInterval: any = ''; //900000
-
-    function startTimer() {
-        idleInterval = setInterval(idleTimer, 900000)
-    }
-
-    function idleTimer() {
-        alert('You have been idle for too long. Automtically logging you out now...');
-        clearInterval(idleInterval);
-        idleInterval = 0;
-        logOut();
-        history.push('/');
-    }
-
-    window.addEventListener('keydown', function() {
-        clearInterval(idleInterval);
-        idleInterval = setInterval(idleTimer, 900000);
-    });
-
-    window.addEventListener('mousemove', function() {
-        clearInterval(idleInterval);
-        idleInterval = setInterval(idleTimer, 900000);
-    });
-
-    window.addEventListener('scroll', function() {
-        clearInterval(idleInterval);
-        idleInterval = setInterval(idleTimer, 900000);
-    });
 
     const fetch = async() => {
         const userID = localStorage.getItem('userID') || '-1';
@@ -83,12 +56,39 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     }
 
     useEffect(() => {
+        if(timer==true) {
+            setCountDown(setInterval(() => {
+                alert('You have been idle for too long. Automtically logging you out now...');
+                logOut();
+                history.push('/');
+                setCountDown(clearInterval(countDown));
+            }, 900000))
+        }
+        else if(timer==false) {
+            setCountDown(clearInterval(countDown));
+            setTimer(true);
+        }
+    },[timer])
+
+    useEffect(() => {
         fetch();
-        startTimer();
-        const interval = setInterval(() => {
+        setTimer(true);
+        setTimeout(() => {
             refresh();
         }, 240000); //4 minutes
-        return () => clearInterval(interval);
+
+        window.addEventListener('keydown', function() {
+            setTimer(false);
+        });
+    
+        window.addEventListener('mousemove', function() {
+            setTimer(false);
+        });
+    
+        window.addEventListener('scroll', function() {
+            setTimer(false);
+        });
+
       }, []);
 
     const refresh = async() => {
