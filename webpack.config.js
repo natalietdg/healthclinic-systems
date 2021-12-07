@@ -98,7 +98,7 @@ module.exports = {
         port: process.env.PORT || 8080,
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".jsx", ".js", ".json", ".ttf"],
+        extensions: [".ts", ".tsx", ".jsx", ".js", ".json"],
         alias: {
             Components: path.resolve(__dirname, 'src/components'),
             Pages: path.resolve(__dirname, 'src/pages'),
@@ -110,7 +110,6 @@ module.exports = {
             Helpers: path.resolve(__dirname, 'src/helpers'),
             src: path.resolve(__dirname, 'src'),
             Data: path.resolve(__dirname, 'src/data'),
-            Fonts: path.resolve(__dirname, 'src/fonts')
         },
     },
     module: {
