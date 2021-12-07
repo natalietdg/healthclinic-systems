@@ -19,7 +19,6 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({}) => {
     const [logoutState, setLogoutState] = useRecoilState<LoginAtomType>(loginAtom);
-    const [ dates, setDates ] = useRecoilState<DateType>(dateAtom);
     const [ timer, setTimer ] = useState<any>(false);
     const [ countDown, setCountDown ] = useState<any>(0);
     const [ toaster, setToaster ] = useState<any>({
@@ -50,6 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
 
             setTimeout(function() {
                 history.push('/');
+                setTimer(-1);
             }, 3000);
         }
         
@@ -58,15 +58,21 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     useEffect(() => {
         if(timer==true) {
             setCountDown(setInterval(() => {
-                alert('You have been idle for too long. Automtically logging you out now...');
-                logOut();
-                history.push('/');
-                setCountDown(clearInterval(countDown));
+                if(countDown!=undefined || countDown!='undefined') {
+                    alert('You have been idle for too long. Automtically logging you out now...');
+                    logOut();
+                    history.push('/');
+                    setTimer(-1);
+                    setCountDown(clearInterval(countDown));
+                }
+                
             }, 900000))
         }
         else if(timer==false) {
-            setCountDown(clearInterval(countDown));
-            setTimer(true);
+            if(countDown!=undefined || countDown !='undefined') {
+                setCountDown(clearInterval(countDown));
+                setTimer(true);
+            }
         }
     },[timer])
 
@@ -101,6 +107,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             })
             setTimeout(function() {
                 history.push('/');
+                setTimer(-1);
             }, 3000);
             
         }
@@ -113,6 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 });
                 setTimeout(function() {
                     history.push('/');
+                    setTimer(-1);
                 }, 3000);
             }
         return response;
@@ -132,6 +140,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 })
                 setTimeout(function() {
                     history.push('/');
+                    setTimer(-1);
                 }, 3000);
             }
         }
@@ -155,6 +164,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             });
             setTimeout(function() {
                 history.push('/');
+                setTimer(-1);
             }, 3000);
         }
         else {
@@ -164,6 +174,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             });
             setTimeout(function() {
                 history.push('/');
+                setTimer(-1);
             }, 3000);
             setLogoutState({state: 'idle'});
         }
