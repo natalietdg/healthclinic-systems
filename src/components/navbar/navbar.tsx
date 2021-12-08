@@ -48,7 +48,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             });
 
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
         }
@@ -61,7 +60,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 if(countDown!=undefined || countDown!='undefined') {
                     alert('You have been idle for too long. Automtically logging you out now...');
                     logOut();
-                    history.push('/');
                     setTimer(-1);
                     setCountDown(clearInterval(countDown));
                 }
@@ -73,6 +71,9 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 setCountDown(clearInterval(countDown));
                 setTimer(true);
             }
+        }
+        else if(timer==-1) {
+            history.push('/');
         }
     },[timer])
 
@@ -106,7 +107,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'You are not logged in! Redirecting you to the home page...'
             })
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
             
@@ -119,7 +119,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                     message: 'You are not logged in! Redirecting you to the home page...'
                 });
                 setTimeout(function() {
-                    history.push('/');
                     setTimer(-1);
                 }, 3000);
             }
@@ -139,7 +138,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                     message: 'You are not logged in! Redirecting you to the home page...'
                 })
                 setTimeout(function() {
-                    history.push('/');
                     setTimer(-1);
                 }, 3000);
             }
@@ -163,7 +161,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'Log out successful! Redirecting you to the home page...'
             });
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
         }
@@ -173,7 +170,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'Log out successful! Redirecting you to the home page...'
             });
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
             setLogoutState({state: 'idle'});

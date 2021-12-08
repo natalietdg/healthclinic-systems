@@ -4,6 +4,9 @@
     <base href="/" />
   </head>
   <body style="height: auto">
+    <meta http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src https://*; child-src 'none';">
+
     {% comment %}
     <meta http-equiv="Content-Security-Policy" content="script-src 'none'" /> {%
     endcomment %}
