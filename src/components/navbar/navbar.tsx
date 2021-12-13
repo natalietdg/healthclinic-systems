@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { refreshAccessToken } from 'Services/auth.services';
 import {Toaster} from 'Components/shared'
 import { fetchProfile } from 'Services/profile.services';
-import { dateAtom, DateType } from 'Recoil/date.atom';
 import { styles } from 'Components/shared/animation';
 import { loginAtom, LoginAtomType } from 'Recoil/login.atom';
 import { logout } from 'Services/auth.services';
@@ -73,6 +72,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             }
         }
         else if(timer==-1) {
+            setCountDown(clearInterval(countDown))
             history.push('/');
         }
     },[timer])
@@ -136,7 +136,8 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 setToaster({
                     type: 'errors',
                     message: 'You are not logged in! Redirecting you to the home page...'
-                })
+                });
+                
                 setTimeout(function() {
                     setTimer(-1);
                 }, 3000);
@@ -183,6 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     const hideDropdown = () => {
         (document.querySelector('.dropdown--ul') as HTMLElement).style.display = 'none';
     }
+
     return (       
         <div className="navbar-bg">
             <div className="blurred" >
