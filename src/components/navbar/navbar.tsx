@@ -6,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 import { refreshAccessToken } from 'Services/auth.services';
 import {Toaster} from 'Components/shared'
 import { fetchProfile } from 'Services/profile.services';
-import { dateAtom, DateType } from 'Recoil/date.atom';
 import { styles } from 'Components/shared/animation';
 import { loginAtom, LoginAtomType } from 'Recoil/login.atom';
 import { logout } from 'Services/auth.services';
@@ -48,7 +47,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
             });
 
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
         }
@@ -61,7 +59,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 if(countDown!=undefined || countDown!='undefined') {
                     alert('You have been idle for too long. Automtically logging you out now...');
                     logOut();
-                    history.push('/');
                     setTimer(-1);
                     setCountDown(clearInterval(countDown));
                 }
@@ -73,6 +70,10 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 setCountDown(clearInterval(countDown));
                 setTimer(true);
             }
+        }
+        else if(timer==-1) {
+            setCountDown(clearInterval(countDown))
+            history.push('/');
         }
     },[timer])
 
@@ -106,7 +107,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'You are not logged in! Redirecting you to the home page...'
             })
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
             
@@ -119,7 +119,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                     message: 'You are not logged in! Redirecting you to the home page...'
                 });
                 setTimeout(function() {
-                    history.push('/');
                     setTimer(-1);
                 }, 3000);
             }
@@ -137,9 +136,9 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 setToaster({
                     type: 'errors',
                     message: 'You are not logged in! Redirecting you to the home page...'
-                })
+                });
+                
                 setTimeout(function() {
-                    history.push('/');
                     setTimer(-1);
                 }, 3000);
             }
@@ -163,7 +162,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'Log out successful! Redirecting you to the home page...'
             });
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
         }
@@ -173,7 +171,6 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
                 message: 'Log out successful! Redirecting you to the home page...'
             });
             setTimeout(function() {
-                history.push('/');
                 setTimer(-1);
             }, 3000);
             setLogoutState({state: 'idle'});
@@ -187,6 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({}) => {
     const hideDropdown = () => {
         (document.querySelector('.dropdown--ul') as HTMLElement).style.display = 'none';
     }
+
     return (       
         <div className="navbar-bg">
             <div className="blurred" >
